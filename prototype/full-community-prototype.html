@@ -1,0 +1,2542 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>个人技术社区全功能原型</title>
+<style>
+  :root {
+    --bg: #f4f7f5;
+    --surface: #ffffff;
+    --surface-soft: #f8fbfa;
+    --surface-strong: #eaf3ef;
+    --text: #1f2a2e;
+    --muted: #657773;
+    --line: #d9e3df;
+    --line-strong: #c7d4cf;
+    --primary: #247b63;
+    --primary-dark: #155c4a;
+    --primary-soft: #e3f2ed;
+    --blue: #3978c3;
+    --blue-soft: #e6f0fb;
+    --coral: #e9654f;
+    --coral-soft: #fcebe7;
+    --amber: #c98318;
+    --amber-soft: #fff3d8;
+    --purple: #7963b5;
+    --purple-soft: #eeeafb;
+    --sidebar: #142421;
+    --sidebar-soft: #243a35;
+    --shadow: 0 18px 42px rgba(35, 51, 46, 0.08);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  .icon-sprite {
+    display: none;
+  }
+
+  .app-shell {
+    display: grid;
+    grid-template-columns: 264px minmax(0, 1fr);
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    gap: 20px;
+    overflow: auto;
+    padding: 22px;
+    background: var(--sidebar);
+    color: #eef8f4;
+  }
+
+  .brand {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    display: grid;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 8px;
+    background: #65caa6;
+    color: #0e211d;
+    font-weight: 700;
+  }
+
+  .brand strong,
+  .user-card strong {
+    display: block;
+    font-weight: 600;
+  }
+
+  .brand span,
+  .user-card span,
+  .nav-group-title {
+    color: #adc5bd;
+    font-size: 13px;
+  }
+
+  .nav-groups {
+    display: grid;
+    gap: 16px;
+  }
+
+  .nav-group {
+    display: grid;
+    gap: 7px;
+  }
+
+  .nav-group-title {
+    margin: 0 0 2px;
+    padding-left: 8px;
+  }
+
+  .nav-button {
+    display: flex;
+    width: 100%;
+    min-height: 42px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #dcece7;
+    text-align: left;
+  }
+
+  .nav-button:hover,
+  .nav-button.active {
+    background: var(--sidebar-soft);
+    color: #fff;
+  }
+
+  .nav-button span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-button em {
+    margin-left: auto;
+    min-width: 22px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--coral);
+    color: #fff;
+    font-size: 12px;
+    font-style: normal;
+    text-align: center;
+  }
+
+  .user-card {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+  }
+
+  .avatar {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+
+  .avatar.small {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+  .main {
+    min-width: 0;
+    padding: 26px;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+
+  .kicker {
+    margin: 0 0 5px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+
+  h1 {
+    margin-bottom: 0;
+    font-size: 30px;
+    letter-spacing: 0;
+  }
+
+  h2 {
+    margin-bottom: 8px;
+    font-size: 22px;
+    letter-spacing: 0;
+  }
+
+  h3 {
+    margin-bottom: 0;
+    font-size: 16px;
+    letter-spacing: 0;
+  }
+
+  .top-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .role-switch {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+  }
+
+  .role-switch button,
+  .tab-row button,
+  .chip,
+  .icon-btn,
+  .primary-btn,
+  .secondary-btn,
+  .ghost-btn,
+  .danger-btn {
+    min-height: 38px;
+    border-radius: 8px;
+  }
+
+  .role-switch button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    padding: 0 10px;
+  }
+
+  .role-switch button.active {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .icon-btn {
+    position: relative;
+    display: inline-grid;
+    width: 40px;
+    place-items: center;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .badge-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--coral);
+    color: #fff;
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+  }
+
+  .primary-btn,
+  .secondary-btn,
+  .ghost-btn,
+  .danger-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 14px;
+    border: 0;
+    white-space: nowrap;
+  }
+
+  .primary-btn {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .primary-btn:hover {
+    background: var(--primary-dark);
+  }
+
+  .secondary-btn {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .ghost-btn {
+    background: transparent;
+    color: var(--primary-dark);
+  }
+
+  .danger-btn {
+    border: 1px solid #f0b8ad;
+    background: var(--coral-soft);
+    color: #a83827;
+  }
+
+  .content {
+    display: grid;
+    gap: 20px;
+  }
+
+  .panel,
+  .metric-card,
+  .article-card,
+  .table-panel,
+  .empty-state,
+  .auth-panel,
+  .editor-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .panel,
+  .table-panel,
+  .editor-card {
+    padding: 20px;
+  }
+
+  .panel-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .panel-title span,
+  .muted {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .grid-main-side {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 18px;
+  }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .metric-card {
+    padding: 16px;
+  }
+
+  .metric-card span {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .metric-card strong {
+    display: block;
+    margin: 8px 0 6px;
+    font-size: 27px;
+  }
+
+  .metric-card em {
+    color: var(--primary);
+    font-size: 13px;
+    font-style: normal;
+  }
+
+  .hero-workbench {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .feature-article {
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .feature-cover {
+    display: flex;
+    min-height: 230px;
+    align-items: flex-end;
+    padding: 24px;
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.10) 1px, transparent 1px),
+      linear-gradient(135deg, #1c3e38, #2f6e63 54%, #d4a44a);
+    background-size: 32px 32px, 32px 32px, auto;
+    color: #fff;
+  }
+
+  .feature-cover h2 {
+    max-width: 720px;
+    margin-bottom: 8px;
+    font-size: 28px;
+  }
+
+  .feature-body {
+    display: grid;
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .quick-stack {
+    display: grid;
+    gap: 12px;
+  }
+
+  .quick-card {
+    display: grid;
+    min-height: 118px;
+    align-content: space-between;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+  }
+
+  .quick-card strong {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .quick-card p {
+    margin-bottom: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .tag,
+  .status,
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .tag {
+    padding: 4px 9px;
+    background: var(--surface-strong);
+    color: var(--primary-dark);
+  }
+
+  .status {
+    padding: 4px 9px;
+    background: var(--blue-soft);
+    color: #245d9e;
+  }
+
+  .status.warn {
+    background: var(--amber-soft);
+    color: #875800;
+  }
+
+  .status.danger {
+    background: var(--coral-soft);
+    color: #a83827;
+  }
+
+  .status.ok {
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+  }
+
+  .article-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .article-card {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .thumb {
+    min-height: 104px;
+    border-radius: 8px;
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.13) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.11) 1px, transparent 1px),
+      linear-gradient(135deg, #1c3e38, #2f6e63 54%, #d4a44a);
+    background-size: 22px 22px, 22px 22px, auto;
+  }
+
+  .article-card h3 {
+    margin-bottom: 6px;
+  }
+
+  .article-card p {
+    margin-bottom: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .meta-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .toolbar,
+  .form-row,
+  .comment-actions,
+  .composer,
+  .review-actions,
+  .inline-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .toolbar {
+    justify-content: space-between;
+  }
+
+  .search-box {
+    position: relative;
+    flex: 1 1 320px;
+  }
+
+  .search-box svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    color: var(--muted);
+    transform: translateY(-50%);
+  }
+
+  .search-box input {
+    width: 100%;
+    min-height: 42px;
+    padding: 0 12px 0 40px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    min-height: 34px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .chip.active {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+  }
+
+  .tab-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .tab-row button {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--muted);
+    padding: 0 12px;
+  }
+
+  .tab-row button.active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .detail-body {
+    display: grid;
+    gap: 18px;
+  }
+
+  .article-detail {
+    padding: 24px;
+  }
+
+  .article-detail h2 {
+    font-size: 30px;
+  }
+
+  .article-content {
+    color: #2d3c38;
+    line-height: 1.9;
+  }
+
+  .article-content h3 {
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+
+  .interaction-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .action-metric {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-soft);
+    color: var(--text);
+  }
+
+  .action-metric.active {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+  }
+
+  .author-panel {
+    display: grid;
+    gap: 14px;
+  }
+
+  .author-head {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+  }
+
+  .author-head .avatar {
+    width: 54px;
+    height: 54px;
+  }
+
+  .comment-list,
+  .notice-list,
+  .activity-list,
+  .draft-list,
+  .log-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .comment-item,
+  .notice-item,
+  .activity-item,
+  .draft-item,
+  .log-item {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-soft);
+  }
+
+  .comment-main {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .comment-item p,
+  .notice-item p,
+  .activity-item p,
+  .draft-item p {
+    margin-bottom: 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  textarea,
+  input,
+  select {
+    color: var(--text);
+  }
+
+  textarea,
+  .field input,
+  .field select {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+  }
+
+  textarea {
+    padding: 12px;
+    resize: vertical;
+  }
+
+  .field {
+    display: grid;
+    gap: 7px;
+  }
+
+  .field label {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .field input,
+  .field select {
+    min-height: 42px;
+    padding: 0 12px;
+  }
+
+  .auth-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .auth-panel {
+    display: grid;
+    gap: 14px;
+    padding: 22px;
+  }
+
+  .form-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .profile-head {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr) auto;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .profile-head .avatar {
+    width: 76px;
+    height: 76px;
+    font-size: 24px;
+  }
+
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 680px;
+  }
+
+  th,
+  td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  th {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  td {
+    color: var(--text);
+  }
+
+  .editor-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 18px;
+  }
+
+  .upload-box {
+    display: grid;
+    min-height: 150px;
+    place-items: center;
+    padding: 18px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(36, 123, 99, 0.08), rgba(57, 120, 195, 0.08)),
+      var(--surface-soft);
+    text-align: center;
+  }
+
+  .upload-box strong {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .status-flow {
+    display: grid;
+    gap: 10px;
+  }
+
+  .flow-step {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+  }
+
+  .flow-step i {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-style: normal;
+    font-size: 13px;
+  }
+
+  .flow-step.pending i {
+    background: var(--amber);
+  }
+
+  .flow-step.muted-step i {
+    background: #9aaba6;
+  }
+
+  .message-layout {
+    display: grid;
+    grid-template-columns: 310px minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .conversation-list {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+  }
+
+  .conversation {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text);
+    text-align: left;
+  }
+
+  .conversation.active,
+  .conversation:hover {
+    background: var(--primary-soft);
+  }
+
+  .conversation strong,
+  .conversation em {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .conversation em {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 13px;
+    font-style: normal;
+  }
+
+  .chat-panel {
+    display: grid;
+    min-height: 560px;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    overflow: hidden;
+  }
+
+  .chat-head,
+  .composer {
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .composer {
+    border-top: 1px solid var(--line);
+    border-bottom: 0;
+  }
+
+  .chat-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .bubble {
+    max-width: min(540px, 88%);
+    margin: 0;
+    padding: 11px 13px;
+    border-radius: 8px;
+    line-height: 1.7;
+  }
+
+  .bubble.other {
+    align-self: flex-start;
+    background: var(--surface-soft);
+  }
+
+  .bubble.mine {
+    align-self: flex-end;
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .composer input {
+    flex: 1 1 260px;
+    min-height: 42px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+
+  .chart-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(290px, 0.7fr);
+    gap: 18px;
+  }
+
+  .line-chart {
+    width: 100%;
+    height: auto;
+    color: var(--primary);
+  }
+
+  .line-chart polyline {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 4;
+  }
+
+  .line-chart .grid-line {
+    color: var(--line);
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+
+  .bar-chart {
+    display: grid;
+    height: 240px;
+    grid-template-columns: repeat(7, minmax(18px, 1fr));
+    align-items: end;
+    gap: 12px;
+    padding-top: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bar-chart span {
+    height: var(--h);
+    min-height: 22px;
+    border-radius: 8px 8px 0 0;
+    background: linear-gradient(180deg, #6db5d8, var(--blue));
+  }
+
+  .rank-list {
+    display: grid;
+    gap: 13px;
+  }
+
+  .rank-item {
+    display: grid;
+    gap: 7px;
+  }
+
+  .rank-item header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .rank-item span {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .rank-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--surface-strong);
+    overflow: hidden;
+  }
+
+  .rank-bar i {
+    display: block;
+    width: var(--w);
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--primary), #6db5d8);
+  }
+
+  .donut-wrap {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+  }
+
+  .donut {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: conic-gradient(var(--primary) 0 52%, var(--blue) 52% 80%, var(--coral) 80% 100%);
+    position: relative;
+  }
+
+  .donut::after {
+    content: "";
+    position: absolute;
+    inset: 34px;
+    border-radius: 50%;
+    background: var(--surface);
+  }
+
+  .legend {
+    display: grid;
+    gap: 9px;
+  }
+
+  .legend span {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .legend i {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+
+  .swatch-primary {
+    background: var(--primary);
+  }
+
+  .swatch-blue {
+    background: var(--blue);
+  }
+
+  .swatch-coral {
+    background: var(--coral);
+  }
+
+  .empty-state {
+    display: grid;
+    min-height: 220px;
+    place-items: center;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .empty-state svg {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+    color: var(--muted);
+  }
+
+  .lock-panel {
+    display: grid;
+    min-height: 360px;
+    place-items: center;
+    padding: 28px;
+    text-align: center;
+  }
+
+  .lock-panel svg {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 14px;
+    color: var(--amber);
+  }
+
+  .check-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .check-item {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: start;
+    padding: 11px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-soft);
+  }
+
+  .check-item i {
+    display: grid;
+    width: 22px;
+    height: 22px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-size: 12px;
+    font-style: normal;
+  }
+
+  .code-block {
+    overflow-x: auto;
+    padding: 14px;
+    border-radius: 8px;
+    background: #182522;
+    color: #e5fff5;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 20;
+    display: none;
+    max-width: min(360px, calc(100vw - 40px));
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #182522;
+    color: #fff;
+    box-shadow: var(--shadow);
+  }
+
+  .toast.show {
+    display: block;
+  }
+
+  @media (max-width: 1180px) {
+    .app-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      position: static;
+      height: auto;
+      padding: 16px;
+    }
+
+    .brand,
+    .user-card {
+      display: none;
+    }
+
+    .nav-groups {
+      display: block;
+    }
+
+    .nav-group {
+      display: flex;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .nav-group + .nav-group {
+      margin-top: 8px;
+    }
+
+    .nav-group-title {
+      display: none;
+    }
+
+    .nav-button {
+      width: auto;
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+
+    .main {
+      padding: 20px;
+    }
+
+    .grid-main-side,
+    .hero-workbench,
+    .editor-layout,
+    .message-layout,
+    .chart-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .metric-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .main {
+      padding: 16px;
+    }
+
+    .topbar,
+    .toolbar,
+    .profile-head,
+    .panel-title {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+    }
+
+    .profile-head {
+      grid-template-columns: 1fr;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .top-actions,
+    .role-switch,
+    .inline-actions,
+    .comment-actions {
+      width: 100%;
+    }
+
+    .role-switch,
+    .top-actions {
+      justify-content: stretch;
+    }
+
+    .role-switch button,
+    .top-actions > button,
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn {
+      flex: 1 1 auto;
+    }
+
+    .grid-2,
+    .grid-3,
+    .metric-grid,
+    .auth-grid,
+    .interaction-row {
+      grid-template-columns: 1fr;
+    }
+
+    .article-card {
+      grid-template-columns: 1fr;
+    }
+
+    .thumb {
+      min-height: 150px;
+    }
+
+    .feature-cover {
+      min-height: 180px;
+    }
+
+    .feature-cover h2,
+    .article-detail h2 {
+      font-size: 24px;
+    }
+
+    .donut-wrap {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+  }
+</style>
+</head>
+<body>
+<svg class="icon-sprite" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 0 1 3 19.5z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v7A2.5 2.5 0 0 1 17.5 15H9l-5 4z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-5M12 16V8M16 16v-9"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.3 5.8a5.1 5.1 0 0 0-7.2 0L12 6.9l-1.1-1.1a5.1 5.1 0 0 0-7.2 7.2l1.1 1.1L12 21.3l7.2-7.2 1.1-1.1a5.1 5.1 0 0 0 0-7.2z"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21l-6-3.5L6 21z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8 12 3 7 8"/><path d="M12 3v12"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+</svg>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">W</span>
+      <div>
+        <strong>WebPlan 社区</strong>
+        <span>个人技术社区原型</span>
+      </div>
+    </div>
+
+    <nav class="nav-groups" aria-label="主导航">
+      <div class="nav-group">
+        <p class="nav-group-title">前台</p>
+        <button class="nav-button" type="button" data-route="home"><svg><use href="#i-home"></use></svg><span>社区首页</span></button>
+        <button class="nav-button" type="button" data-route="discover"><svg><use href="#i-search"></use></svg><span>文章搜索</span></button>
+        <button class="nav-button" type="button" data-route="article"><svg><use href="#i-file"></use></svg><span>文章详情</span></button>
+        <button class="nav-button" type="button" data-route="auth"><svg><use href="#i-lock"></use></svg><span>登录注册</span></button>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group-title">用户与作者</p>
+        <button class="nav-button" type="button" data-route="profile"><svg><use href="#i-user"></use></svg><span>个人中心</span></button>
+        <button class="nav-button" type="button" data-route="creator"><svg><use href="#i-pen"></use></svg><span>创作中心</span></button>
+        <button class="nav-button" type="button" data-route="messages"><svg><use href="#i-message"></use></svg><span>消息通知</span><em id="nav-unread">6</em></button>
+        <button class="nav-button" type="button" data-route="analytics"><svg><use href="#i-chart"></use></svg><span>数据看板</span></button>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group-title">管理与系统</p>
+        <button class="nav-button" type="button" data-route="admin"><svg><use href="#i-users"></use></svg><span>管理后台</span></button>
+        <button class="nav-button" type="button" data-route="system"><svg><use href="#i-shield"></use></svg><span>资源安全</span></button>
+      </div>
+    </nav>
+
+    <div class="user-card">
+      <div class="avatar" id="sidebar-avatar">赵</div>
+      <div>
+        <strong id="sidebar-user">赵同学</strong>
+        <span id="sidebar-role">注册用户 / 作者</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="kicker" id="page-kicker">全功能原型</p>
+        <h1 id="page-title">社区首页</h1>
+      </div>
+      <div class="top-actions">
+        <div class="role-switch" aria-label="角色切换">
+          <button type="button" data-role="guest">游客</button>
+          <button type="button" data-role="user">用户</button>
+          <button type="button" data-role="admin">管理员</button>
+        </div>
+        <button class="icon-btn" type="button" data-route="messages" aria-label="通知">
+          <svg><use href="#i-bell"></use></svg>
+          <span class="badge-dot" id="top-unread">6</span>
+        </button>
+        <button class="primary-btn" type="button" data-route="creator">
+          <svg><use href="#i-pen"></use></svg>
+          写文章
+        </button>
+      </div>
+    </header>
+
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  const state = {
+    route: "home",
+    role: "user",
+    query: "",
+    category: "全部",
+    liked: false,
+    favorited: false,
+    followed: false,
+    analyticsMode: "personal",
+    adminTab: "users",
+    unread: 6,
+    comments: [
+      { name: "陈同学", avatar: "陈", text: "评论、点赞、收藏这三个表拆开后，后面做数据统计会清楚很多。", time: "12 分钟前" },
+      { name: "周航", avatar: "周", text: "文章详情页要把未登录状态也画出来，联调时容易漏。", time: "32 分钟前" }
+    ],
+    messages: [
+      { mine: false, text: "用户交互模块的接口路径要不要统一用文章 ID 做前缀？" },
+      { mine: true, text: "评论、点赞、收藏可以放在 article 下，关注和私信放在 user/message 下。" },
+      { mine: false, text: "那数据分析就监听这些行为事件。" }
+    ]
+  };
+
+  const routeMeta = {
+    home: ["前台首页", "社区首页"],
+    discover: ["搜索分类模块", "文章搜索"],
+    article: ["内容管理 + 用户交互", "文章详情"],
+    auth: ["用户认证模块", "登录注册"],
+    profile: ["个人中心模块", "个人中心"],
+    creator: ["内容管理模块", "创作中心"],
+    messages: ["通知消息 + 私信", "消息通知"],
+    analytics: ["数据分析模块", "数据看板"],
+    admin: ["后台管理模块", "管理后台"],
+    system: ["文件资源 + 系统安全", "资源安全"]
+  };
+
+  const roleInfo = {
+    guest: ["游客", "未登录访问者", "访"],
+    user: ["赵同学", "注册用户 / 作者", "赵"],
+    admin: ["管理员", "平台管理者", "管"]
+  };
+
+  const articles = [
+    { title: "从博客项目开始打通 Web 开发链路", category: "React", tag: "实战", author: "林木", views: 2846, likes: 128, comments: 18, status: "已发布", summary: "从需求定义、原型设计、接口联调到部署上线的一次完整实践。" },
+    { title: "评论、点赞、收藏的数据表怎么拆", category: "数据库", tag: "设计", author: "赵同学", views: 2160, likes: 96, comments: 24, status: "已发布", summary: "围绕用户行为关系表，梳理唯一索引、计数字段和事件采集。" },
+    { title: "JWT 登录态和前端路由守卫实践", category: "后端", tag: "认证", author: "陈同学", views: 1780, likes: 74, comments: 12, status: "审核中", summary: "整理登录、刷新 token、权限判断和接口拦截的常见流程。" },
+    { title: "个人数据看板应该统计哪些指标", category: "数据分析", tag: "看板", author: "周航", views: 1243, likes: 58, comments: 9, status: "已发布", summary: "围绕阅读、点赞、收藏、评论和粉丝增长建立作者侧看板。" }
+  ];
+
+  const content = document.getElementById("content");
+
+  function icon(id) {
+    return `<svg><use href="#${id}"></use></svg>`;
+  }
+
+  function escapeHtml(value) {
+    return value.replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    })[char]);
+  }
+
+  function toast(message) {
+    const node = document.getElementById("toast");
+    node.textContent = message;
+    node.classList.add("show");
+    window.clearTimeout(toast.timer);
+    toast.timer = window.setTimeout(() => node.classList.remove("show"), 2200);
+  }
+
+  function canUseAuthFeature() {
+    return state.role !== "guest";
+  }
+
+  function guardPanel(type) {
+    const isAdmin = type === "admin";
+    return `
+      <section class="panel lock-panel">
+        <div>
+          ${icon(isAdmin ? "i-shield" : "i-lock")}
+          <h2>${isAdmin ? "需要管理员权限" : "需要登录后访问"}</h2>
+          <p class="muted">${isAdmin ? "该区域用于用户管理、文章审核、评论治理和运营数据查看。" : "该区域包含个人资料、创作管理、消息和私有数据。"}</p>
+          <div class="inline-actions" style="justify-content:center;margin-top:16px">
+            <button class="primary-btn" type="button" ${isAdmin ? 'data-action="role-admin"' : 'data-route="auth"'}>${isAdmin ? "模拟管理员" : "去登录"}</button>
+            <button class="secondary-btn" type="button" ${isAdmin ? 'data-route="home"' : 'data-action="role-user"'}>${isAdmin ? "返回首页" : "模拟登录用户"}</button>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderHome() {
+    return `
+      <section class="hero-workbench">
+        <article class="feature-article">
+          <div class="feature-cover">
+            <div>
+              <span class="tag">推荐文章</span>
+              <h2>从博客项目开始打通 Web 开发链路</h2>
+              <p>需求、设计、前端、后端、数据库、测试、部署和运维完整走一遍。</p>
+            </div>
+          </div>
+          <div class="feature-body">
+            <div class="meta-line">
+              <span>作者：林木</span>
+              <span>阅读 2,846</span>
+              <span>点赞 128</span>
+              <span>评论 18</span>
+            </div>
+            <div class="inline-actions">
+              <button class="primary-btn" type="button" data-route="article">查看文章</button>
+              <button class="secondary-btn" type="button" data-route="discover">浏览更多</button>
+            </div>
+          </div>
+        </article>
+
+        <aside class="quick-stack">
+          <div class="quick-card">
+            <div>
+              <strong>今日新增互动</strong>
+              <p>评论、点赞、收藏、关注会进入用户行为事件表。</p>
+            </div>
+            <span class="status ok">436 次</span>
+          </div>
+          <div class="quick-card">
+            <div>
+              <strong>待审核文章</strong>
+              <p>管理员可在后台通过、驳回或下架内容。</p>
+            </div>
+            <span class="status warn">7 篇</span>
+          </div>
+          <div class="quick-card">
+            <div>
+              <strong>未读消息</strong>
+              <p>评论、点赞、关注、私信和审核结果统一进入通知中心。</p>
+            </div>
+            <span class="status danger">${state.unread} 条</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="metric-grid">
+        ${metric("注册用户", "3,428", "今日 +42")}
+        ${metric("文章总数", "684", "今日 +9")}
+        ${metric("互动总量", "18,920", "本周 +18%")}
+        ${metric("日活用户", "718", "活跃率 20.9%")}
+      </section>
+
+      <section class="grid-main-side">
+        <div class="panel">
+          <div class="panel-title">
+            <h3>最新文章</h3>
+            <button class="ghost-btn" type="button" data-route="discover">全部文章</button>
+          </div>
+          <div class="article-list">
+            ${articles.map(articleCard).join("")}
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">
+            <h3>模块覆盖</h3>
+            <span>MVP + P1</span>
+          </div>
+          <div class="check-list">
+            ${check("用户认证", "注册、登录、退出、权限守卫", "P0")}
+            ${check("内容管理", "文章编辑、状态流转、审核", "P0")}
+            ${check("用户交互", "评论、点赞、收藏、关注、私信", "P0/P1")}
+            ${check("数据分析", "个人看板、运营看板、行为事件", "P1")}
+            ${check("后台管理", "用户、文章、评论、分类、日志", "P1")}
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderDiscover() {
+    const filtered = articles.filter((item) => {
+      const matchQuery = !state.query || `${item.title}${item.summary}${item.category}${item.tag}`.includes(state.query);
+      const matchCategory = state.category === "全部" || item.category === state.category;
+      return matchQuery && matchCategory;
+    });
+
+    return `
+      <section class="panel">
+        <div class="toolbar">
+          <div class="search-box">
+            ${icon("i-search")}
+            <input id="search-input" type="search" placeholder="搜索文章标题、摘要、分类或标签" value="${escapeHtml(state.query)}">
+          </div>
+          <select id="sort-select" aria-label="排序方式">
+            <option>按最新排序</option>
+            <option>按阅读量排序</option>
+            <option>按互动量排序</option>
+          </select>
+        </div>
+        <div class="chip-row" style="margin-top:14px">
+          ${["全部", "React", "数据库", "后端", "数据分析"].map((name) => `<button class="chip ${state.category === name ? "active" : ""}" type="button" data-category="${name}">${name}</button>`).join("")}
+        </div>
+      </section>
+
+      <section class="grid-main-side">
+        <div class="panel">
+          <div class="panel-title">
+            <h3>搜索结果</h3>
+            <span>${filtered.length} 篇文章</span>
+          </div>
+          ${filtered.length ? `<div class="article-list">${filtered.map(articleCard).join("")}</div>` : empty("i-search", "没有找到匹配文章", "换一个关键词或分类试试。")}
+        </div>
+        <aside class="panel">
+          <div class="panel-title">
+            <h3>分类与标签</h3>
+            <span>内容发现</span>
+          </div>
+          <div class="check-list">
+            ${check("分类", "React、后端、数据库、数据分析", "单选")}
+            ${check("标签", "实战、认证、看板、设计", "多选")}
+            ${check("归档", "按月份组织历史文章", "P1")}
+            ${check("全文搜索", "后续接入专用搜索能力", "P2")}
+          </div>
+        </aside>
+      </section>
+    `;
+  }
+
+  function renderArticle() {
+    const locked = !canUseAuthFeature();
+    return `
+      <section class="grid-main-side">
+        <article class="panel article-detail">
+          <div class="detail-body">
+            <div>
+              <span class="tag">React 实战</span>
+              <h2>从博客项目开始打通 Web 开发链路</h2>
+              <div class="meta-line">
+                <span>作者：林木</span>
+                <span>发布：2026-08-11</span>
+                <span>阅读 2,846</span>
+                <span>状态：已发布</span>
+              </div>
+            </div>
+
+            <div class="interaction-row">
+              ${actionMetric("like", "i-heart", "点赞", state.liked ? 129 : 128, state.liked)}
+              ${actionMetric("favorite", "i-bookmark", "收藏", state.favorited ? 47 : 46, state.favorited)}
+              ${actionMetric("focus-comment", "i-message", "评论", state.comments.length + 16, false)}
+              ${actionMetric("follow", "i-user", state.followed ? "已关注" : "关注", state.followed ? 236 : 235, state.followed)}
+            </div>
+
+            <div class="article-content">
+              <p>这个项目的价值不只是完成一个页面，而是把需求、设计、前端、后端、数据库、测试和部署全部串起来。第一版先保证能登录、能发文章、能互动、能看到基础数据。</p>
+              <h3>一、先把主流程跑通</h3>
+              <p>用户进入首页后可以浏览文章，进入详情页后可以查看正文和评论。登录后可以点赞、收藏、发表评论和关注作者。</p>
+              <h3>二、再补社区能力</h3>
+              <p>当评论、点赞、收藏、关注这些关系都稳定后，通知中心、私信、个人数据看板和运营看板就能自然接上。</p>
+              <h3>三、最后完善治理能力</h3>
+              <p>后台管理负责用户状态、文章审核、评论治理、分类标签和系统日志，保证平台可以长期维护。</p>
+            </div>
+
+            <div class="comment-box" id="comment-box">
+              <div class="field">
+                <label for="comment-input">发表评论</label>
+                <textarea id="comment-input" rows="4" placeholder="${locked ? "登录后可以评论" : "写下你的想法"}" ${locked ? "disabled" : ""}></textarea>
+              </div>
+              <div class="comment-actions" style="margin-top:10px">
+                <span class="muted">${locked ? "当前是游客状态，互动按钮会触发登录提示。" : "评论成功后会通知作者，并进入行为事件统计。"}</span>
+                <button class="primary-btn" type="button" data-action="post-comment">${locked ? "去登录" : "发送评论"}</button>
+              </div>
+            </div>
+
+            <div class="comment-list">
+              ${state.comments.map(commentTemplate).join("")}
+            </div>
+          </div>
+        </article>
+
+        <aside class="panel author-panel">
+          <div class="author-head">
+            <div class="avatar">林</div>
+            <div>
+              <h3>林木</h3>
+              <p class="muted">前端开发者 · 12 篇文章 · 235 粉丝</p>
+            </div>
+          </div>
+          <button class="primary-btn" type="button" data-action="follow">${state.followed ? "已关注作者" : "关注作者"}</button>
+          <button class="secondary-btn" type="button" data-route="messages">发送私信</button>
+          <div class="check-list">
+            ${check("文章状态", "published 已发布，公开可见", "内容")}
+            ${check("互动关系", "likes、favorites、follows 去重", "数据")}
+            ${check("通知触发", "评论、点赞、关注生成通知", "消息")}
+          </div>
+        </aside>
+      </section>
+    `;
+  }
+
+  function renderAuth() {
+    return `
+      <section class="auth-grid">
+        <div class="auth-panel">
+          <div>
+            <h2>账号登录</h2>
+            <p class="muted">登录后可以评论、点赞、收藏、关注、私信和发布文章。</p>
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="login-email">邮箱</label>
+              <input id="login-email" type="email" value="zhao@example.com">
+            </div>
+            <div class="field">
+              <label for="login-password">密码</label>
+              <input id="login-password" type="password" value="12345678">
+            </div>
+            <button class="primary-btn" type="button" data-action="login">登录</button>
+          </div>
+        </div>
+
+        <div class="auth-panel">
+          <div>
+            <h2>注册账号</h2>
+            <p class="muted">注册后默认是普通用户，发布文章后具备作者侧能力。</p>
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="register-name">用户名</label>
+              <input id="register-name" type="text" value="新同学">
+            </div>
+            <div class="field">
+              <label for="register-email">邮箱</label>
+              <input id="register-email" type="email" value="new@example.com">
+            </div>
+            <div class="field">
+              <label for="register-password">密码</label>
+              <input id="register-password" type="password" value="12345678">
+            </div>
+            <button class="secondary-btn" type="button" data-action="register">创建账号</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <h3>权限矩阵</h3>
+          <span>游客 / 用户 / 管理员</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>功能</th><th>游客</th><th>注册用户</th><th>管理员</th></tr></thead>
+            <tbody>
+              <tr><td>浏览公开文章</td><td>支持</td><td>支持</td><td>支持</td></tr>
+              <tr><td>评论、点赞、收藏</td><td>不支持</td><td>支持</td><td>支持</td></tr>
+              <tr><td>发布和编辑自己的文章</td><td>不支持</td><td>支持</td><td>支持</td></tr>
+              <tr><td>查看个人数据</td><td>不支持</td><td>支持</td><td>支持</td></tr>
+              <tr><td>用户管理和文章审核</td><td>不支持</td><td>不支持</td><td>支持</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderProfile() {
+    if (!canUseAuthFeature()) return guardPanel("user");
+    return `
+      <section class="panel">
+        <div class="profile-head">
+          <div class="avatar">赵</div>
+          <div>
+            <h2>赵同学</h2>
+            <p class="muted">前端开发者，正在用个人技术社区练习完整 Web 开发链路。</p>
+            <div class="meta-line">
+              <span>文章 18</span>
+              <span>关注 42</span>
+              <span>粉丝 286</span>
+              <span>收藏 126</span>
+            </div>
+          </div>
+          <button class="secondary-btn" type="button" data-action="save-profile">保存资料</button>
+        </div>
+      </section>
+
+      <section class="metric-grid">
+        ${metric("我的文章", "18", "已发布 12")}
+        ${metric("我的点赞", "936", "本周 +11%")}
+        ${metric("我的收藏", "318", "本周 +9%")}
+        ${metric("新增粉丝", "74", "近 7 天")}
+      </section>
+
+      <section class="grid-2">
+        <div class="panel">
+          <div class="panel-title">
+            <h3>个人资料编辑</h3>
+            <span>users/me</span>
+          </div>
+          <div class="form-grid">
+            <div class="field"><label>昵称</label><input value="赵同学"></div>
+            <div class="field"><label>个人简介</label><textarea rows="4">正在从 React 项目走向完整 Web 项目实践。</textarea></div>
+            <div class="field"><label>联系方式</label><input value="zhao@example.com"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">
+            <h3>我的关注 / 粉丝</h3>
+            <span>follows</span>
+          </div>
+          <div class="activity-list">
+            ${activity("林木", "关注中 · 前端开发者 · 12 篇文章", "已关注")}
+            ${activity("陈同学", "粉丝 · 后端开发者 · 8 篇文章", "回关")}
+            ${activity("周航", "关注中 · 数据分析 · 6 篇文章", "已关注")}
+          </div>
+        </div>
+      </section>
+
+      <section class="table-panel">
+        <div class="panel-title">
+          <h3>我的内容与互动记录</h3>
+          <span>文章 / 点赞 / 收藏 / 评论</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>类型</th><th>标题或内容</th><th>状态</th><th>时间</th><th>操作</th></tr></thead>
+            <tbody>
+              <tr><td>文章</td><td>评论系统设计拆解</td><td><span class="status ok">已发布</span></td><td>今天 14:20</td><td><button class="ghost-btn" type="button" data-route="creator">编辑</button></td></tr>
+              <tr><td>收藏</td><td>JWT 登录态和前端路由守卫实践</td><td><span class="status">已收藏</span></td><td>昨天 21:12</td><td><button class="ghost-btn" type="button">取消收藏</button></td></tr>
+              <tr><td>评论</td><td>后续可以把通知中心拆成独立模块。</td><td><span class="status ok">正常</span></td><td>昨天 18:06</td><td><button class="ghost-btn" type="button">删除</button></td></tr>
+              <tr><td>文章</td><td>数据看板接口设计</td><td><span class="status warn">审核中</span></td><td>周一 09:30</td><td><button class="ghost-btn" type="button" data-route="creator">查看</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderCreator() {
+    if (!canUseAuthFeature()) return guardPanel("user");
+    return `
+      <section class="editor-layout">
+        <div class="editor-card">
+          <div class="panel-title">
+            <h3>文章编辑</h3>
+            <span>Markdown / 草稿 / 发布</span>
+          </div>
+          <div class="form-grid">
+            <div class="field"><label for="article-title">标题</label><input id="article-title" value="评论、点赞、收藏的数据表怎么拆"></div>
+            <div class="form-row">
+              <div class="field" style="flex:1 1 220px"><label for="article-category">分类</label><select id="article-category"><option>数据库</option><option>React</option><option>后端</option><option>数据分析</option></select></div>
+              <div class="field" style="flex:1 1 220px"><label for="article-tags">标签</label><input id="article-tags" value="设计, 实战, 互动"></div>
+            </div>
+            <div class="field"><label for="article-summary">摘要</label><textarea id="article-summary" rows="3">围绕用户行为关系表，梳理唯一索引、计数字段和事件采集。</textarea></div>
+            <div class="field"><label for="article-content">正文</label><textarea id="article-content" rows="13">## 表结构
+likes、favorites、follows 都属于关系表。
+
+## 关键点
+同一个用户对同一个目标只能创建一条关系记录。
+
+## 数据分析
+每次成功操作都写入 user_events 行为事件表。</textarea></div>
+            <div class="inline-actions">
+              <button class="secondary-btn" type="button" data-action="save-draft">保存草稿</button>
+              <button class="primary-btn" type="button" data-action="publish-article">提交发布</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <div class="panel-title">
+            <h3>封面与状态</h3>
+            <span>文件资源</span>
+          </div>
+          <button class="upload-box" type="button" data-action="upload">
+            <span>
+              ${icon("i-upload")}
+              <strong>上传文章封面</strong>
+              <span class="muted">jpg / png / webp，建议小于 2MB</span>
+            </span>
+          </button>
+          <div class="status-flow" style="margin-top:16px">
+            ${flow(1, "草稿", "作者保存后仅自己可见", "")}
+            ${flow(2, "审核中", "提交发布后进入管理员审核", "pending")}
+            ${flow(3, "已发布", "审核通过后公开展示", "muted-step")}
+          </div>
+        </aside>
+      </section>
+
+      <section class="grid-2">
+        <div class="panel">
+          <div class="panel-title"><h3>草稿箱</h3><span>draft</span></div>
+          <div class="draft-list">
+            ${draft("数据看板接口设计", "保存于 10 分钟前", "继续编辑")}
+            ${draft("个人中心页面拆分", "保存于 昨天 20:16", "继续编辑")}
+            ${draft("部署上线检查清单", "保存于 周一 11:42", "继续编辑")}
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h3>评论管理</h3><span>作者侧</span></div>
+          <div class="comment-list">
+            ${commentTemplate({ name: "陈同学", avatar: "陈", text: "这个字段设计可以直接拿去建表。", time: "刚刚" })}
+            ${commentTemplate({ name: "周航", avatar: "周", text: "建议文章计数字段和关系表同时维护。", time: "18 分钟前" })}
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderMessages() {
+    if (!canUseAuthFeature()) return guardPanel("user");
+    return `
+      <section class="grid-main-side">
+        <div class="panel">
+          <div class="panel-title">
+            <h3>通知中心</h3>
+            <button class="secondary-btn" type="button" data-action="read-all">全部已读</button>
+          </div>
+          <div class="notice-list">
+            ${notice("评论通知", "陈同学评论了你的文章《评论系统设计拆解》", "未读", "danger")}
+            ${notice("点赞通知", "你的文章收到 8 个新点赞", "未读", "danger")}
+            ${notice("关注通知", "林木关注了你", "未读", "danger")}
+            ${notice("审核结果", "《数据看板接口设计》已通过审核", "已读", "ok")}
+            ${notice("系统通知", "生产环境已开启 HTTPS 和接口限流", "已读", "")}
+          </div>
+        </div>
+        <aside class="panel">
+          <div class="panel-title"><h3>通知类型</h3><span>notifications</span></div>
+          <div class="check-list">
+            ${check("评论", "文章收到新评论或评论回复", "即时")}
+            ${check("点赞 / 收藏", "聚合展示，避免刷屏", "聚合")}
+            ${check("关注", "新增粉丝提醒", "即时")}
+            ${check("私信", "展示未读数量", "会话")}
+            ${check("审核", "通过、驳回、下架原因", "系统")}
+          </div>
+        </aside>
+      </section>
+
+      <section class="message-layout">
+        <div class="panel conversation-list">
+          <button class="conversation active" type="button">
+            <span class="avatar small">林</span>
+            <span><strong>林木</strong><em>数据分析就监听这些行为事件。</em></span>
+            <span class="status danger">2</span>
+          </button>
+          <button class="conversation" type="button">
+            <span class="avatar small">陈</span>
+            <span><strong>陈同学</strong><em>我整理了接口路径。</em></span>
+          </button>
+          <button class="conversation" type="button">
+            <span class="avatar small">周</span>
+            <span><strong>周航</strong><em>看板先做近 7 天。</em></span>
+          </button>
+        </div>
+
+        <div class="panel chat-panel">
+          <div class="chat-head">
+            <h3>和林木的私信</h3>
+            <span class="muted">conversation_id: 10001</span>
+          </div>
+          <div class="chat-stream" id="chat-stream">
+            ${state.messages.map((msg) => `<p class="bubble ${msg.mine ? "mine" : "other"}">${escapeHtml(msg.text)}</p>`).join("")}
+          </div>
+          <div class="composer">
+            <input id="message-input" type="text" placeholder="输入私信内容">
+            <button class="primary-btn" type="button" data-action="send-message">${icon("i-send")}发送</button>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderAnalytics() {
+    if (!canUseAuthFeature()) return guardPanel("user");
+    const isOperation = state.analyticsMode === "operation";
+    return `
+      <section class="panel">
+        <div class="toolbar">
+          <div class="tab-row" style="margin-bottom:0">
+            <button type="button" class="${!isOperation ? "active" : ""}" data-analytics="personal">个人数据</button>
+            <button type="button" class="${isOperation ? "active" : ""}" data-analytics="operation">运营总览</button>
+          </div>
+          <select aria-label="统计时间范围">
+            <option>近 7 天</option>
+            <option>近 30 天</option>
+            <option>自定义时间</option>
+          </select>
+        </div>
+      </section>
+      ${isOperation ? operationAnalytics() : personalAnalytics()}
+    `;
+  }
+
+  function personalAnalytics() {
+    return `
+      <section class="metric-grid">
+        ${metric("阅读量", "12,480", "较上周期 +18%")}
+        ${metric("点赞数", "936", "较上周期 +11%")}
+        ${metric("收藏数", "318", "较上周期 +9%")}
+        ${metric("新增粉丝", "74", "较上周期 +15%")}
+      </section>
+      <section class="chart-grid">
+        <div class="panel">
+          <div class="panel-title"><h3>阅读趋势</h3><span>article_views</span></div>
+          ${lineChart("30,205 125,165 220,174 315,120 410,130 505,84 650,54")}
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h3>热门文章</h3><span>Top 5</span></div>
+          <div class="rank-list">
+            ${rank("React 表单设计", "2,846", "92%")}
+            ${rank("接口联调笔记", "2,160", "76%")}
+            ${rank("JWT 登录实践", "1,780", "62%")}
+            ${rank("评论系统设计", "1,243", "48%")}
+            ${rank("数据看板拆解", "986", "36%")}
+          </div>
+        </div>
+      </section>
+      <section class="table-panel">
+        <div class="panel-title"><h3>文章数据明细</h3><span>按文章聚合</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>文章</th><th>阅读</th><th>点赞</th><th>收藏</th><th>评论</th><th>转化</th></tr></thead>
+            <tbody>
+              <tr><td>评论系统设计拆解</td><td>2,846</td><td>128</td><td>46</td><td>18</td><td>6.7%</td></tr>
+              <tr><td>数据看板接口设计</td><td>2,160</td><td>96</td><td>39</td><td>24</td><td>7.3%</td></tr>
+              <tr><td>JWT 登录实践</td><td>1,780</td><td>74</td><td>28</td><td>12</td><td>6.4%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    `;
+  }
+
+  function operationAnalytics() {
+    if (state.role !== "admin") {
+      return guardPanel("admin");
+    }
+    return `
+      <section class="metric-grid">
+        ${metric("注册用户", "3,428", "今日 +42")}
+        ${metric("文章总数", "684", "今日 +9")}
+        ${metric("互动总量", "18,920", "本周 +18%")}
+        ${metric("日活用户", "718", "活跃率 20.9%")}
+      </section>
+      <section class="chart-grid">
+        <div class="panel">
+          <div class="panel-title"><h3>用户增长</h3><span>新增注册</span></div>
+          <div class="bar-chart" aria-label="用户增长柱状图">
+            ${["38%", "52%", "46%", "70%", "64%", "82%", "76%"].map((h) => `<span style="--h:${h}"></span>`).join("")}
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h3>互动分布</h3><span>本周期</span></div>
+          <div class="donut-wrap">
+            <div class="donut" aria-label="点赞 52%，评论 28%，收藏 20%"></div>
+            <div class="legend">
+              <span><i class="swatch-primary"></i>点赞 52%</span>
+              <span><i class="swatch-blue"></i>评论 28%</span>
+              <span><i class="swatch-coral"></i>收藏 20%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="table-panel">
+        <div class="panel-title"><h3>活跃用户排行</h3><span>user_events</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>用户</th><th>行为数</th><th>评论</th><th>点赞</th><th>收藏</th><th>最后活跃</th></tr></thead>
+            <tbody>
+              <tr><td>赵同学</td><td>286</td><td>36</td><td>188</td><td>62</td><td>刚刚</td></tr>
+              <tr><td>陈同学</td><td>214</td><td>42</td><td>132</td><td>40</td><td>12 分钟前</td></tr>
+              <tr><td>林木</td><td>198</td><td>28</td><td>126</td><td>44</td><td>20 分钟前</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderAdmin() {
+    if (state.role !== "admin") return guardPanel("admin");
+    return `
+      <section class="panel">
+        <div class="tab-row">
+          ${["users", "reviews", "comments", "categories", "logs"].map((tab) => `<button type="button" class="${state.adminTab === tab ? "active" : ""}" data-admin-tab="${tab}">${adminTabName(tab)}</button>`).join("")}
+        </div>
+        ${adminContent()}
+      </section>
+    `;
+  }
+
+  function adminContent() {
+    if (state.adminTab === "users") {
+      return table("用户管理", ["用户", "角色", "状态", "注册时间", "操作"], [
+        ["赵同学", "作者", '<span class="status ok">正常</span>', "2026-08-01", '<button class="ghost-btn" type="button">禁用</button>'],
+        ["陈同学", "用户", '<span class="status ok">正常</span>', "2026-08-03", '<button class="ghost-btn" type="button">调整角色</button>'],
+        ["测试账号", "用户", '<span class="status danger">禁用</span>', "2026-08-08", '<button class="ghost-btn" type="button">解禁</button>']
+      ]);
+    }
+    if (state.adminTab === "reviews") {
+      return table("文章审核", ["文章", "作者", "状态", "提交时间", "操作"], [
+        ["JWT 登录态和前端路由守卫实践", "陈同学", '<span class="status warn">待审核</span>', "今天 10:20", '<div class="review-actions"><button class="primary-btn" type="button" data-action="approve">通过</button><button class="danger-btn" type="button" data-action="reject">驳回</button></div>'],
+        ["数据看板接口设计", "赵同学", '<span class="status warn">待审核</span>', "昨天 19:16", '<div class="review-actions"><button class="primary-btn" type="button" data-action="approve">通过</button><button class="danger-btn" type="button" data-action="reject">驳回</button></div>']
+      ]);
+    }
+    if (state.adminTab === "comments") {
+      return table("评论管理", ["评论内容", "用户", "文章", "状态", "操作"], [
+        ["这个设计可以直接拿去建表。", "陈同学", "评论系统设计拆解", '<span class="status ok">正常</span>', '<button class="ghost-btn" type="button">删除</button>'],
+        ["带有敏感词的测试评论", "测试账号", "JWT 登录实践", '<span class="status danger">隐藏</span>', '<button class="ghost-btn" type="button">恢复</button>']
+      ]);
+    }
+    if (state.adminTab === "categories") {
+      return table("分类标签管理", ["类型", "名称", "文章数", "排序", "操作"], [
+        ["分类", "React", "126", "1", '<button class="ghost-btn" type="button">编辑</button>'],
+        ["分类", "数据库", "84", "2", '<button class="ghost-btn" type="button">编辑</button>'],
+        ["标签", "实战", "232", "-", '<button class="ghost-btn" type="button">合并</button>']
+      ]);
+    }
+    return `
+      <div class="panel-title"><h3>系统日志</h3><span>admin_logs</span></div>
+      <div class="log-list">
+        ${log("管理员通过文章审核", "article_id=1038，审核人=admin，结果=approved")}
+        ${log("用户登录失败触发限流", "ip=127.0.0.1，reason=password_error")}
+        ${log("上传文件被拦截", "file=demo.exe，reason=invalid_extension")}
+      </div>
+    `;
+  }
+
+  function renderSystem() {
+    return `
+      <section class="grid-2">
+        <div class="panel">
+          <div class="panel-title">
+            <h3>文件资源模块</h3>
+            <span>upload</span>
+          </div>
+          <button class="upload-box" type="button" data-action="upload">
+            <span>
+              ${icon("i-upload")}
+              <strong>上传头像 / 封面 / Markdown 图片</strong>
+              <span class="muted">格式校验、大小限制、文件名安全处理</span>
+            </span>
+          </button>
+          <div class="table-wrap" style="margin-top:14px">
+            <table>
+              <thead><tr><th>资源</th><th>格式</th><th>大小</th><th>用途</th></tr></thead>
+              <tbody>
+                <tr><td>头像</td><td>jpg/png/webp</td><td>小于 1MB</td><td>个人资料</td></tr>
+                <tr><td>文章封面</td><td>jpg/png/webp</td><td>小于 2MB</td><td>文章卡片</td></tr>
+                <tr><td>正文图片</td><td>jpg/png/webp/gif</td><td>小于 5MB</td><td>Markdown 内容</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">
+            <h3>系统安全模块</h3>
+            <span>security</span>
+          </div>
+          <div class="check-list">
+            ${check("密码加密", "password_hash，不保存明文密码", "P0")}
+            ${check("接口鉴权", "写操作校验 token 和角色", "P0")}
+            ${check("XSS 防护", "Markdown 和评论内容安全过滤", "P0")}
+            ${check("接口限流", "登录、评论、上传限制频率", "P1")}
+            ${check("日志审计", "管理员操作和异常事件留痕", "P1")}
+          </div>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <div class="panel">
+          <div class="panel-title"><h3>统一 API 响应</h3><span>response</span></div>
+          <pre class="code-block">{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "list": [],
+    "page": 1,
+    "pageSize": 10,
+    "total": 100
+  }
+}</pre>
+        </div>
+        <div class="panel">
+          <div class="panel-title"><h3>上线检查</h3><span>deploy</span></div>
+          <div class="check-list">
+            ${check("环境变量", "数据库、JWT 密钥、上传路径配置完成", "通过")}
+            ${check("HTTPS", "生产环境证书和反向代理可用", "通过")}
+            ${check("数据库备份", "上线前准备备份策略", "待确认")}
+            ${check("冒烟测试", "登录、发文、互动、后台审核", "待执行")}
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function metric(label, value, extra) {
+    return `<div class="metric-card"><span>${label}</span><strong>${value}</strong><em>${extra}</em></div>`;
+  }
+
+  function check(title, detail, status) {
+    return `<div class="check-item"><i>✓</i><div><strong>${title}</strong><p class="muted">${detail}</p></div><span class="status">${status}</span></div>`;
+  }
+
+  function articleCard(item) {
+    return `
+      <article class="article-card">
+        <div class="thumb" aria-hidden="true"></div>
+        <div>
+          <div class="meta-line"><span class="tag">${item.category}</span><span class="status ${item.status === "审核中" ? "warn" : "ok"}">${item.status}</span></div>
+          <h3>${item.title}</h3>
+          <p>${item.summary}</p>
+          <div class="meta-line">
+            <span>作者：${item.author}</span>
+            <span>阅读 ${item.views}</span>
+            <span>点赞 ${item.likes}</span>
+            <span>评论 ${item.comments}</span>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  function actionMetric(action, iconId, label, count, active) {
+    return `<button class="action-metric ${active ? "active" : ""}" type="button" data-action="${action}">${icon(iconId)}<span>${label}</span><strong>${count}</strong></button>`;
+  }
+
+  function commentTemplate(item) {
+    return `
+      <div class="comment-item">
+        <div class="comment-main">
+          <div class="avatar small">${item.avatar}</div>
+          <div>
+            <strong>${item.name}</strong>
+            <p>${escapeHtml(item.text)}</p>
+            <span class="muted">${item.time}</span>
+          </div>
+        </div>
+        <div class="inline-actions">
+          <button class="ghost-btn" type="button">回复</button>
+          <button class="ghost-btn" type="button">删除</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function empty(iconId, title, detail) {
+    return `<div class="empty-state">${icon(iconId)}<div><h3>${title}</h3><p class="muted">${detail}</p></div></div>`;
+  }
+
+  function activity(name, detail, action) {
+    return `<div class="activity-item"><strong>${name}</strong><p>${detail}</p><div><button class="secondary-btn" type="button">${action}</button></div></div>`;
+  }
+
+  function flow(index, title, detail, className) {
+    return `<div class="flow-step ${className}"><i>${index}</i><div><strong>${title}</strong><p class="muted">${detail}</p></div></div>`;
+  }
+
+  function draft(title, time, action) {
+    return `<div class="draft-item"><strong>${title}</strong><p>${time}</p><div><button class="secondary-btn" type="button">${action}</button></div></div>`;
+  }
+
+  function notice(title, detail, status, type) {
+    return `<div class="notice-item"><div class="panel-title" style="margin-bottom:0"><strong>${title}</strong><span class="status ${type}">${status}</span></div><p>${detail}</p></div>`;
+  }
+
+  function lineChart(points) {
+    return `
+      <svg class="line-chart" viewBox="0 0 680 260" role="img" aria-label="趋势折线图">
+        <line class="grid-line" x1="30" x2="650" y1="220" y2="220"></line>
+        <line class="grid-line" x1="30" x2="650" y1="150" y2="150"></line>
+        <line class="grid-line" x1="30" x2="650" y1="80" y2="80"></line>
+        <polyline points="${points}"></polyline>
+      </svg>
+    `;
+  }
+
+  function rank(title, value, width) {
+    return `<div class="rank-item"><header><strong>${title}</strong><span>${value}</span></header><div class="rank-bar"><i style="--w:${width}"></i></div></div>`;
+  }
+
+  function table(title, heads, rows) {
+    return `
+      <div class="panel-title"><h3>${title}</h3><span>管理操作</span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>${heads.map((head) => `<th>${head}</th>`).join("")}</tr></thead>
+          <tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function adminTabName(tab) {
+    return { users: "用户管理", reviews: "文章审核", comments: "评论管理", categories: "分类标签", logs: "系统日志" }[tab];
+  }
+
+  function log(title, detail) {
+    return `<div class="log-item"><strong>${title}</strong><p class="muted">${detail}</p></div>`;
+  }
+
+  const renderers = {
+    home: renderHome,
+    discover: renderDiscover,
+    article: renderArticle,
+    auth: renderAuth,
+    profile: renderProfile,
+    creator: renderCreator,
+    messages: renderMessages,
+    analytics: renderAnalytics,
+    admin: renderAdmin,
+    system: renderSystem
+  };
+
+  function render() {
+    const [kicker, title] = routeMeta[state.route];
+    document.getElementById("page-kicker").textContent = kicker;
+    document.getElementById("page-title").textContent = title;
+    document.querySelectorAll("[data-route]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.route === state.route);
+    });
+    document.querySelectorAll("[data-role]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.role === state.role);
+    });
+    const [name, role, avatar] = roleInfo[state.role];
+    document.getElementById("sidebar-user").textContent = name;
+    document.getElementById("sidebar-role").textContent = role;
+    document.getElementById("sidebar-avatar").textContent = avatar;
+    document.getElementById("nav-unread").textContent = state.unread;
+    document.getElementById("top-unread").textContent = state.unread;
+    content.innerHTML = renderers[state.route]();
+  }
+
+  document.body.addEventListener("click", (event) => {
+    const routeButton = event.target.closest("[data-route]");
+    if (routeButton) {
+      const targetRoute = routeButton.dataset.route;
+      if (routeButton.dataset.action === "role-admin") {
+        state.role = "admin";
+      }
+      state.route = targetRoute;
+      render();
+      return;
+    }
+
+    const roleButton = event.target.closest("[data-role]");
+    if (roleButton) {
+      state.role = roleButton.dataset.role;
+      render();
+      toast(`已切换为${roleInfo[state.role][1]}`);
+      return;
+    }
+
+    const categoryButton = event.target.closest("[data-category]");
+    if (categoryButton) {
+      state.category = categoryButton.dataset.category;
+      render();
+      return;
+    }
+
+    const analyticsButton = event.target.closest("[data-analytics]");
+    if (analyticsButton) {
+      state.analyticsMode = analyticsButton.dataset.analytics;
+      render();
+      return;
+    }
+
+    const adminButton = event.target.closest("[data-admin-tab]");
+    if (adminButton) {
+      state.adminTab = adminButton.dataset.adminTab;
+      render();
+      return;
+    }
+
+    const actionButton = event.target.closest("[data-action]");
+    if (!actionButton) return;
+    const action = actionButton.dataset.action;
+
+    if (action === "role-user") {
+      state.role = "user";
+      render();
+      toast("已模拟登录为普通用户");
+      return;
+    }
+    if (action === "role-admin") {
+      state.role = "admin";
+      render();
+      toast("已模拟切换为管理员");
+      return;
+    }
+    if (action === "login" || action === "register") {
+      state.role = "user";
+      state.route = "home";
+      render();
+      toast(action === "login" ? "登录成功" : "注册成功");
+      return;
+    }
+    if (["like", "favorite", "follow", "post-comment", "send-message"].includes(action) && !canUseAuthFeature()) {
+      state.route = "auth";
+      render();
+      toast("请先登录后再操作");
+      return;
+    }
+    if (action === "like") {
+      state.liked = !state.liked;
+      render();
+      toast(state.liked ? "已点赞，行为已写入 user_events" : "已取消点赞");
+      return;
+    }
+    if (action === "favorite") {
+      state.favorited = !state.favorited;
+      render();
+      toast(state.favorited ? "已收藏，可在个人中心查看" : "已取消收藏");
+      return;
+    }
+    if (action === "follow") {
+      state.followed = !state.followed;
+      render();
+      toast(state.followed ? "已关注作者" : "已取消关注");
+      return;
+    }
+    if (action === "focus-comment") {
+      const input = document.getElementById("comment-input");
+      if (input) input.focus();
+      return;
+    }
+    if (action === "post-comment") {
+      const input = document.getElementById("comment-input");
+      const text = input ? input.value.trim() : "";
+      if (!text) {
+        toast("评论内容不能为空");
+        return;
+      }
+      state.comments.unshift({ name: "赵同学", avatar: "赵", text, time: "刚刚" });
+      render();
+      toast("评论已发送，通知已生成");
+      return;
+    }
+    if (action === "send-message") {
+      const input = document.getElementById("message-input");
+      const text = input ? input.value.trim() : "";
+      if (!text) {
+        toast("请输入私信内容");
+        return;
+      }
+      state.messages.push({ mine: true, text });
+      render();
+      toast("私信已发送");
+      return;
+    }
+    if (action === "read-all") {
+      state.unread = 0;
+      render();
+      toast("通知已全部标记为已读");
+      return;
+    }
+    if (action === "save-draft") {
+      toast("草稿已保存");
+      return;
+    }
+    if (action === "publish-article") {
+      toast("文章已提交审核");
+      return;
+    }
+    if (action === "upload") {
+      toast("文件已通过格式和大小校验");
+      return;
+    }
+    if (action === "save-profile") {
+      toast("个人资料已保存");
+      return;
+    }
+    if (action === "approve") {
+      toast("文章审核已通过");
+      return;
+    }
+    if (action === "reject") {
+      toast("文章已驳回并生成通知");
+    }
+  });
+
+  document.body.addEventListener("input", (event) => {
+    if (event.target.id === "search-input") {
+      state.query = event.target.value.trim();
+      render();
+      const input = document.getElementById("search-input");
+      if (input) {
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      }
+    }
+  });
+
+  render();
+</script>
+</body>
+</html>
