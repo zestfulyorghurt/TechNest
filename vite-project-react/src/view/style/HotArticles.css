@@ -1,0 +1,89 @@
+/* ================================================================
+   HotArticles 组件样式
+   ================================================================ */
+
+.sidebar-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px 20px;
+    border: 1px solid #e8edf4;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.sidebar-card .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a2a3a;
+    margin-bottom: 12px;
+}
+
+.hot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.hot-list .hot-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f2f5;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.hot-list .hot-item:last-child {
+    border-bottom: none;
+}
+
+.hot-list .hot-item:hover .hot-title {
+    color: #4f6ef7;
+}
+
+.hot-list .hot-item .hot-index {
+    font-size: 12px;
+    font-weight: 700;
+    color: #8a9aaa;
+    min-width: 20px;
+    text-align: center;
+}
+
+.hot-list .hot-item .hot-index.top1 {
+    color: #e74c3c;
+}
+
+.hot-list .hot-item .hot-index.top2 {
+    color: #f39c12;
+}
+
+.hot-list .hot-item .hot-index.top3 {
+    color: #f1c40f;
+}
+
+.hot-list .hot-item .hot-title {
+    font-size: 13px;
+    color: #1a2a3a;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: 0.15s;
+}
+
+.hot-list .hot-item .hot-tag {
+    font-size: 10px;
+    padding: 1px 10px;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.hot-list .hot-item .hot-tag.top {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.hot-list .hot-item .hot-tag.hot {
+    background: #fee2e2;
+    color: #991b1b;
+}

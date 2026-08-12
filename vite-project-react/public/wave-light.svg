@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 150" preserveAspectRatio="none" width="100%" height="100%">
+    <path
+        d="M0,90 
+           C70,10 170,170 250,90 
+           C330,10 430,170 500,90 
+           C550,10 580,170 600,90 
+           L600,150 L0,150 Z"
+        fill="rgba(255, 255, 255, 0.5)"
+    />
+</svg>

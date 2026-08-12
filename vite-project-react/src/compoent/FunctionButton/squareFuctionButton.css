@@ -1,0 +1,27 @@
+.squareFuctionButton {
+    min-width: 60px;
+    padding: 0;
+    aspect-ratio: 1 / 1;
+    border-radius: 15%;
+    color: #1976d2;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* 1. 去掉边框 */
+    border: none;
+    /* 2. 去掉背景 */
+    background: none;
+    /* 4. 去掉轮廓线（点击时的蓝色/黑色外发光） */
+    outline: none;
+    /* 5. 去掉默认的字体继承问题，让字体和父级一致 */
+    font: inherit;
+    /* 6. 去掉鼠标指针变化（可选，一般保留 pointer 更好） */
+    cursor: pointer;
+    /* 这个保留，因为按钮还是可点击的 */
+    transition: background 0.5s ease;
+}
+
+.squareFuctionButton:hover {
+    background-color: rgb(228, 216, 216);
+}

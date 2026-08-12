@@ -1,0 +1,193 @@
+/* src/view/page/login/login.css */
+
+/* 1. 主容器：固定大小，作为整个组件的边界 */
+.login-container {
+    display: flex;
+    width: 900px;
+    height: 550px;
+    margin: 50px auto;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    overflow: hidden; /* 裁剪掉滑出边界的内容 */
+    background: white;
+    position: relative;
+}
+
+/* 2. 左侧侧边栏：静止不动，层级最高 */
+.left-side {
+    width: 35%;
+    background: linear-gradient(135deg, #8a6cf7 0%, #6a4cdd 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+    z-index: 10; /* 确保在滑动层之上 */
+    position: relative;
+}
+
+.left-content h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.left-content p {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.signup-btn {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.signup-btn:hover {
+    background-color: white;
+    color: #8a6cf7;
+    transform: translateY(-2px);
+}
+
+/* 3. 右侧区域：滑动的“视口” */
+.right-side {
+    width: 65%;
+    position: relative;
+    overflow: hidden; /* 关键：只显示当前视口内的内容 */
+    background-color: #fff;
+}
+
+/* 4. 滑动包裹层：宽度是视口的 200% */
+.forms-wrapper {
+    display: flex;
+    width: 200%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* 弹性贝塞尔曲线 */
+}
+
+/* 5. 单个面板：各占 50% (即视口的 100%) */
+.form-panel {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+    flex-shrink: 0; /* 防止被压缩 */
+}
+
+/* 面板内部元素样式 */
+.form-panel h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.input-field {
+    width: 100%;
+    max-width: 320px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-field:focus {
+    border-color: #8a6cf7;
+    box-shadow: 0 0 0 3px rgba(138, 108, 247, 0.1);
+}
+
+.login-btn {
+    width: 100%;
+    max-width: 320px;
+    padding: 12px;
+    background-color: #8a6cf7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    background-color: #7a5cd2;
+}
+
+/* 社交登录部分 */
+.social-login {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.social-login p {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.icon {
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+/* --- 动画核心逻辑 --- */
+
+/* 状态 A: 显示登录 (默认位置) */
+.forms-wrapper.show-login {
+    transform: translateX(0);
+}
+
+/* 状态 B: 显示注册 (向左移动 50%，露出右边的注册面板) */
+.forms-wrapper.show-register {
+    transform: translateX(-50%);
+}
+
+/* 6. 响应式适配 */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+        min-height: 600px;
+    }
+
+    .left-side {
+        width: 100%;
+        padding: 30px 20px;
+        order: 2; /* 移动端按钮在下 */
+    }
+
+    .right-side {
+        width: 100%;
+        height: 450px; /* 移动端给右侧固定高度以支持滑动 */
+        order: 1;
+    }
+}

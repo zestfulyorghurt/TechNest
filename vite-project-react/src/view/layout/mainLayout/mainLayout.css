@@ -1,0 +1,103 @@
+.main-layout {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-layout {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 1);
+    height: 70px;
+    z-index: 9999;
+}
+
+.content-menu-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 24px 0px 0px 0px;
+    gap: 32px;
+    background: rgba(255, 255, 255, 1);
+}
+
+.content-layout {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    flex-wrap: wrap;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 1);
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    flex: 1 1 30%;
+    max-height: 140px;
+    user-select: none;
+}
+
+.card-img {
+    /* 高度撑满父容器 */
+    aspect-ratio: 1.2 / 1;
+    /* 宽高比 3:1，宽度自动计算 */
+    object-fit: cover;
+    /* 裁剪填充，保持比例 */
+    border-radius: 20px;
+    background-color: #84abc7;
+    border-radius: 20px;
+    min-width: 120px;
+}
+
+.wave-bg-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.wave-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-size: 600px 100%;
+}
+
+/* 深色波浪 - 使用内联 SVG */
+.wave-dark {
+    background-image: url("/wave-dark.svg");
+    animation: waveMove 5s linear infinite;
+    z-index: 1;
+}
+
+/* 浅色波浪 - 使用内联 SVG */
+.wave-light {
+    background-image: url("/wave-light.svg");
+    animation: waveMove 7s linear infinite;
+    animation-delay: -2s;
+    z-index: 2;
+}
+
+@keyframes waveMove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: -600px 0;
+    }
+}
