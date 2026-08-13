@@ -1,0 +1,3204 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="ocean"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深入 Rust 异步运行时：从 Future 到底层调度器 · CodeHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THEME VARIABLES — 5 color schemes (via data-theme on <html>)
+   ============================================================ */
+:root,
+html[data-theme="ocean"] {
+  --c-primary:        #3B82F6;
+  --c-primary-rgb:    59, 130, 246;
+  --c-primary-soft:   #DBEAFE;
+  --c-primary-deep:   #1D4ED8;
+  --c-accent:         #06B6D4;
+  --c-accent-rgb:     6, 182, 212;
+
+  --bg-page:          #F0F6FF;
+  --bg-page-2:        #E6EEFB;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(59, 130, 246, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(59, 130, 246, 0.22);
+
+  --text-1:           #0F172A;
+  --text-2:           #334155;
+  --text-3:           #64748B;
+  --text-4:           #94A3B8;
+  --text-on-primary:  #FFFFFF;
+
+  --shadow-glass:     0 8px 32px rgba(15, 30, 80, 0.08), 0 2px 6px rgba(15, 30, 80, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(15, 30, 80, 0.10), 0 4px 12px rgba(15, 30, 80, 0.05);
+  --shadow-primary:   0 6px 20px rgba(59, 130, 246, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(59,130,246,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(6,182,212,0.22) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(139,92,246,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, var(--c-primary) 0%, var(--c-accent) 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(6,182,212,0.15) 100%);
+}
+html[data-theme="mint"] {
+  --c-primary:        #10B981;
+  --c-primary-rgb:    16, 185, 129;
+  --c-primary-soft:   #D1FAE5;
+  --c-primary-deep:   #047857;
+  --c-accent:         #0EA5E9;
+  --c-accent-rgb:     14, 165, 233;
+
+  --bg-page:          #EEFBF5;
+  --bg-page-2:        #DFF5E8;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(16, 185, 129, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(16, 185, 129, 0.22);
+
+  --text-1:           #0B3D2E;
+  --text-2:           #1B5E46;
+  --text-3:           #4D806B;
+  --text-4:           #8BA89A;
+
+  --shadow-glass:     0 8px 32px rgba(10, 60, 40, 0.08), 0 2px 6px rgba(10, 60, 40, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(10, 60, 40, 0.10), 0 4px 12px rgba(10, 60, 40, 0.05);
+  --shadow-primary:   0 6px 20px rgba(16, 185, 129, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(16,185,129,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(14,165,233,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(34,197,94,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #10B981 0%, #0EA5E9 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(14,165,233,0.15) 100%);
+}
+html[data-theme="coral"] {
+  --c-primary:        #F97316;
+  --c-primary-rgb:    249, 115, 22;
+  --c-primary-soft:   #FFEDD5;
+  --c-primary-deep:   #C2410C;
+  --c-accent:         #F43F5E;
+  --c-accent-rgb:     244, 63, 94;
+
+  --bg-page:          #FFF7F0;
+  --bg-page-2:        #FFEBDB;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(249, 115, 22, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(249, 115, 22, 0.22);
+
+  --text-1:           #3F1E0A;
+  --text-2:           #6B3410;
+  --text-3:           #985A30;
+  --text-4:           #C48A64;
+
+  --shadow-glass:     0 8px 32px rgba(80, 30, 10, 0.08), 0 2px 6px rgba(80, 30, 10, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(80, 30, 10, 0.10), 0 4px 12px rgba(80, 30, 10, 0.05);
+  --shadow-primary:   0 6px 20px rgba(249, 115, 22, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(249,115,22,0.22) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(244,63,94,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(251,146,60,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #F97316 0%, #F43F5E 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(244,63,94,0.15) 100%);
+}
+html[data-theme="lilac"] {
+  --c-primary:        #8B5CF6;
+  --c-primary-rgb:    139, 92, 246;
+  --c-primary-soft:   #EDE9FE;
+  --c-primary-deep:   #6D28D9;
+  --c-accent:         #EC4899;
+  --c-accent-rgb:     236, 72, 153;
+
+  --bg-page:          #F7F2FF;
+  --bg-page-2:        #ECE3FB;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(139, 92, 246, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(139, 92, 246, 0.22);
+
+  --text-1:           #2A1458;
+  --text-2:           #472A82;
+  --text-3:           #7355A8;
+  --text-4:           #A38DCC;
+
+  --shadow-glass:     0 8px 32px rgba(60, 20, 120, 0.08), 0 2px 6px rgba(60, 20, 120, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(60, 20, 120, 0.10), 0 4px 12px rgba(60, 20, 120, 0.05);
+  --shadow-primary:   0 6px 20px rgba(139, 92, 246, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(139,92,246,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(236,72,153,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(167,139,250,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.15) 100%);
+}
+html[data-theme="amber"] {
+  --c-primary:        #D97706;
+  --c-primary-rgb:    217, 119, 6;
+  --c-primary-soft:   #FEF3C7;
+  --c-primary-deep:   #92400E;
+  --c-accent:         #DC2626;
+  --c-accent-rgb:     220, 38, 38;
+
+  --bg-page:          #FFFBF0;
+  --bg-page-2:        #FFF3DC;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(217, 119, 6, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(217, 119, 6, 0.22);
+
+  --text-1:           #3D2405;
+  --text-2:           #6B4308;
+  --text-3:           #986A1A;
+  --text-4:           #C4974A;
+
+  --shadow-glass:     0 8px 32px rgba(80, 50, 10, 0.08), 0 2px 6px rgba(80, 50, 10, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(80, 50, 10, 0.10), 0 4px 12px rgba(80, 50, 10, 0.05);
+  --shadow-primary:   0 6px 20px rgba(217, 119, 6, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(217,119,6,0.22) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(220,38,38,0.18) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(245,158,11,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #D97706 0%, #DC2626 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(217,119,6,0.15) 0%, rgba(220,38,38,0.15) 100%);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--text-1);
+  line-height: 1.6;
+  min-height: 100vh;
+  background:
+    var(--grad-hero),
+    linear-gradient(180deg, var(--bg-page) 0%, var(--bg-page-2) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* soft floating blobs */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: var(--grad-primary-soft);
+  filter: blur(100px);
+  border-radius: 50%;
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+  animation: float-b 20s ease-in-out infinite;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -25%;
+  left: -15%;
+  width: 500px;
+  height: 500px;
+  background: var(--grad-primary-soft);
+  filter: blur(90px);
+  border-radius: 50%;
+  opacity: 0.45;
+  z-index: 0;
+  pointer-events: none;
+  animation: float-a 18s ease-in-out infinite;
+}
+
+#app { position: relative; z-index: 2; }
+
+/* ============================================================
+   GLASS UTILITY
+   ============================================================ */
+.glass {
+  background: var(--bg-blur);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-glass);
+}
+.glass-strong {
+  background: var(--bg-blur-strong);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-glass-lg);
+}
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px) saturate(1.25);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: var(--shadow-glass);
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s, border-color 0.35s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glass-lg);
+  border-color: var(--border-strong);
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--c-primary-rgb), 0.25);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--c-primary-rgb), 0.45);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.font-mono    { font-family: 'JetBrains Mono', monospace; }
+
+/* ============================================================
+   THEME SWITCHER
+   ============================================================ */
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  box-shadow: var(--shadow-glass);
+}
+.theme-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.theme-dot::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 6px;
+  background: inherit;
+  filter: brightness(1.05);
+}
+.theme-dot:hover {
+  transform: scale(1.12);
+}
+.theme-dot.active {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px rgba(var(--c-primary-rgb), 0.18);
+}
+.theme-dot.active::before {
+  content: '✓';
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.theme-ocean  { background: linear-gradient(135deg, #3B82F6, #06B6D4); }
+.theme-mint   { background: linear-gradient(135deg, #10B981, #0EA5E9); }
+.theme-coral  { background: linear-gradient(135deg, #F97316, #F43F5E); }
+.theme-lilac  { background: linear-gradient(135deg, #8B5CF6, #EC4899); }
+.theme-amber  { background: linear-gradient(135deg, #D97706, #DC2626); }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  margin: 16px auto 0;
+  max-width: 1400px;
+  padding: 0 24px;
+}
+.nav-inner {
+  height: 68px;
+  padding: 0 18px 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-1);
+}
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--grad-primary);
+  box-shadow: var(--shadow-primary);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, transparent 50%);
+  pointer-events: none;
+}
+.logo-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+}
+.logo-text em {
+  font-style: normal;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+}
+.nav-link {
+  position: relative;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+.nav-link:hover {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+.nav-link.active {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+  font-weight: 600;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  width: 280px;
+  transition: all 0.25s;
+}
+.search-box:focus-within {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.12);
+  background: #fff;
+}
+.search-box svg { width: 16px; height: 16px; color: var(--text-3); flex-shrink: 0; }
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 14px;
+}
+.search-box input::placeholder { color: var(--text-4); }
+.search-kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 3px 6px;
+  background: var(--bg-chip);
+  border-radius: 5px;
+  color: var(--c-primary);
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn svg { width: 16px; height: 16px; }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+}
+.btn-ghost:hover {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+.btn-primary {
+  background: var(--grad-primary);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-primary);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(var(--c-primary-rgb), 0.38);
+}
+.btn-outline {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  color: var(--text-2);
+}
+.btn-outline:hover {
+  color: var(--c-primary);
+  border-color: var(--c-primary);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-card-solid);
+  background: var(--grad-primary);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 12px rgba(var(--c-primary-rgb), 0.25);
+}
+.avatar:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(var(--c-primary-rgb), 0.35);
+}
+
+/* ============================================================
+   ARTICLE LAYOUT
+   ============================================================ */
+.article-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 32px;
+}
+
+/* ---- Breadcrumb ---- */
+.crumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-3);
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.crumb a {
+  color: var(--text-3);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.crumb a:hover { color: var(--c-primary); }
+.crumb .cur { color: var(--text-1); font-weight: 600; }
+.crumb .sep { color: var(--text-4); font-weight: 600; }
+
+/* ---- Article Header ---- */
+.art-head {
+  padding: 40px 44px 32px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.art-head::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  right: -10%;
+  width: 360px;
+  height: 360px;
+  background: var(--grad-primary-soft);
+  filter: blur(70px);
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.art-head > * { position: relative; z-index: 1; }
+
+.art-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.atag {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: var(--bg-chip);
+  color: var(--c-primary-deep);
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid var(--border-strong);
+}
+.atag:hover { background: var(--c-primary); color: #fff; }
+
+.art-title {
+  font-size: clamp(28px, 3.6vw, 42px);
+  font-weight: 800;
+  line-height: 1.18;
+  margin-bottom: 24px;
+}
+
+.art-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+.author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ava-lg {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-primary);
+}
+.author-info { display: flex; flex-direction: column; gap: 2px; }
+.author-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-1);
+}
+.author-name:hover { color: var(--c-primary); cursor: pointer; }
+.author-bio {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.meta-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-4);
+  flex-shrink: 0;
+}
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.meta-item svg { width: 14px; height: 14px; }
+
+.art-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.aa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.22s;
+  font-family: inherit;
+}
+.aa-btn svg { width: 16px; height: 16px; }
+.aa-btn:hover {
+  color: var(--c-primary);
+  border-color: var(--c-primary);
+  transform: translateY(-2px);
+}
+.aa-btn.liked {
+  background: var(--c-primary);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: var(--shadow-primary);
+}
+.aa-btn.liked:hover { color: #fff; }
+.aa-btn.saved {
+  background: var(--c-primary-soft);
+  color: var(--c-primary-deep);
+  border-color: var(--c-primary);
+}
+
+/* ============================================================
+   MAIN 3-COLUMN LAYOUT
+   ============================================================ */
+.art-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr 84px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ---- Left TOC ---- */
+.toc-wrap {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+.toc {
+  padding: 22px 20px;
+}
+.toc-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+.toc-title::before {
+  content: '';
+  width: 4px;
+  height: 16px;
+  background: var(--grad-primary);
+  border-radius: 3px;
+}
+.toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+.toc-link {
+  display: block;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-3);
+  text-decoration: none;
+  border-radius: 9px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+  line-height: 1.45;
+}
+.toc-link:hover {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+.toc-link.active {
+  color: var(--c-primary);
+  font-weight: 700;
+  background: var(--bg-chip);
+  border-left-color: var(--c-primary);
+}
+.toc-link.sub {
+  padding-left: 26px;
+  font-size: 13px;
+}
+
+/* ---- Middle Article Body ---- */
+.art-body {
+  padding: 44px 48px;
+  min-width: 0;
+}
+.prose { font-size: 16px; line-height: 1.85; color: var(--text-2); }
+.prose p { margin-bottom: 20px; }
+.prose p.lead {
+  font-size: 17px;
+  color: var(--text-1);
+  font-weight: 500;
+  line-height: 1.75;
+  padding-left: 18px;
+  border-left: 4px solid var(--c-primary);
+  margin-bottom: 28px;
+}
+.prose strong { color: var(--text-1); font-weight: 700; }
+.prose a { color: var(--c-primary); text-decoration: none; border-bottom: 1px dashed var(--c-primary); }
+.prose a:hover { border-bottom-style: solid; }
+.prose code.inline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88em;
+  padding: 2px 7px;
+  background: var(--bg-chip);
+  color: var(--c-primary-deep);
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.prose h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 44px 0 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  scroll-margin-top: 100px;
+}
+.prose h2 .h-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--grad-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-primary);
+}
+.prose h3 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 28px 0 12px;
+  color: var(--text-1);
+  scroll-margin-top: 100px;
+}
+.prose h3::before {
+  content: '›';
+  color: var(--c-primary);
+  margin-right: 8px;
+  font-weight: 800;
+}
+
+/* Code block (reuse code-card from index) */
+.code-card {
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  margin: 24px 0;
+}
+.code-card::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 280px;
+  height: 280px;
+  background: var(--grad-primary-soft);
+  filter: blur(50px);
+  border-radius: 50%;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(12px);
+}
+.code-dots { display: flex; gap: 7px; }
+.code-dots span {
+  width: 12px; height: 12px; border-radius: 50%;
+}
+.code-dots span:nth-child(1) { background: #FF6057; }
+.code-dots span:nth-child(2) { background: #FEBC2E; }
+.code-dots span:nth-child(3) { background: #28C840; }
+.code-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.code-lang {
+  padding: 3px 8px;
+  background: var(--bg-chip);
+  color: var(--c-primary);
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 10px;
+}
+.code-body {
+  padding: 22px 24px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px;
+  line-height: 1.8;
+  position: relative;
+  z-index: 1;
+  overflow-x: auto;
+  white-space: pre;
+}
+.ln {
+  display: inline-block;
+  width: 28px;
+  color: var(--text-4);
+  user-select: none;
+  font-weight: 500;
+}
+.t-kw   { color: #A855F7; font-weight: 600; }
+.t-fn   { color: var(--c-primary-deep); font-weight: 600; }
+.t-str  { color: var(--c-primary); }
+.t-num  { color: #EA580C; font-weight: 600; }
+.t-var  { color: var(--c-accent); }
+.t-com  { color: var(--text-4); font-style: italic; }
+.t-bool { color: #DC2626; font-weight: 600; }
+.t-punc { color: var(--text-3); }
+
+/* Blockquote */
+.bq {
+  margin: 24px 0;
+  padding: 18px 22px 18px 22px;
+  background: var(--grad-primary-soft);
+  border-left: 4px solid var(--c-primary);
+  border-radius: 0 14px 14px 0;
+  position: relative;
+}
+.bq p {
+  margin: 0;
+  font-size: 15.5px;
+  color: var(--text-1);
+  font-weight: 500;
+  line-height: 1.7;
+  font-style: italic;
+}
+.bq cite {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--c-primary-deep);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Info / Warning boxes */
+.callout {
+  display: flex;
+  gap: 14px;
+  padding: 18px 20px;
+  margin: 24px 0;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  align-items: flex-start;
+}
+.callout .ic {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.callout .ic svg { width: 20px; height: 20px; }
+.callout .ct { flex: 1; }
+.callout .ct strong {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.callout .ct p { margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--text-2); }
+.callout.info {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+.callout.info .ic { background: rgba(59, 130, 246, 0.15); color: var(--c-primary); }
+.callout.info .ct strong { color: var(--c-primary-deep); }
+.callout.warn {
+  background: rgba(245, 158, 11, 0.10);
+  border-color: rgba(245, 158, 11, 0.30);
+}
+.callout.warn .ic { background: rgba(245, 158, 11, 0.18); color: #B45309; }
+.callout.warn .ct strong { color: #92400E; }
+
+/* Lists */
+.prose ul, .prose ol {
+  margin: 16px 0 20px 4px;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.prose ul li { list-style: none; position: relative; padding-left: 22px; }
+.prose ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 7px;
+  height: 7px;
+  border-radius: 3px;
+  background: var(--grad-primary);
+}
+.prose ol { list-style: none; counter-reset: olc; }
+.prose ol li { counter-increment: olc; position: relative; padding-left: 34px; }
+.prose ol li::before {
+  content: counter(olc);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: var(--bg-chip);
+  color: var(--c-primary-deep);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
+/* Image placeholder */
+.img-ph {
+  margin: 28px 0;
+  height: 280px;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  background: var(--grad-primary-soft);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+}
+.img-ph::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(var(--c-primary-rgb), 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--c-primary-rgb), 0.06) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+.img-ph .ip-label {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--c-primary-deep);
+}
+.img-ph .ip-label svg { width: 40px; height: 40px; opacity: 0.7; }
+.img-ph .ip-label span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+}
+.img-cap {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: -16px;
+  margin-bottom: 28px;
+  font-style: italic;
+}
+
+/* Article footer tags */
+.art-foot-tags {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border-subtle);
+}
+.art-foot-tags .ft-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.art-foot-tags .ft-label::before { content: '#'; color: var(--c-primary); }
+
+/* ---- Right Action Sidebar ---- */
+.act-side {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.act-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  box-shadow: var(--shadow-glass);
+}
+.act-btn svg { width: 20px; height: 20px; }
+.act-btn:hover {
+  color: var(--c-primary);
+  border-color: var(--c-primary);
+  transform: translateY(-3px);
+}
+.act-btn .num {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--grad-primary);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--bg-card-solid);
+}
+.act-btn.on {
+  background: var(--c-primary);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: var(--shadow-primary);
+}
+.act-btn.on .num { background: #fff; color: var(--c-primary); }
+.act-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 4px 8px;
+}
+.act-btn.top-btn {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+.act-btn.top-btn.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ============================================================
+   COMMENTS
+   ============================================================ */
+.cmt-sec {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 48px;
+}
+.cmt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.cmt-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cmt-title .bar {
+  width: 5px;
+  height: 30px;
+  background: var(--grad-primary);
+  border-radius: 3px;
+  box-shadow: 0 0 16px rgba(var(--c-primary-rgb), 0.4);
+}
+.cmt-title h2 { font-size: 24px; font-weight: 700; }
+.cmt-title .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 3px;
+}
+.sort-group { display: flex; gap: 4px; padding: 4px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; }
+.sort-btn {
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.sort-btn.on {
+  background: var(--grad-primary);
+  color: #fff;
+  box-shadow: var(--shadow-primary);
+}
+
+.cmt-input {
+  padding: 18px 20px;
+  margin-bottom: 24px;
+}
+.cmt-input-row { display: flex; gap: 14px; align-items: flex-start; }
+.cmt-input textarea {
+  flex: 1;
+  min-height: 60px;
+  resize: vertical;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.cmt-input textarea::placeholder { color: var(--text-4); }
+.cmt-input-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border-subtle);
+}
+.cmt-input-hint {
+  font-size: 12px;
+  color: var(--text-4);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cmt-list { display: flex; flex-direction: column; gap: 16px; }
+.cmt {
+  padding: 20px 22px;
+}
+.cmt-main { display: flex; gap: 14px; }
+.cmt-ava {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.cmt-body { flex: 1; min-width: 0; }
+.cmt-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.cmt-name { font-size: 14px; font-weight: 700; color: var(--text-1); }
+.cmt-badge {
+  padding: 2px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: 6px;
+  background: var(--bg-chip);
+  color: var(--c-primary-deep);
+}
+.cmt-time { font-size: 12px; color: var(--text-4); font-weight: 500; }
+.cmt-text { font-size: 14.5px; line-height: 1.7; color: var(--text-2); margin-bottom: 12px; }
+.cmt-foot {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.cmt-act {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  font-family: inherit;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+.cmt-act svg { width: 15px; height: 15px; }
+.cmt-act:hover { color: var(--c-primary); background: var(--bg-chip); }
+.cmt-act.on { color: var(--c-primary); }
+
+/* Nested replies */
+.cmt-replies {
+  margin-top: 16px;
+  margin-left: 56px;
+  padding-left: 20px;
+  border-left: 2px dashed var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.reply {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.45);
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+}
+.reply .cmt-ava { width: 34px; height: 34px; border-radius: 10px; font-size: 11.5px; }
+.reply-name { font-size: 13.5px; font-weight: 700; color: var(--text-1); }
+.reply-to {
+  color: var(--c-primary);
+  font-weight: 600;
+}
+.reply-text { font-size: 13.5px; line-height: 1.65; color: var(--text-2); margin-bottom: 8px; }
+
+.load-more {
+  text-align: center;
+  margin-top: 24px;
+}
+
+/* ========== 回复功能（内联展开） ========== */
+.reply-box {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.5);
+  border: 1px dashed var(--border-strong);
+  border-radius: 14px;
+  animation: reply-in 0.28s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes reply-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reply-box-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 12.5px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.reply-box-head .replying-to {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.reply-box-head .replying-to b {
+  color: var(--c-primary);
+  font-weight: 700;
+}
+.reply-box-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-4);
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  line-height: 1;
+}
+.reply-box-close:hover { background: rgba(239,68,68,0.1); color: #EF4444; }
+.reply-box-row { display: flex; gap: 10px; align-items: flex-start; }
+.reply-box-row .cmt-ava { width: 34px; height: 34px; border-radius: 10px; font-size: 11.5px; }
+.reply-box textarea {
+  flex: 1;
+  min-height: 56px;
+  resize: vertical;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  transition: all 0.2s;
+}
+.reply-box textarea:focus {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.12);
+  background: #fff;
+}
+.reply-box-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.reply-box-foot .hint {
+  font-size: 11.5px;
+  color: var(--text-4);
+  font-family: 'JetBrains Mono', monospace;
+}
+.reply-box-foot .actions { display: flex; gap: 8px; }
+
+/* 点赞 on 状态 */
+.cmt-act.like-on { color: #EF4444; }
+
+/* 回复按钮高亮 */
+.cmt-act.replying {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+
+/* 回复展开时父评论的视觉指示 */
+.cmt.has-reply-open {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-glass-lg);
+}
+
+/* 新增回复进场动画 */
+.reply.new-reply,
+.cmt.new-reply {
+  animation: new-cmt-in 0.45s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes new-cmt-in {
+  0%   { opacity: 0; transform: translateY(12px) scale(0.98); background: rgba(var(--c-primary-rgb), 0.12); }
+  60%  { background: rgba(var(--c-primary-rgb), 0.04); }
+  100% { opacity: 1; transform: translateY(0) scale(1); background: ''; }
+}
+
+/* ============================================================
+   RELATED POSTS
+   ============================================================ */
+.rel-sec {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 24px 48px;
+}
+.rel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.post {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.post-cover {
+  height: 150px;
+  position: relative;
+  overflow: hidden;
+  background: var(--grad-primary-soft);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.post-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(255,255,255,0.7) 100%);
+  pointer-events: none;
+}
+.post-code {
+  position: absolute;
+  inset: 0;
+  padding: 18px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-2);
+  opacity: 0.75;
+  overflow: hidden;
+}
+.post-code .pc1 { color: var(--c-primary); font-weight: 600; }
+.post-code .pc2 { color: var(--c-accent); }
+.post-code .pc3 { color: var(--c-primary-deep); font-weight: 600; }
+.post-code .pc4 { color: #A855F7; }
+.post-tag {
+  position: absolute;
+  top: 14px; left: 14px;
+  z-index: 3;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 8px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.tag-tut { background: linear-gradient(135deg, #3B82F6, #06B6D4); color: #fff; }
+.tag-dis { background: linear-gradient(135deg, #8B5CF6, #EC4899); color: #fff; }
+.tag-hot { background: linear-gradient(135deg, #F59E0B, #EF4444); color: #fff; }
+.tag-new { background: linear-gradient(135deg, #10B981, #22D3EE); color: #fff; }
+.post-body {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.post-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-1);
+  transition: color 0.22s;
+  cursor: pointer;
+}
+.post:hover .post-title { color: var(--c-primary); }
+.post-desc {
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.post-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  margin-top: auto;
+  border-top: 1px dashed var(--border-subtle);
+}
+.pauthor { display: flex; align-items: center; gap: 10px; }
+.pavatar {
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.pname { font-size: 12.5px; font-weight: 600; color: var(--text-2); }
+.pstats { display: flex; gap: 14px; }
+.ps {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.ps svg { width: 14px; height: 14px; }
+.ps:hover { color: var(--c-primary); }
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.cta-sec { max-width: 1400px; margin: 0 auto; padding: 32px 24px 80px; }
+.cta {
+  padding: 64px 48px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 30%, var(--grad-primary-soft) 0%, transparent 45%),
+    radial-gradient(circle at 85% 70%, var(--grad-primary-soft) 0%, transparent 45%);
+  pointer-events: none;
+}
+.cta-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(var(--c-primary-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--c-primary-rgb), 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+.cta > * { position: relative; z-index: 1; }
+
+.cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  background: rgba(var(--c-primary-rgb), 0.1);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c-primary-deep);
+  margin-bottom: 22px;
+}
+.cta-badge svg { width: 14px; height: 14px; }
+
+.cta h2 {
+  font-size: clamp(28px, 3.8vw, 44px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.cta h2 .em {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cta p {
+  font-size: 16px;
+  color: var(--text-2);
+  max-width: 560px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+}
+.cta-form {
+  display: flex;
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto 12px;
+}
+.cta-input {
+  flex: 1;
+  padding: 14px 18px;
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.25s;
+}
+.cta-input::placeholder { color: var(--text-4); }
+.cta-input:focus {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.12);
+}
+.cta-note {
+  font-size: 12.5px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot {
+  padding: 56px 24px 28px;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 40px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(16px);
+}
+.foot-inner { max-width: 1400px; margin: 0 auto; }
+.foot-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.foot-brand p {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.75;
+  margin: 16px 0 22px;
+  max-width: 380px;
+}
+.socials { display: flex; gap: 10px; }
+.soc {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-2);
+  transition: all 0.25s;
+}
+.soc svg { width: 17px; height: 17px; }
+.soc:hover {
+  color: #fff;
+  background: var(--grad-primary);
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: var(--shadow-primary);
+}
+
+.fcol h4 {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  margin-bottom: 18px;
+}
+.fcol ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.fcol a {
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 500;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.fcol a::before {
+  content: '›';
+  color: var(--text-4);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s;
+  font-weight: 700;
+}
+.fcol a:hover {
+  color: var(--c-primary);
+  padding-left: 0;
+}
+.fcol a:hover::before { opacity: 1; transform: translateX(0); color: var(--c-primary); }
+
+.foot-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.foot-copy {
+  font-size: 13px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.heart { color: var(--c-accent); display: inline-block; animation: beat 1.4s ease-in-out infinite; }
+.foot-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.foot-meta span::before {
+  content: '● ';
+  color: var(--c-primary);
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  25%      { transform: scale(1.2); }
+  50%      { transform: scale(1); }
+  75%      { transform: scale(1.15); }
+}
+@keyframes float-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(30px, -40px) scale(1.1); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-40px, 30px) scale(1.05); }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; }
+.reveal.shown { animation: fade-in-up 0.65s cubic-bezier(.2,.8,.2,1) forwards; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1200px) {
+  .art-layout { grid-template-columns: 220px 1fr; }
+  .act-side { display: none; }
+  .rel-grid { grid-template-columns: repeat(2, 1fr); }
+  .foot-top { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 980px) {
+  .art-layout { grid-template-columns: 1fr; }
+  .toc-wrap { display: none; }
+  .art-body { padding: 32px 28px; }
+  .art-head { padding: 32px 28px 28px; }
+}
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .search-box { width: 180px; }
+  .search-kbd { display: none; }
+  .theme-switcher { display: none; }
+  .article-wrap { padding: 18px 20px 24px; }
+  .art-body { padding: 26px 22px; }
+  .art-head { padding: 28px 22px 24px; }
+  .cmt-sec, .rel-sec { padding: 18px 20px 36px; }
+  .rel-grid { grid-template-columns: 1fr; }
+  .cta { padding: 40px 24px; }
+  .cta-form { flex-direction: column; }
+  .foot { padding: 40px 20px 20px; }
+  .foot-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; }
+  .code-body { font-size: 12px; padding: 18px 18px 20px; }
+  .prose { font-size: 15px; }
+  .prose h2 { font-size: 22px; }
+  .cmt-replies { margin-left: 16px; }
+}
+@media (max-width: 520px) {
+  .nav-inner { padding: 0 12px; }
+  .btn-outline { display: none; }
+  .art-title { font-size: 24px; }
+  .art-meta { gap: 10px; }
+  .meta-dot { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner glass-strong">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div class="logo-text">Code<em>Hub</em></div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">首页</a></li>
+      <li><a href="#" class="nav-link active">文章</a></li>
+      <li><a href="#" class="nav-link">讨论</a></li>
+      <li><a href="#" class="nav-link">开源</a></li>
+      <li><a href="#" class="nav-link">活动</a></li>
+      <li><a href="#" class="nav-link">招聘</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <!-- Theme switcher -->
+      <div class="theme-switcher" title="切换主题颜色">
+        <div class="theme-dot theme-ocean  active" data-theme="ocean"></div>
+        <div class="theme-dot theme-mint" data-theme="mint"></div>
+        <div class="theme-dot theme-coral" data-theme="coral"></div>
+        <div class="theme-dot theme-lilac" data-theme="lilac"></div>
+        <div class="theme-dot theme-amber" data-theme="amber"></div>
+      </div>
+
+      <div class="search-box">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input type="text" placeholder="搜索文章、用户、话题...">
+        <span class="search-kbd">⌘K</span>
+      </div>
+      <a href="#" class="btn btn-ghost">登录</a>
+      <a href="#" class="btn btn-primary">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+        注册
+      </a>
+      <div class="avatar">你</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ ARTICLE WRAP ============ -->
+<div class="article-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="crumb reveal">
+    <a href="index.html">首页</a>
+    <span class="sep">/</span>
+    <a href="#">文章</a>
+    <span class="sep">/</span>
+    <a href="#">后端</a>
+    <span class="sep">/</span>
+    <span class="cur">Rust 异步运行时</span>
+  </nav>
+
+  <!-- Article Header -->
+  <header class="art-head card reveal" style="animation-delay:.05s">
+    <div class="art-tags">
+      <a href="#" class="atag">后端</a>
+      <a href="#" class="atag">Rust</a>
+      <a href="#" class="atag">异步编程</a>
+      <a href="#" class="atag">运行时</a>
+    </div>
+
+    <h1 class="art-title">深入 Rust 异步运行时：从 Future 到底层调度器</h1>
+
+    <div class="art-meta">
+      <div class="author">
+        <div class="ava-lg" style="background: linear-gradient(135deg, #F97316, #DC2626);">RS</div>
+        <div class="author-info">
+          <div class="author-name">rust_sage</div>
+          <div class="author-bio">系统工程师 · Tokio 贡献者</div>
+        </div>
+      </div>
+      <span class="meta-dot"></span>
+      <span class="meta-item">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        2026 年 8 月 11 日
+      </span>
+      <span class="meta-item">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        22 分钟阅读
+      </span>
+      <span class="meta-item">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+        12,847 次阅读
+      </span>
+    </div>
+
+    <div class="art-actions">
+      <button class="aa-btn" id="likeBtn">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+        <span id="likeCount">2,341</span>
+      </button>
+      <button class="aa-btn" id="saveBtn">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+        收藏
+      </button>
+      <button class="aa-btn">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.032 4.026a3 3 0 10-5.464 0M15 5H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z"></path></svg>
+        分享
+      </button>
+      <button class="aa-btn">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-1m0 0H3m18 0h-3M3 20h3M3 20a2 2 0 00-2-2m5 0a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2M7 20a2 2 0 002 2h6a2 2 0 002-2M9 20h6"></path></svg>
+        举报
+      </button>
+    </div>
+  </header>
+
+  <!-- Main 3-column Layout -->
+  <div class="art-layout">
+
+    <!-- Left: TOC -->
+    <aside class="toc-wrap reveal" style="animation-delay:.1s">
+      <div class="toc card glass">
+        <div class="toc-title">目录</div>
+        <ul class="toc-list">
+          <li><a href="#sec1" class="toc-link">1. 为什么需要异步</a></li>
+          <li><a href="#sec2" class="toc-link">2. Future trait 解析</a></li>
+          <li><a href="#sec2-1" class="toc-link sub">2.1 Poll 与 Waker</a></li>
+          <li><a href="#sec3" class="toc-link">3. async/await 状态机</a></li>
+          <li><a href="#sec4" class="toc-link">4. 运行时架构</a></li>
+          <li><a href="#sec4-1" class="toc-link sub">4.1 Executor 与 Reactor</a></li>
+          <li><a href="#sec5" class="toc-link">5. Tokio 调度器</a></li>
+          <li><a href="#sec6" class="toc-link">6. 性能与最佳实践</a></li>
+          <li><a href="#sec7" class="toc-link">7. 总结</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Middle: Article Body -->
+    <article class="art-body card reveal" style="animation-delay:.12s">
+      <div class="prose">
+
+        <p class="lead">
+          Rust 的异步模型既没有内建运行时，也不依赖操作系统线程的轻量切换。它把"等待"这件事抽象成一个可以被反复询问的状态机——<strong>Future</strong>。本文从 Future trait 出发，一路向下拆解 async/await 的状态机展开、executor 与 reactor 的协作，最终落到 Tokio 调度器的 work-stealing 算法，帮你建立对 Rust 异步的完整心智模型。
+        </p>
+
+        <h2 id="sec1"><span class="h-num">01</span>为什么需要异步</h2>
+        <p>
+          在传统的同步阻塞模型里，每一次 I/O 调用都会让当前操作系统线程陷入内核态等待，直到数据就绪才被唤醒。对于高并发场景，这意味着要么为每个连接分配一个线程（线程开销昂贵），要么自己实现事件循环。<strong>异步</strong>的核心目标只有一个：让单个线程在等待 I/O 时，能够去处理其他任务，而不是被挂起浪费 CPU。
+        </p>
+        <p>
+          不同语言给出了不同的答案。Go 用 goroutine + 运行时抢占调度，Node.js 用单线程事件循环 + 回调，Java 用虚拟线程。而 Rust 选择了一条更底层的路：语言只提供 <code class="inline">async/await</code> 语法和 <code class="inline">Future</code> 抽象，把"怎么调度"完全留给生态——这也是为什么 Tokio、async-std、smol 等运行时能够并存的原因。
+        </p>
+
+        <div class="callout info">
+          <div class="ic">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <div class="ct">
+            <strong>关键认知</strong>
+            <p>Rust 的 async 函数本身不会执行任何代码，它只是返回一个实现了 Future 的状态机。真正驱动它前进的是运行时的 <code class="inline">poll</code> 调用。没有运行时，async 代码就是一具"沉睡的躯壳"。</p>
+          </div>
+        </div>
+
+        <h2 id="sec2"><span class="h-num">02</span>Future trait 解析</h2>
+        <p>
+          一切异步的起点都是 <code class="inline">Future</code> trait。它的定义出奇地简洁，却蕴含了 Rust 异步的全部哲学：
+        </p>
+
+        <!-- 代码块：Future trait 定义 -->
+        <div class="code-card card">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <div class="code-title">
+              <span class="code-lang">rust</span>
+              future.rs
+            </div>
+          </div>
+          <div class="code-body"><span class="t-kw">pub trait</span> <span class="t-fn">Future</span> {
+    <span class="t-kw">type</span> <span class="t-var">Output</span>;
+
+    <span class="t-kw">fn</span> <span class="t-fn">poll</span>(<span class="t-kw">self</span>: <span class="t-fn">Pin</span>&lt;<span class="t-kw">&amp;mut</span> <span class="t-var">Self</span>&gt;, cx: <span class="t-kw">&amp;mut</span> <span class="t-fn">Context</span>&lt;<span class="t-var">'_</span>&gt;) -&gt; <span class="t-fn">Poll</span>&lt;<span class="t-var">Self::Output</span>&gt;;
+}
+
+<span class="t-kw">pub enum</span> <span class="t-fn">Poll</span>&lt;<span class="t-var">T</span>&gt; {
+    <span class="t-fn">Ready</span>(<span class="t-var">T</span>),
+    <span class="t-fn">Pending</span>,
+}</div>
+        </div>
+
+        <p>
+          <code class="inline">poll</code> 是整个异步体系的"心脏"。它的语义是：尝试推进这个 Future 一次。如果数据已经就绪，返回 <code class="inline">Poll::Ready(value)</code>；如果还没准备好，返回 <code class="inline">Poll::Pending</code>，并且承诺"当可以再次推进时，会通过 <code class="inline">Context</code> 里的 Waker 唤醒我"。
+        </p>
+
+        <h3 id="sec2-1">Poll 与 Waker 的契约</h3>
+        <p>
+          Waker 是 Future 和运行时之间的唯一通信渠道。一个正确的 Future 实现必须遵守这条铁律：一旦任务从 <code class="inline">Pending</code> 变为可推进状态，<strong>必须</strong>调用对应的 Waker 通知运行时重新调度它。否则这个任务会永远沉睡——这是异步代码最常见的 bug 来源。
+        </p>
+
+        <div class="bq">
+          <p>"Future 不调度自己，运行时不感知任务。Waker 是连接两者的唯一信号，错过它就是死锁。"</p>
+          <cite>— Rust Async Book</cite>
+        </div>
+
+        <!-- 代码块：手写 Future -->
+        <div class="code-card card">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <div class="code-title">
+              <span class="code-lang">rust</span>
+              timer.rs
+            </div>
+          </div>
+          <div class="code-body"><span class="t-kw">use</span> std::{future::<span class="t-fn">Future</span>, pin::<span class="t-fn">Pin</span>, task::{<span class="t-fn">Context</span>, <span class="t-fn">Poll</span>}, time::<span class="t-fn">Instant</span>};
+
+<span class="t-com">// 一个简单的延时 Future，到点后产出 ()</span>
+<span class="t-kw">pub struct</span> <span class="t-fn">Timer</span> {
+    deadline: <span class="t-fn">Instant</span>,
+}
+
+<span class="t-kw">impl</span> <span class="t-fn">Timer</span> {
+    <span class="t-kw">pub fn</span> <span class="t-fn">new</span>(duration: std::time::<span class="t-fn">Duration</span>) -&gt; <span class="t-var">Self</span> {
+        <span class="t-fn">Timer</span> { deadline: <span class="t-fn">Instant::now</span>() + duration }
+    }
+}
+
+<span class="t-kw">impl</span> <span class="t-fn">Future</span> <span class="t-kw">for</span> <span class="t-fn">Timer</span> {
+    <span class="t-kw">type</span> <span class="t-var">Output</span> = ();
+
+    <span class="t-kw">fn</span> <span class="t-fn">poll</span>(<span class="t-kw">self</span>: <span class="t-fn">Pin</span>&lt;<span class="t-kw">&amp;mut</span> <span class="t-var">Self</span>&gt;, cx: <span class="t-kw">&amp;mut</span> <span class="t-fn">Context</span>&lt;<span class="t-var">'_</span>&gt;) -&gt; <span class="t-fn">Poll</span>&lt;<span class="t-var">Self::Output</span>&gt; {
+        <span class="t-kw">if</span> <span class="t-fn">Instant::now</span>() &gt;= <span class="t-kw">self</span>.deadline {
+            <span class="t-fn">Poll::Ready</span>(())
+        } <span class="t-kw">else</span> {
+            <span class="t-com">// 还没到点，注册唤醒器并等待</span>
+            cx.<span class="t-fn">waker</span>().<span class="t-fn">wake_by_ref</span>();
+            <span class="t-fn">Poll::Pending</span>
+        }
+    }
+}</div>
+        </div>
+
+        <p>
+          上面这个例子刻意简化了——真实场景里，唤醒逻辑应该由一个后台线程或定时器轮在 deadline 到来时调用 <code class="inline">waker.wake()</code>，而不是像这里那样自旋。但它展示了 poll 的核心模式：检查状态，就绪则返回 Ready，否则注册唤醒并返回 Pending。
+        </p>
+
+        <h2 id="sec3"><span class="h-num">03</span>async/await：语法糖与状态机</h2>
+        <p>
+          手写 Future 枯燥且容易出错。于是 Rust 提供了 <code class="inline">async</code>/<code class="inline">.await</code> 语法糖。编译器会把一个 async 函数转换成一个实现了 Future 的<strong>状态机</strong>，每个 <code class="inline">.await</code> 点都是一个可能挂起的状态。
+        </p>
+
+        <!-- 代码块：async 状态机 -->
+        <div class="code-card card">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <div class="code-title">
+              <span class="code-lang">rust</span>
+              fetch.rs
+            </div>
+          </div>
+          <div class="code-body"><span class="t-com">// 源代码：看起来像同步，实则是异步状态机</span>
+<span class="t-kw">async fn</span> <span class="t-fn">fetch_user</span>(id: <span class="t-var">u64</span>) -&gt; <span class="t-fn">User</span> {
+    <span class="t-kw">let</span> token = <span class="t-fn">get_token</span>().<span class="t-kw">await</span>;     <span class="t-com">// 挂起点 #1</span>
+    <span class="t-kw">let</span> resp  = <span class="t-fn">http_get</span>(<span class="t-str">"/users/"</span>, id, token).<span class="t-kw">await</span>;  <span class="t-com">// 挂起点 #2</span>
+    <span class="t-fn">parse_user</span>(resp.<span class="t-fn">body</span>()).<span class="t-kw">await</span>     <span class="t-com">// 挂起点 #3</span>
+}
+
+<span class="t-com">// 编译器生成的状态机（伪代码）大致长这样：</span>
+<span class="t-kw">enum</span> <span class="t-fn">FetchUser</span> {
+    <span class="t-fn">Start</span> { id: <span class="t-var">u64</span> },
+    <span class="t-fn">GotToken</span> { id: <span class="t-var">u64</span>, token: <span class="t-fn">Token</span> },
+    <span class="t-fn">GotResp</span> { resp: <span class="t-fn">Response</span> },
+    <span class="t-fn">Done</span>,
+}</div>
+        </div>
+
+        <p>
+          每次调用 <code class="inline">poll</code>，状态机根据当前状态执行到下一个 <code class="inline">.await</code>。如果子 Future 返回 Pending，整个状态机也返回 Pending，并把当前状态（包括所有局部变量）保存在自己内部——这就是<strong>无栈协程</strong>的本质：协程的状态不放在调用栈上，而是放在堆分配的 Future 对象里。
+        </p>
+
+        <div class="callout warn">
+          <div class="ic">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          </div>
+          <div class="ct">
+            <strong>注意：Pin 的存在意义</strong>
+            <p>状态机可能包含自引用（比如一个引用指向自己内部另一个字段）。一旦被移动，这些引用就失效了。这就是 <code class="inline">Pin&lt;&amp;mut Self&gt;</code> 存在的原因——它向 poll 保证"我不会被移动"，从而让自引用安全。</p>
+          </div>
+        </div>
+
+        <div class="img-ph">
+          <div class="ip-label">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span>状态机执行流程示意图</span>
+          </div>
+        </div>
+        <p class="img-cap">图 1：async 函数被编译为状态机，每个 .await 对应一个状态转换</p>
+
+        <h2 id="sec4"><span class="h-num">04</span>运行时架构</h2>
+        <p>
+          Future 本身不会自动运行。需要一个"驱动者"不断调用 poll，并在任务可推进时唤醒它。这就是运行时（runtime）的职责。一个完整的异步运行时通常由两部分构成：
+        </p>
+
+        <ul>
+          <li><strong>Executor（执行器）</strong>：持有一组工作线程，不断从任务队列取出就绪任务并调用 poll。它只关心"谁可以跑"。</li>
+          <li><strong>Reactor（反应器）</strong>：监听底层 I/O 事件（如 epoll/kqueue/IOCP），当某个 socket 可读可写时，找到对应的 Waker 并唤醒它，让 Executor 重新调度关联任务。</li>
+        </ul>
+
+        <h3 id="sec4-1">Executor 与 Reactor 的协作</h3>
+        <p>
+          二者的分工可以用一句话概括：<strong>Reactor 负责发现"可以跑了"，Executor 负责真正"去跑"</strong>。当一个 Future 在 poll 中发现自己依赖的 socket 还没数据，它会向 Reactor 注册"我对这个 fd 感兴趣"，然后返回 Pending。Reactor 在底层事件循环里收到 epoll 通知后，触发对应 Waker，Executor 的任务队列随即多出一个就绪任务，下一轮循环就会重新 poll 它。
+        </p>
+
+        <div class="img-ph">
+          <div class="ip-label">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            <span>Executor / Reactor 协作架构图</span>
+          </div>
+        </div>
+        <p class="img-cap">图 2：I/O 事件经 Reactor 唤醒 Waker，再由 Executor 重新 poll 任务</p>
+
+        <h2 id="sec5"><span class="h-num">05</span>Tokio 调度器：work-stealing 算法</h2>
+        <p>
+          Tokio 是 Rust 生态最主流的运行时，它的多线程调度器采用 <strong>work-stealing（工作窃取）</strong>算法，灵感来自 Java 的 ForkJoinPool 和 Go 的 GMP 模型。每个工作线程拥有一个本地双端队列（deque），新任务优先入队到当前线程；当某个线程的队列空了，它会从其他线程队列的"尾部"偷任务来执行。
+        </p>
+
+        <!-- 代码块：work-stealing 伪代码 -->
+        <div class="code-card card">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <div class="code-title">
+              <span class="code-lang">rust</span>
+              scheduler.rs
+            </div>
+          </div>
+          <div class="code-body"><span class="t-com">// work-stealing 调度循环的简化模型</span>
+<span class="t-kw">fn</span> <span class="t-fn">worker_loop</span>(<span class="t-kw">self</span>: <span class="t-fn">Arc</span>&lt;<span class="t-fn">Scheduler</span>&gt;, worker_id: <span class="t-var">usize</span>) {
+    <span class="t-kw">loop</span> {
+        <span class="t-com">// 1. 优先从本地队列取任务（LIFO，缓存友好）</span>
+        <span class="t-kw">let</span> task = <span class="t-kw">self</span>.workers[worker_id]
+            .local_queue.<span class="t-fn">pop</span>()
+            <span class="t-com">// 2. 本地空了，去全局队列抢一批（公平性）</span>
+            .<span class="t-fn">or_else</span>(|| <span class="t-kw">self</span>.global_queue.<span class="t-fn">pop</span>())
+            <span class="t-com">// 3. 都没有，去偷别人的（窃取）</span>
+            .<span class="t-fn">or_else</span>(|| <span class="t-kw">self</span>.<span class="t-fn">steal_from_peers</span>(worker_id));
+
+        <span class="t-kw">match</span> task {
+            <span class="t-fn">Some</span>(t) =&gt; {
+                <span class="t-com">// 4. 真正驱动任务前进</span>
+                <span class="t-kw">let</span> poll = t.<span class="t-fn">poll</span>();
+                <span class="t-kw">if</span> <span class="t-fn">matches</span>!(poll, <span class="t-fn">Poll::Pending</span>) {
+                    <span class="t-com">// 5. 未完成，Waker 已注册，等待 Reactor 唤醒</span>
+                }
+            }
+            <span class="t-fn">None</span> =&gt; <span class="t-fn">thread::park</span>(),  <span class="t-com">// 实在没事干，休眠</span>
+        }
+    }
+}</div>
+        </div>
+
+        <p>
+          这种设计有几个精妙之处：本地队列用 LIFO（后进先出）出队，让新任务能利用上一轮还在 CPU 缓存里的数据；窃取从别人队列的 FIFO 端偷，偷的是最老的任务，这些任务往往已经"凉"了缓存，被偷走也不影响原线程的局部性。这种"本地 LIFO + 窃取 FIFO"的组合，在缓存命中率和负载均衡之间取得了绝妙平衡。
+        </p>
+
+        <ol>
+          <li>新任务入当前线程本地队列，避免全局锁竞争</li>
+          <li>本地为空时去全局队列搬一批，保证公平性</li>
+          <li>全局也空时窃取他人最老任务，最大化缓存复用</li>
+          <li>全部为空时 park 线程，由 Reactor 唤醒重新进入循环</li>
+        </ol>
+
+        <div class="bq">
+          <p>"Tokio 的 work-stealing 不是凭空选的，它是对缓存友好性与负载均衡做了精确权衡后的工程最优解。"</p>
+          <cite>— Carl Lerche, Tokio 核心维护者</cite>
+        </div>
+
+        <h2 id="sec6"><span class="h-num">06</span>性能考量与最佳实践</h2>
+        <p>
+          理解了原理，实践中要注意几个性能陷阱。这些细节往往决定了你的异步服务是"快"还是"看起来快但实际在烧 CPU"。
+        </p>
+
+        <h3>避免在 async 块中做 CPU 密集计算</h3>
+        <p>
+          async 任务跑在 Executor 的工作线程上。如果你在一个任务里做长时间 CPU 计算（比如加密、压缩、大循环），会霸占整个工作线程，导致同线程的其他任务无法被调度，造成尾部延迟飙升。正确做法是用 <code class="inline">tokio::task::spawn_blocking</code> 把重计算丢到独立的阻塞线程池。
+        </p>
+
+        <!-- 代码块：spawn_blocking -->
+        <div class="code-card card">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+            <div class="code-title">
+              <span class="code-lang">rust</span>
+              blocking.rs
+            </div>
+          </div>
+          <div class="code-body"><span class="t-com">// 错误：阻塞整个 worker 线程</span>
+<span class="t-kw">async fn</span> <span class="t-fn">bad_handler</span>(data: <span class="t-fn">Vec</span>&lt;<span class="t-var">u8</span>&gt;) -&gt; <span class="t-fn">Hash</span> {
+    <span class="t-fn">sha256</span>(&amp;data)  <span class="t-com">// 同步 CPU 计算，会卡住调度器</span>
+}
+
+<span class="t-com">// 正确：丢到阻塞线程池，不占用 async worker</span>
+<span class="t-kw">async fn</span> <span class="t-fn">good_handler</span>(data: <span class="t-fn">Vec</span>&lt;<span class="t-var">u8</span>&gt;) -&gt; <span class="t-fn">Hash</span> {
+    tokio::task::<span class="t-fn">spawn_blocking</span>(<span class="t-kw">move</span> || {
+        <span class="t-fn">sha256</span>(&amp;data)
+    }).<span class="t-kw">await</span>.<span class="t-fn">unwrap</span>()
+}</div>
+        </div>
+
+        <h3>合理使用并发与并发上限</h3>
+        <p>
+          <code class="inline">tokio::spawn</code> 创建的任务没有上限。如果你在一个循环里 spawn 十万个并发请求，会瞬间打爆下游服务、耗尽文件描述符。用 <code class="inline">Semaphore</code> 或 <code class="inline">buffer_unordered</code> 给并发戴上"限流阀"。
+        </p>
+
+        <h2 id="sec7"><span class="h-num">07</span>总结</h2>
+        <p>
+          Rust 的异步设计是把控制权交给开发者：语言提供 Future 和 async/await 这套"语法工具箱"，把调度策略留给运行时生态去竞争。这种分层让 Rust 既能写出高吞吐的网络服务，也能跑在嵌入式无 std 环境里。理解 Future 的 poll/Waker 契约、async 的状态机展开、以及运行时的 work-stealing 调度，是写出高效且正确异步代码的根基。
+        </p>
+        <p>
+          记住一个心智模型：<strong>async 函数是状态机，Future 是它的实例，Waker 是它和调度器的电话，Executor 是接电话并派活的人，Reactor 是在门口看信箱的人</strong>。五者协同，构成了 Rust 异步的全部图景。
+        </p>
+
+        <!-- 文末标签 -->
+        <div class="art-foot-tags">
+          <div class="ft-label">文章标签</div>
+          <div class="art-tags">
+            <a href="#" class="atag">Rust</a>
+            <a href="#" class="atag">Tokio</a>
+            <a href="#" class="atag">异步编程</a>
+            <a href="#" class="atag">运行时</a>
+            <a href="#" class="atag">调度器</a>
+            <a href="#" class="atag">Future</a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- Right: Action Sidebar -->
+    <aside class="act-side reveal" style="animation-delay:.14s">
+      <button class="act-btn" id="sideLike" title="点赞">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+        <span class="num">2.3k</span>
+      </button>
+      <button class="act-btn" id="sideSave" title="收藏">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+      </button>
+      <button class="act-btn" title="分享">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.032 4.026a3 3 0 10-5.464 0M15 5H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z"></path></svg>
+      </button>
+      <button class="act-btn" title="评论" onclick="document.getElementById('cmtInput').scrollIntoView({behavior:'smooth'})">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+      </button>
+      <div class="act-divider"></div>
+      <button class="act-btn top-btn" id="topBtn" title="回到顶部">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+      </button>
+    </aside>
+
+  </div>
+</div>
+
+<!-- ============ COMMENTS ============ -->
+<section class="cmt-sec">
+  <div class="cmt-head reveal">
+    <div class="cmt-title">
+      <div class="bar"></div>
+      <div>
+        <h2>评论 <span style="color:var(--c-primary);font-family:'JetBrains Mono',monospace;font-size:18px;">128</span></h2>
+        <div class="count">参与讨论，分享你的见解</div>
+      </div>
+    </div>
+    <div class="sort-group">
+      <button class="sort-btn on" data-sort="new">最新</button>
+      <button class="sort-btn" data-sort="hot">最热</button>
+    </div>
+  </div>
+
+  <!-- Comment input -->
+  <div class="cmt-input card glass reveal" style="animation-delay:.05s" id="cmtInput">
+    <div class="cmt-input-row">
+      <div class="cmt-ava" style="background: var(--grad-primary);">你</div>
+      <textarea id="mainCommentTa" placeholder="写下你的评论…支持 Markdown 语法"></textarea>
+    </div>
+    <div class="cmt-input-foot">
+      <span class="cmt-input-hint">Ctrl + Enter 发送</span>
+      <button id="mainCommentBtn" class="btn btn-primary" style="padding:9px 20px;font-size:13.5px;">发表评论</button>
+    </div>
+  </div>
+
+  <!-- Comment list -->
+  <div class="cmt-list">
+
+    <!-- Comment 1 -->
+    <div class="cmt card reveal" style="animation-delay:.06s" data-cid="c1" data-author="ai_pioneer" data-badge="Lv.8" data-ava="linear-gradient(135deg, #8B5CF6, #EC4899)" data-ava-initial="AI">
+      <div class="cmt-main">
+        <div class="cmt-ava" style="background: linear-gradient(135deg, #8B5CF6, #EC4899);">AI</div>
+        <div class="cmt-body">
+          <div class="cmt-meta">
+            <span class="cmt-name">ai_pioneer</span>
+            <span class="cmt-badge">Lv.8</span>
+            <span class="cmt-time">2 小时前</span>
+          </div>
+          <p class="cmt-text">关于 Waker 那段讲得太透彻了。之前我一直以为 async 就是"自动多线程"，看完才明白它本质是个协作式的状态机。Poll/Pending 的契约确实是最容易踩坑的地方，曾经因为忘记注册 waker 调试了一整晚……</p>
+          <div class="cmt-foot">
+            <button class="cmt-act" data-act="like">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              <span class="like-num">86</span>
+            </button>
+            <button class="cmt-act" data-act="reply">回复</button>
+            <button class="cmt-act" data-act="report">举报</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nested replies -->
+      <div class="cmt-replies">
+        <div class="reply" data-rid="c1-r1" data-author="rust_sage" data-badge="作者" data-ava="linear-gradient(135deg, #F97316, #DC2626)" data-ava-initial="RS">
+          <div class="cmt-ava" style="background: linear-gradient(135deg, #F97316, #DC2626);">RS</div>
+          <div class="cmt-body">
+            <div class="cmt-meta">
+              <span class="reply-name">rust_sage</span>
+              <span class="cmt-badge">作者</span>
+              <span class="cmt-time">1 小时前</span>
+            </div>
+            <p class="reply-text"><span class="reply-to">@ai_pioneer</span> 这个坑太经典了。一个小技巧：如果你用的是 tokio，大部分情况下不需要手动管 waker，<code class="inline">tokio::select!</code> 和 <code class="inline">tokio::time::sleep</code> 都帮你处理好了。只有手写底层 Future 才需要直面它。</p>
+            <div class="cmt-foot">
+              <button class="cmt-act" data-act="like">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                <span class="like-num">34</span>
+              </button>
+              <button class="cmt-act" data-act="reply">回复</button>
+            </div>
+          </div>
+        </div>
+        <div class="reply" data-rid="c1-r2" data-author="gopher_dev" data-ava="linear-gradient(135deg, #0EA5E9, #0284C7)" data-ava-initial="GO">
+          <div class="cmt-ava" style="background: linear-gradient(135deg, #0EA5E9, #0284C7);">GO</div>
+          <div class="cmt-body">
+            <div class="cmt-meta">
+              <span class="reply-name">gopher_dev</span>
+              <span class="cmt-time">52 分钟前</span>
+            </div>
+            <p class="reply-text">从 Go 转过来表示共鸣很深。Go 的 runtime 帮你做了太多事，到 Rust 才发现这些"魔法"背后全是 waker 和 reactor。不过理解了之后反而觉得 Rust 的模型更纯粹。</p>
+            <div class="cmt-foot">
+              <button class="cmt-act" data-act="like">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                <span class="like-num">12</span>
+              </button>
+              <button class="cmt-act" data-act="reply">回复</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comment 2 -->
+    <div class="cmt card reveal" style="animation-delay:.08s" data-cid="c2" data-author="infra_guru" data-badge="Lv.9" data-ava="linear-gradient(135deg, #10B981, #22D3EE)" data-ava-initial="IF">
+      <div class="cmt-main">
+        <div class="cmt-ava" style="background: linear-gradient(135deg, #10B981, #22D3EE);">IF</div>
+        <div class="cmt-body">
+          <div class="cmt-meta">
+            <span class="cmt-name">infra_guru</span>
+            <span class="cmt-badge">Lv.9</span>
+            <span class="cmt-time">3 小时前</span>
+          </div>
+          <p class="cmt-text">work-stealing 那段讲得很好，但我觉得可以补充一点：Tokio 的调度器其实有两种模式，current-thread（单线程）和 multi-thread。生产环境基本都用 multi-thread，但单线程模式在嵌入式或对延迟敏感的场景下很有用，因为它避免了任务在核间迁移带来的缓存失效。</p>
+          <div class="cmt-foot">
+            <button class="cmt-act" data-act="like">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              <span class="like-num">57</span>
+            </button>
+            <button class="cmt-act" data-act="reply">回复</button>
+            <button class="cmt-act" data-act="report">举报</button>
+          </div>
+        </div>
+      </div>
+      <div class="cmt-replies">
+        <div class="reply" data-rid="c2-r1" data-author="rust_sage" data-badge="作者" data-ava="linear-gradient(135deg, #F97316, #DC2626)" data-ava-initial="RS">
+          <div class="cmt-ava" style="background: linear-gradient(135deg, #F97316, #DC2626);">RS</div>
+          <div class="cmt-body">
+            <div class="cmt-meta">
+              <span class="reply-name">rust_sage</span>
+              <span class="cmt-badge">作者</span>
+              <span class="cmt-time">2 小时前</span>
+            </div>
+            <p class="reply-text"><span class="reply-to">@infra_guru</span> 补充得很到位！单线程运行时确实在确定性延迟场景下更可控，因为不存在任务跨核迁移。下一篇文章会专门对比几种运行时的选型策略，敬请关注。</p>
+            <div class="cmt-foot">
+              <button class="cmt-act" data-act="like">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                <span class="like-num">21</span>
+              </button>
+              <button class="cmt-act" data-act="reply">回复</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comment 3 -->
+    <div class="cmt card reveal" style="animation-delay:.1s" data-cid="c3" data-author="sys_caller" data-ava="linear-gradient(135deg, #6366F1, #8B5CF6)" data-ava-initial="SY">
+      <div class="cmt-main">
+        <div class="cmt-ava" style="background: linear-gradient(135deg, #6366F1, #8B5CF6);">SY</div>
+        <div class="cmt-body">
+          <div class="cmt-meta">
+            <span class="cmt-name">sys_caller</span>
+            <span class="cmt-time">5 小时前</span>
+          </div>
+          <p class="cmt-text">想请教一个问题：如果我在 async 函数里不小心调用了 std::thread::sleep，会发生什么？是会阻塞整个 worker 线程吗？这种 bug 应该怎么排查？</p>
+          <div class="cmt-foot">
+            <button class="cmt-act" data-act="like">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              <span class="like-num">29</span>
+            </button>
+            <button class="cmt-act" data-act="reply">回复</button>
+            <button class="cmt-act" data-act="report">举报</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comment 4 -->
+    <div class="cmt card reveal" style="animation-delay:.12s" data-cid="c4" data-author="new_bee" data-ava="linear-gradient(135deg, #EC4899, #F43F5E)" data-ava-initial="NB">
+      <div class="cmt-main">
+        <div class="cmt-ava" style="background: linear-gradient(135deg, #EC4899, #F43F5E);">NB</div>
+        <div class="cmt-body">
+          <div class="cmt-meta">
+            <span class="cmt-name">new_bee</span>
+            <span class="cmt-time">6 小时前</span>
+          </div>
+          <p class="cmt-text">作为一个刚入门 Rust 的人，这篇文章帮我把零散的概念串起来了。最后那个"电话接活"的比喻真的很形象，一下子就懂了 Executor 和 Reactor 的分工。收藏了，准备反复读几遍。</p>
+          <div class="cmt-foot">
+            <button class="cmt-act" data-act="like">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              <span class="like-num">18</span>
+            </button>
+            <button class="cmt-act" data-act="reply">回复</button>
+            <button class="cmt-act" data-act="report">举报</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="load-more reveal">
+    <button class="btn btn-outline" style="padding:11px 28px;">加载更多评论</button>
+  </div>
+</section>
+
+<!-- ============ RELATED POSTS ============ -->
+<section class="rel-sec">
+  <div class="cmt-head reveal">
+    <div class="cmt-title">
+      <div class="bar"></div>
+      <div>
+        <h2 style="font-size:24px;">相关文章</h2>
+        <div class="count">继续深入 Rust 生态</div>
+      </div>
+    </div>
+    <a href="#" class="btn btn-outline">查看全部 →</a>
+  </div>
+
+  <div class="rel-grid">
+    <!-- Related 1 -->
+    <div class="post card reveal" style="animation-delay:.05s">
+      <div class="post-cover">
+        <span class="post-tag tag-tut">教程</span>
+        <div class="post-code"><span class="pc1">tokio::select!</span> {
+    <span class="pc2">_</span> = timeout =&gt; <span class="pc1">println!</span>(<span class="pc3">"done"</span>),
+    <span class="pc2">_</span> = cancel  =&gt; <span class="pc1">return</span>,
+}</div>
+      </div>
+      <div class="post-body">
+        <h3 class="post-title">Tokio select! 宏到底做了什么：从并发选择到取消机制</h3>
+        <p class="post-desc">深入剖析 select! 宏展开后的代码结构，理解它如何同时 poll 多个 Future，以及取消时如何保证资源安全释放。</p>
+        <div class="post-foot">
+          <div class="pauthor">
+            <div class="pavatar" style="background: linear-gradient(135deg, #F97316, #DC2626);">RS</div>
+            <span class="pname">rust_sage</span>
+          </div>
+          <div class="pstats">
+            <span class="ps"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>1.2k</span>
+            <span class="ps"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>87</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related 2 -->
+    <div class="post card reveal" style="animation-delay:.08s">
+      <div class="post-cover">
+        <span class="post-tag tag-dis">深度</span>
+        <div class="post-code"><span class="pc1">trait</span> <span class="pc3">AsyncRead</span> {
+  <span class="pc1">async fn</span> <span class="pc2">read</span>(&amp;<span class="pc1">mut</span> <span class="pc2">self</span>, buf: &amp;<span class="pc1">mut</span> [<span class="pc4">u8</span>]);
+}</div>
+      </div>
+      <div class="post-body">
+        <h3 class="post-title">async trait 终于稳定了：Rust 1.75 带来了什么</h3>
+        <p class="post-desc">原生 async fn in trait 经过多年打磨终于落地。本文对比它和 async-trait 宏的差异，分析性能与限制。</p>
+        <div class="post-foot">
+          <div class="pauthor">
+            <div class="pavatar" style="background: linear-gradient(135deg, #8B5CF6, #EC4899);">AI</div>
+            <span class="pname">ai_pioneer</span>
+          </div>
+          <div class="pstats">
+            <span class="ps"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>986</span>
+            <span class="ps"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>64</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related 3 -->
+    <div class="post card reveal" style="animation-delay:.11s">
+      <div class="post-cover">
+        <span class="post-tag tag-hot">热门</span>
+        <div class="post-code"><span class="pc1">#[tokio::main]</span>
+<span class="pc1">async fn</span> <span class="pc3">main</span>() {
+    <span class="pc1">let</span> pool = <span class="pc2">SqlitePool</span>::connect(<span class="pc4">"db"</span>)
+        .<span class="pc1">await</span>?;
+}</div>
+      </div>
+      <div class="post-body">
+        <h3 class="post-title">用 Rust + Axum + SQLx 搭一个百万 QPS 的 API 服务</h3>
+        <p class="post-desc">从零搭建高性能 Web 服务的实战记录，涵盖连接池调优、 Tower 中间件、零拷贝序列化等进阶技巧。</p>
+        <div class="post-foot">
+          <div class="pauthor">
+            <div class="pavatar" style="background: linear-gradient(135deg, #10B981, #22D3EE);">IF</div>
+            <span class="pname">infra_guru</span>
+          </div>
+          <div class="pstats">
+            <span class="ps"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>2.4k</span>
+            <span class="ps"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>203</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-sec">
+  <div class="cta card reveal">
+    <div class="cta-grid"></div>
+    <div class="cta-badge">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+      加入 128,476+ 名开发者
+    </div>
+    <h2>
+      喜欢这类深度技术文章？<br>
+      <span class="em">加入 CodeHub 一起精进</span>
+    </h2>
+    <p>
+      注册即享无限文章阅读、讨论参与、文章发布、开源项目协作、专属技术活动邀请。
+      <br>用一个邮箱，连接整个开发者世界。
+    </p>
+    <form class="cta-form" onsubmit="event.preventDefault();">
+      <input type="email" class="cta-input" placeholder="输入你的邮箱地址…" required="">
+      <button type="submit" class="btn btn-primary" style="padding: 14px 24px; font-size: 15px;">立即加入 →</button>
+    </form>
+    <p class="cta-note">无需信用卡 · 完全免费 · 随时可取消订阅</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">C</div>
+          <div class="logo-text">Code<em>Hub</em></div>
+        </a>
+        <p>
+          为创作者而生的现代技术社区。分享、讨论、协作、成长 — 在 CodeHub，与全球 128,000+ 开发者一起构建更好的技术未来。
+        </p>
+        <div class="socials">
+          <a href="#" class="soc" title="GitHub">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.11.793-.26.793-.577v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0112 5.8c1.02.01 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.7.8.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"></path></svg>
+          </a>
+          <a href="#" class="soc" title="Twitter">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          </a>
+          <a href="#" class="soc" title="Discord">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.3 4.37A19.8 19.8 0 0015.43 2.86a.07.07 0 00-.08.04 13 13 0 00-.6 1.24 18.3 18.3 0 00-5.49 0 12.6 12.6 0 00-.62-1.25.08.08 0 00-.08-.04A19.7 19.7 0 003.68 4.37a.07.07 0 00-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 00.03.06 19.9 19.9 0 005.99 3.03.08.08 0 00.08-.03 14 14 0 001.23-2 14 14 0 01-1.87-.89.08.08 0 01-.01-.13c.12-.1.25-.2.37-.3a.07.07 0 01.08-.01 13.1 13.1 0 0012.06 0 .07.07 0 01.08.01c.12.1.25.19.37.29a.08.08 0 01-.01.128 12.3 12.3 0 01-1.87.89.08.08 0 00-.04.1c.36.7.77 1.37 1.22 2 .01.02.04.04.08.03a19.8 19.8 0 006-3.03.08.08 0 00.03-.05c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 00-.03-.03zM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.2 0 2.17 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.09-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.2 0 2.17 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42z"></path></svg>
+          </a>
+          <a href="#" class="soc" title="RSS">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.18 15.64a2.18 2.18 0 012.18 2.18M4 10.1a8.1 8.1 0 018.1 8.1M4 4.58a13.42 13.42 0 0113.42 13.42"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="fcol">
+        <h4>社区</h4>
+        <ul>
+          <li><a href="#">最新文章</a></li>
+          <li><a href="#">热门讨论</a></li>
+          <li><a href="#">开源项目</a></li>
+          <li><a href="#">技术活动</a></li>
+          <li><a href="#">招聘专区</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>内容</h4>
+        <ul>
+          <li><a href="#">专栏文章</a></li>
+          <li><a href="#">视频教程</a></li>
+          <li><a href="#">电子书</a></li>
+          <li><a href="#">每周精选</a></li>
+          <li><a href="#">技术周刊</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>开源</h4>
+        <ul>
+          <li><a href="#">推荐项目</a></li>
+          <li><a href="#">Good First Issue</a></li>
+          <li><a href="#">组织主页</a></li>
+          <li><a href="#">赞助商</a></li>
+          <li><a href="#">开源协议</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>关于</h4>
+        <ul>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">社区守则</a></li>
+          <li><a href="#">隐私政策</a></li>
+          <li><a href="#">服务条款</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div class="foot-copy">© 2026 CodeHub Community · 用 <span class="heart">♥</span> 为开发者构建</div>
+      <div class="foot-meta">
+        <span>v2.6.0</span>
+        <span>Build #20260418</span>
+        <span>Status: <b style="color:#10B981;">● 全部系统正常</b></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /#app -->
+
+<script>
+/* =========================================================
+   主题切换器 + localStorage 记忆
+   ========================================================= */
+(function initTheme() {
+  const saved = localStorage.getItem('codehub-theme') || 'ocean';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.querySelectorAll('.theme-dot').forEach(dot => {
+    dot.classList.toggle('active', dot.dataset.theme === saved);
+  });
+})();
+
+document.querySelectorAll('.theme-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    const theme = dot.dataset.theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('codehub-theme', theme);
+    document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+  });
+});
+
+/* =========================================================
+   滚动渐入动画 (IntersectionObserver + .reveal/.shown)
+   ========================================================= */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('shown');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => io.observe(el));
+
+/* =========================================================
+   快捷键：⌘K / Ctrl+K 聚焦搜索框
+   ========================================================= */
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    const input = document.querySelector('.search-box input');
+    if (input) input.focus();
+  }
+});
+
+/* =========================================================
+   导航链接 active 状态切换
+   ========================================================= */
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    navLinks.forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+  });
+});
+
+/* =========================================================
+   TOC 目录滚动跟随高亮 (IntersectionObserver)
+   ========================================================= */
+const tocLinks = document.querySelectorAll('.toc-link');
+const headings = document.querySelectorAll('.prose h2[id], .prose h3[id]');
+
+// 监听每个标题，进入视口时高亮对应 TOC 项
+const tocObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute('id');
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-90px 0px -70% 0px', threshold: 0 });
+headings.forEach(h => tocObserver.observe(h));
+
+// TOC 链接平滑滚动（补偿 sticky 导航高度）
+tocLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      const top = target.getBoundingClientRect().top + window.pageYOffset - 96;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+/* =========================================================
+   点赞 / 收藏 按钮联动（顶部 + 右侧操作栏）
+   ========================================================= */
+const likeBtn = document.getElementById('likeBtn');
+const sideLike = document.getElementById('sideLike');
+const likeCount = document.getElementById('likeCount');
+let likeNum = 2341;
+let liked = false;
+
+function toggleLike() {
+  liked = !liked;
+  likeBtn.classList.toggle('liked', liked);
+  sideLike.classList.toggle('on', liked);
+  likeNum += liked ? 1 : -1;
+  likeCount.textContent = likeNum.toLocaleString();
+}
+likeBtn.addEventListener('click', toggleLike);
+sideLike.addEventListener('click', toggleLike);
+
+const saveBtn = document.getElementById('saveBtn');
+const sideSave = document.getElementById('sideSave');
+let saved = false;
+function toggleSave() {
+  saved = !saved;
+  saveBtn.classList.toggle('saved', saved);
+  saveBtn.lastChild.textContent = saved ? ' 已收藏' : ' 收藏';
+  sideSave.classList.toggle('on', saved);
+}
+saveBtn.addEventListener('click', toggleSave);
+sideSave.addEventListener('click', toggleSave);
+
+/* =========================================================
+   评论排序切换
+   ========================================================= */
+document.querySelectorAll('.sort-group').forEach(group => {
+  group.addEventListener('click', e => {
+    if (!e.target.classList.contains('sort-btn')) return;
+    group.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('on'));
+    e.target.classList.add('on');
+  });
+});
+
+/* =========================================================
+   回到顶部按钮显隐
+   ========================================================= */
+const topBtn = document.getElementById('topBtn');
+window.addEventListener('scroll', () => {
+  topBtn.classList.toggle('show', window.pageYOffset > 600);
+});
+topBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* =========================================================
+   CTA 表单 - 小反馈动画
+   ========================================================= */
+const ctaForm = document.querySelector('.cta-form');
+if (ctaForm) {
+  ctaForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = ctaForm.querySelector('button');
+    const orig = btn.textContent;
+    btn.textContent = '✓ 已发送邀请链接!';
+    btn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+      ctaForm.reset();
+    }, 2400);
+  });
+}
+
+/* =========================================================
+   评论系统：点赞 + 回复 + 顶部发布
+   ========================================================= */
+(function initCommentSystem() {
+  const cmtList = document.querySelector('.cmt-list');
+  if (!cmtList) return;
+
+  // —— 当前用户信息（模拟）——
+  const ME = {
+    name: '你',
+    initial: '你',
+    avaBg: 'var(--grad-primary)'
+  };
+
+  // —— 生成唯一 id ——
+  let newIdSeq = 1000;
+  function nid(prefix) { return prefix + '-' + (++newIdSeq); }
+
+  // —— 时间显示（刚刚）——
+  function justNow() { return '刚刚'; }
+
+  // —— 转义 HTML（防 XSS）——
+  function escapeHTML(s) {
+    return s.replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    })[c]);
+  }
+
+  // —— 处理文本中的简单 Markdown：inline code / bold ——
+  function renderInline(text) {
+    let h = escapeHTML(text);
+    h = h.replace(/`([^`]+)`/g, '<code class="inline">$1</code>');
+    h = h.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+    return h;
+  }
+
+  /* ====== 1) 点赞（评论 + 回复通用） ====== */
+  cmtList.addEventListener('click', function(e) {
+    const btn = e.target.closest('button[data-act="like"]');
+    if (!btn) return;
+    const span = btn.querySelector('.like-num');
+    if (!span) return;
+    let n = parseInt(span.textContent, 10) || 0;
+    if (btn.classList.toggle('like-on')) {
+      n += 1;
+    } else {
+      n = Math.max(0, n - 1);
+    }
+    span.textContent = n.toLocaleString();
+  });
+
+  /* ====== 2) 举报（仅给个 toast 反馈） ====== */
+  cmtList.addEventListener('click', function(e) {
+    const btn = e.target.closest('button[data-act="report"]');
+    if (!btn) return;
+    showToast('已收到举报，我们会尽快审核，感谢支持');
+  });
+
+  /* ====== 3) 点击"回复" → 打开内联回复框 ====== */
+  // 一个时刻只保留一个打开的回复框
+  let openCtx = null; // { boxEl, targetBtn, scopeEl, cid, rid, replyTo }
+
+  function closeReplyBox() {
+    if (!openCtx) return;
+    openCtx.targetBtn.classList.remove('replying');
+    if (openCtx.scopeEl && openCtx.scopeEl.classList.contains('cmt')) {
+      openCtx.scopeEl.classList.remove('has-reply-open');
+    }
+    openCtx.boxEl.remove();
+    openCtx = null;
+  }
+
+  function findCidScope(el) {
+    // 回复的"楼"：最近的有 data-cid 的主评论元素
+    return el.closest('.cmt[data-cid]');
+  }
+
+  function findInsertAnchor(actBtn) {
+    // 回复框插入到哪？
+    //  - 如果是主评论按钮 → 插到 .cmt-main 之后（cmt-replies 之前或之后）
+    //  - 如果是子回复按钮 → 插到子回复 .reply 之后
+    const replyEl = actBtn.closest('.reply[data-rid]');
+    if (replyEl) return { anchor: replyEl, scope: 'reply', afterEl: replyEl };
+    const cmtEl = actBtn.closest('.cmt[data-cid]');
+    if (cmtEl) {
+      // 插到 .cmt-main 之后；如果有 cmt-replies 就插到 replies 后面（视觉上是整楼展开回复）
+      const replies = cmtEl.querySelector(':scope > .cmt-replies');
+      return { anchor: cmtEl, scope: 'cmt', afterEl: replies || cmtEl.querySelector('.cmt-main') };
+    }
+    return null;
+  }
+
+  cmtList.addEventListener('click', function(e) {
+    const btn = e.target.closest('button[data-act="reply"]');
+    if (!btn) return;
+
+    const item = btn.closest('[data-cid], [data-rid]');
+    if (!item) return;
+    const cmtEl = findCidScope(btn);
+    const cid = cmtEl ? cmtEl.dataset.cid : null;
+    const rid = item.dataset.rid || null;
+    const replyTo = item.dataset.author || '匿名用户';
+    const authorBadge = item.dataset.badge || '';
+    const anchorInfo = findInsertAnchor(btn);
+    if (!anchorInfo) return;
+
+    // 如果点击的就是当前已展开的按钮 → 关闭
+    if (openCtx && openCtx.targetBtn === btn) {
+      closeReplyBox();
+      return;
+    }
+    // 否则先关掉上一个
+    closeReplyBox();
+
+    // 构造回复框
+    const box = document.createElement('div');
+    box.className = 'reply-box';
+    const badgeLabel = authorBadge ? ' (' + authorBadge + ')' : '';
+    box.innerHTML = `
+      <div class="reply-box-head">
+        <span class="replying-to">回复 <b>@${escapeHTML(replyTo)}${authorBadge ? ' ' + escapeHTML('('+authorBadge+')') : ''}</b></span>
+        <button type="button" class="reply-box-close" title="取消回复">
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="reply-box-row">
+        <div class="cmt-ava" style="background:${ME.avaBg};">${escapeHTML(ME.initial)}</div>
+        <textarea placeholder="${escapeHTML(rid ? '回复 @' + replyTo + '…' : '写下你的回复…支持行内 Markdown')}"></textarea>
+      </div>
+      <div class="reply-box-foot">
+        <span class="hint">Ctrl + Enter 发送</span>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" style="padding:7px 14px;font-size:12.5px;">取消</button>
+          <button type="button" class="btn btn-primary" style="padding:7px 16px;font-size:12.5px;">发送回复</button>
+        </div>
+      </div>
+    `;
+
+    // 插入位置
+    anchorInfo.afterEl.after(box);
+    if (anchorInfo.scope === 'cmt') {
+      cmtEl.classList.add('has-reply-open');
+    }
+    btn.classList.add('replying');
+    const ta = box.querySelector('textarea');
+    setTimeout(() => ta.focus(), 30);
+
+    openCtx = {
+      boxEl: box,
+      targetBtn: btn,
+      scopeEl: cmtEl,
+      cid: cid,
+      rid: rid,
+      replyTo: replyTo
+    };
+
+    // —— 事件：关闭按钮 ——
+    box.querySelector('.reply-box-close').addEventListener('click', closeReplyBox);
+    box.querySelector('.btn-ghost').addEventListener('click', closeReplyBox);
+
+    // —— 事件：发送 ——
+    const sendBtn = box.querySelector('.btn-primary');
+    function doSend() {
+      const val = ta.value.trim();
+      if (!val) { ta.focus(); return; }
+      submitReply({
+        cid: openCtx.cid,
+        replyToRid: openCtx.rid,
+        replyToName: openCtx.replyTo,
+        text: val,
+        cmtEl: cmtEl
+      });
+      closeReplyBox();
+    }
+    sendBtn.addEventListener('click', doSend);
+    ta.addEventListener('keydown', function(ev) {
+      if ((ev.ctrlKey || ev.metaKey) && ev.key === 'Enter') {
+        ev.preventDefault();
+        doSend();
+      } else if (ev.key === 'Escape') {
+        ev.preventDefault();
+        closeReplyBox();
+      }
+    });
+  });
+
+  /* ====== 4) 提交回复 → 动态插入 DOM ====== */
+  function submitReply({ cid, replyToRid, replyToName, text, cmtEl }) {
+    if (!cmtEl) return;
+
+    // 1) 确保主评论下有 .cmt-replies 容器
+    let repliesEl = cmtEl.querySelector(':scope > .cmt-replies');
+    if (!repliesEl) {
+      repliesEl = document.createElement('div');
+      repliesEl.className = 'cmt-replies';
+      // 放到 .cmt-main 后面
+      const main = cmtEl.querySelector(':scope > .cmt-main');
+      main.after(repliesEl);
+    }
+
+    // 2) 构造 reply 元素
+    const replyEl = document.createElement('div');
+    replyEl.className = 'reply new-reply';
+    const newRid = nid(cid + '-r');
+    replyEl.dataset.rid = newRid;
+    replyEl.dataset.author = ME.name;
+    replyEl.dataset.ava = ME.avaBg;
+    replyEl.dataset.avaInitial = ME.initial;
+
+    // 如果是回复"子回复"，内容里带 @xxx
+    const replyToPrefix = replyToName
+      ? `<span class="reply-to">@${escapeHTML(replyToName)}</span> `
+      : '';
+
+    replyEl.innerHTML = `
+      <div class="cmt-ava" style="background:${ME.avaBg};">${escapeHTML(ME.initial)}</div>
+      <div class="cmt-body">
+        <div class="cmt-meta">
+          <span class="reply-name">${escapeHTML(ME.name)}</span>
+          <span class="cmt-time">${justNow()}</span>
+        </div>
+        <p class="reply-text">${replyToPrefix}${renderInline(text)}</p>
+        <div class="cmt-foot">
+          <button class="cmt-act" data-act="like">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            <span class="like-num">0</span>
+          </button>
+          <button class="cmt-act" data-act="reply">回复</button>
+        </div>
+      </div>
+    `;
+
+    // 3) 插入：如果 replyToRid 存在 → 插到被回复的子回复之后；否则放到 replies 末尾
+    if (replyToRid) {
+      const target = repliesEl.querySelector('.reply[data-rid="' + replyToRid + '"]');
+      if (target) {
+        target.after(replyEl);
+      } else {
+        repliesEl.appendChild(replyEl);
+      }
+    } else {
+      repliesEl.appendChild(replyEl);
+    }
+
+    // 4) 滚动到新回复
+    setTimeout(() => {
+      replyEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 40);
+
+    // 5) 计数 +1（顶部评论总数小提示）
+    bumpCommentCount(+1);
+
+    showToast('回复成功，感谢参与讨论');
+  }
+
+  /* ====== 5) 顶部主评论发布 ====== */
+  const mainTa = document.getElementById('mainCommentTa');
+  const mainBtn = document.getElementById('mainCommentBtn');
+  if (mainTa && mainBtn && cmtList) {
+    function submitMain() {
+      const val = mainTa.value.trim();
+      if (!val) { mainTa.focus(); return; }
+
+      const newCid = nid('c');
+      const cmt = document.createElement('div');
+      cmt.className = 'cmt card new-reply';
+      cmt.dataset.cid = newCid;
+      cmt.dataset.author = ME.name;
+      cmt.dataset.ava = ME.avaBg;
+      cmt.dataset.avaInitial = ME.initial;
+      cmt.innerHTML = `
+        <div class="cmt-main">
+          <div class="cmt-ava" style="background:${ME.avaBg};">${escapeHTML(ME.initial)}</div>
+          <div class="cmt-body">
+            <div class="cmt-meta">
+              <span class="cmt-name">${escapeHTML(ME.name)}</span>
+              <span class="cmt-time">${justNow()}</span>
+            </div>
+            <p class="cmt-text">${renderInline(val)}</p>
+            <div class="cmt-foot">
+              <button class="cmt-act" data-act="like">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                <span class="like-num">0</span>
+              </button>
+              <button class="cmt-act" data-act="reply">回复</button>
+              <button class="cmt-act" data-act="report">举报</button>
+            </div>
+          </div>
+        </div>
+        <div class="cmt-replies"></div>
+      `;
+      cmtList.insertBefore(cmt, cmtList.firstChild);
+      mainTa.value = '';
+      bumpCommentCount(+1);
+      showToast('评论发布成功');
+      setTimeout(() => {
+        cmt.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 40);
+    }
+    mainBtn.addEventListener('click', submitMain);
+    mainTa.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        submitMain();
+      }
+    });
+  }
+
+  /* ====== 6) 小工具：评论总数角标 +1 ====== */
+  function bumpCommentCount(delta) {
+    const title = document.querySelector('.cmt-title h2 span');
+    if (!title) return;
+    const cur = parseInt(title.textContent.replace(/[^\d]/g, ''), 10);
+    if (!isNaN(cur)) title.textContent = (cur + delta).toLocaleString();
+  }
+
+  /* ====== 7) 轻量 toast ====== */
+  let toastEl = null;
+  function showToast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.style.cssText = [
+        'position:fixed','z-index:2000','left:50%','top:88px',
+        'transform:translateX(-50%) translateY(-16px)',
+        'padding:10px 20px','border-radius:12px',
+        'background:var(--bg-blur-strong)','backdrop-filter:blur(20px)',
+        '-webkit-backdrop-filter:blur(20px)',
+        'border:1px solid var(--border-subtle)',
+        'box-shadow:var(--shadow-glass-lg)',
+        'color:var(--text-1)','font-size:13.5px','font-weight:600',
+        'font-family:inherit','opacity:0',
+        'transition:all 0.28s cubic-bezier(.2,.8,.2,1)',
+        'pointer-events:none'
+      ].join(';');
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    requestAnimationFrame(() => {
+      toastEl.style.opacity = '1';
+      toastEl.style.transform = 'translateX(-50%) translateY(0)';
+    });
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => {
+      toastEl.style.opacity = '0';
+      toastEl.style.transform = 'translateX(-50%) translateY(-16px)';
+    }, 2000);
+  }
+
+})();
+</script>
+
+</body></html>
