@@ -1,0 +1,3158 @@
+{
+  "options": {
+    "type": "directed",
+    "multi": true,
+    "allowSelfLoops": true
+  },
+  "attributes": {},
+  "nodes": [
+    {
+      "key": "module:@/compoents/AboutCard",
+      "attributes": {
+        "label": "@/compoents/AboutCard",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 0,
+        "communityLabel": "vite-project-react/src/compoents/Sidebar.tsx",
+        "communityHash": "0eb9d67872c1dc04b659e13ca2e181782c42d85f6e0290fa7458133f7c3e9af9"
+      }
+    },
+    {
+      "key": "module:@/compoents/BlogCard",
+      "attributes": {
+        "label": "@/compoents/BlogCard",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 0,
+        "communityLabel": "vite-project-react/src/compoents/Sidebar.tsx",
+        "communityHash": "0eb9d67872c1dc04b659e13ca2e181782c42d85f6e0290fa7458133f7c3e9af9"
+      }
+    },
+    {
+      "key": "module:@/compoents/CategoryTabs",
+      "attributes": {
+        "label": "@/compoents/CategoryTabs",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 1,
+        "communityLabel": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "communityHash": "937315f08859ae202d37d15e26ed407d8f33d08e303dddd0418689555430b0c3"
+      }
+    },
+    {
+      "key": "module:@/compoents/HotArticles",
+      "attributes": {
+        "label": "@/compoents/HotArticles",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 0,
+        "communityLabel": "vite-project-react/src/compoents/Sidebar.tsx",
+        "communityHash": "0eb9d67872c1dc04b659e13ca2e181782c42d85f6e0290fa7458133f7c3e9af9"
+      }
+    },
+    {
+      "key": "module:@/compoents/Navbar",
+      "attributes": {
+        "label": "@/compoents/Navbar",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 1,
+        "communityLabel": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "communityHash": "937315f08859ae202d37d15e26ed407d8f33d08e303dddd0418689555430b0c3"
+      }
+    },
+    {
+      "key": "module:@/compoents/old/NavMenu/navMenu",
+      "attributes": {
+        "label": "@/compoents/old/NavMenu/navMenu",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 2,
+        "communityLabel": "vite-project-react/src/view/layouts/mainLayout.tsx",
+        "communityHash": "cb5ebcccac20dfa5f2d048ca81eb8825e2722f95c37a91b5566f93a08a4f46b4"
+      }
+    },
+    {
+      "key": "module:@/compoents/RecommendedAuthors",
+      "attributes": {
+        "label": "@/compoents/RecommendedAuthors",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 0,
+        "communityLabel": "vite-project-react/src/compoents/Sidebar.tsx",
+        "communityHash": "0eb9d67872c1dc04b659e13ca2e181782c42d85f6e0290fa7458133f7c3e9af9"
+      }
+    },
+    {
+      "key": "module:@/compoents/Sidebar",
+      "attributes": {
+        "label": "@/compoents/Sidebar",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 1,
+        "communityLabel": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "communityHash": "937315f08859ae202d37d15e26ed407d8f33d08e303dddd0418689555430b0c3"
+      }
+    },
+    {
+      "key": "module:@/compoents/SortToolbar",
+      "attributes": {
+        "label": "@/compoents/SortToolbar",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 1,
+        "communityLabel": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "communityHash": "937315f08859ae202d37d15e26ed407d8f33d08e303dddd0418689555430b0c3"
+      }
+    },
+    {
+      "key": "module:@/store/g0001",
+      "attributes": {
+        "label": "@/store/g0001",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "module:@/styles/AboutCard.css",
+      "attributes": {
+        "label": "@/styles/AboutCard.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 4,
+        "communityLabel": "@/styles/AboutCard.css",
+        "communityHash": "bcfff53e95cf6afd86aa2d601fb39014a2c8dd24ab495358c5cd071e823eb37c"
+      }
+    },
+    {
+      "key": "module:@/styles/BlogCard.css",
+      "attributes": {
+        "label": "@/styles/BlogCard.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 5,
+        "communityLabel": "@/styles/BlogCard.css",
+        "communityHash": "fd35956517fd4fbaeb5e23ee4a77b31fba8464a41cc935f453ce5f80799a86db"
+      }
+    },
+    {
+      "key": "module:@/styles/CategoryTabs.css",
+      "attributes": {
+        "label": "@/styles/CategoryTabs.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 6,
+        "communityLabel": "@/styles/CategoryTabs.css",
+        "communityHash": "78a96e8321efefbf71675994587a0bb7568d6a9ac133f5a832707f19b0bd2dff"
+      }
+    },
+    {
+      "key": "module:@/styles/HotArticles.css",
+      "attributes": {
+        "label": "@/styles/HotArticles.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 7,
+        "communityLabel": "@/styles/HotArticles.css",
+        "communityHash": "1f48fc284445a977707bdb426accb356cd5ca2e911f36c1fb4686628436fa6be"
+      }
+    },
+    {
+      "key": "module:@/styles/mainLayout.css",
+      "attributes": {
+        "label": "@/styles/mainLayout.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 8,
+        "communityLabel": "@/styles/mainLayout.css",
+        "communityHash": "e8153f7a457b675dd2ce809bdcf67a47846e6f5e1f8ab72d0774a4233674e906"
+      }
+    },
+    {
+      "key": "module:@/styles/Navbar.css",
+      "attributes": {
+        "label": "@/styles/Navbar.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 9,
+        "communityLabel": "@/styles/Navbar.css",
+        "communityHash": "ec898fee5ef28c3916fc5e3960ee1ecf8656e8643306c02076248de599fc7c45"
+      }
+    },
+    {
+      "key": "module:@/styles/RecommendedAuthors.css",
+      "attributes": {
+        "label": "@/styles/RecommendedAuthors.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 10,
+        "communityLabel": "@/styles/RecommendedAuthors.css",
+        "communityHash": "f17095fd2b2fd17a65987b5ed4a241e9bb82c7033da1ea416c44c71880aaab7d"
+      }
+    },
+    {
+      "key": "module:@/styles/Sidebar.css",
+      "attributes": {
+        "label": "@/styles/Sidebar.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 11,
+        "communityLabel": "@/styles/Sidebar.css",
+        "communityHash": "4deb6fea7a550e101a912023d257b67befc6c3c9271a30fffbd180e29b7db5a6"
+      }
+    },
+    {
+      "key": "module:@/styles/SortToolbar.css",
+      "attributes": {
+        "label": "@/styles/SortToolbar.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 12,
+        "communityLabel": "@/styles/SortToolbar.css",
+        "communityHash": "6c4678d74f25ae7eea475e53a5252c69be61de1c2223ecd963acb74da5be024d"
+      }
+    },
+    {
+      "key": "module:@/styles/TechCommunityPage.css",
+      "attributes": {
+        "label": "@/styles/TechCommunityPage.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 13,
+        "communityLabel": "@/styles/TechCommunityPage.css",
+        "communityHash": "5244efd21f8f069d2368f75547d0c5516de654ce9613ca3ca0f853b2ffaf414d"
+      }
+    },
+    {
+      "key": "module:@/view/layouts/mainLayout",
+      "attributes": {
+        "label": "@/view/layouts/mainLayout",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "module:@/view/page/editBlog/editBlog.css",
+      "attributes": {
+        "label": "@/view/page/editBlog/editBlog.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 15,
+        "communityLabel": "@/view/page/editBlog/editBlog.css",
+        "communityHash": "8d226953986d51a6717e53f5cae232dea4f5680e7533fed9cf9b5449e1d72807"
+      }
+    },
+    {
+      "key": "module:@/view/page/login/logic",
+      "attributes": {
+        "label": "@/view/page/login/logic",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 16,
+        "communityLabel": "@/view/page/login/logic",
+        "communityHash": "844dbf02085ffe4d09b882dd47d47a5847655231057dbd7ff29055c99ec1c1aa"
+      }
+    },
+    {
+      "key": "module:@/view/page/login/login.css",
+      "attributes": {
+        "label": "@/view/page/login/login.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 17,
+        "communityLabel": "@/view/page/login/login.css",
+        "communityHash": "5fe776225f6cfcfcab75b869dcd0e2610b841fb3d2595520900f7ff62f56f360"
+      }
+    },
+    {
+      "key": "module:@/view/page/showBlog/showBlog.css",
+      "attributes": {
+        "label": "@/view/page/showBlog/showBlog.css",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 18,
+        "communityLabel": "@/view/page/showBlog/showBlog.css",
+        "communityHash": "9718d3bb82391ac50096c5b1d5cdff1e779294adb74315962b87f7e7cd27e1cf"
+      }
+    },
+    {
+      "key": "module:@eslint/js",
+      "attributes": {
+        "label": "@eslint/js",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 19,
+        "communityLabel": "vite-project-react/eslint.config.js",
+        "communityHash": "36172cf7464ca5ee1f7659f990a052c0ba66c4b6578718326084adf93c1c2d8a"
+      }
+    },
+    {
+      "key": "module:@mui/icons-material/Home",
+      "attributes": {
+        "label": "@mui/icons-material/Home",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 20,
+        "communityLabel": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx",
+        "communityHash": "334463db2d6c7692314126c07c74788d010b3b8393bbc56327206ce4a0d9f6c1"
+      }
+    },
+    {
+      "key": "module:@mui/icons-material/WhatsApp",
+      "attributes": {
+        "label": "@mui/icons-material/WhatsApp",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 21,
+        "communityLabel": "@mui/icons-material/WhatsApp",
+        "communityHash": "49ee43185fded54f762d8ce8f83e194ece825e88660805857963d42faec7a1f4"
+      }
+    },
+    {
+      "key": "module:@mui/material/Autocomplete",
+      "attributes": {
+        "label": "@mui/material/Autocomplete",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 2,
+        "communityLabel": "vite-project-react/src/view/layouts/mainLayout.tsx",
+        "communityHash": "cb5ebcccac20dfa5f2d048ca81eb8825e2722f95c37a91b5566f93a08a4f46b4"
+      }
+    },
+    {
+      "key": "module:@mui/material/Button",
+      "attributes": {
+        "label": "@mui/material/Button",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "module:@mui/material/Divider",
+      "attributes": {
+        "label": "@mui/material/Divider",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 2,
+        "communityLabel": "vite-project-react/src/view/layouts/mainLayout.tsx",
+        "communityHash": "cb5ebcccac20dfa5f2d048ca81eb8825e2722f95c37a91b5566f93a08a4f46b4"
+      }
+    },
+    {
+      "key": "module:@mui/material/TextField",
+      "attributes": {
+        "label": "@mui/material/TextField",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 2,
+        "communityLabel": "vite-project-react/src/view/layouts/mainLayout.tsx",
+        "communityHash": "cb5ebcccac20dfa5f2d048ca81eb8825e2722f95c37a91b5566f93a08a4f46b4"
+      }
+    },
+    {
+      "key": "module:@rolldown/plugin-babel",
+      "attributes": {
+        "label": "@rolldown/plugin-babel",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    },
+    {
+      "key": "module:@vitejs/plugin-react",
+      "attributes": {
+        "label": "@vitejs/plugin-react",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    },
+    {
+      "key": "module:eslint-plugin-react-hooks",
+      "attributes": {
+        "label": "eslint-plugin-react-hooks",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 19,
+        "communityLabel": "vite-project-react/eslint.config.js",
+        "communityHash": "36172cf7464ca5ee1f7659f990a052c0ba66c4b6578718326084adf93c1c2d8a"
+      }
+    },
+    {
+      "key": "module:eslint-plugin-react-refresh",
+      "attributes": {
+        "label": "eslint-plugin-react-refresh",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 19,
+        "communityLabel": "vite-project-react/eslint.config.js",
+        "communityHash": "36172cf7464ca5ee1f7659f990a052c0ba66c4b6578718326084adf93c1c2d8a"
+      }
+    },
+    {
+      "key": "module:eslint/config",
+      "attributes": {
+        "label": "eslint/config",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 19,
+        "communityLabel": "vite-project-react/eslint.config.js",
+        "communityHash": "36172cf7464ca5ee1f7659f990a052c0ba66c4b6578718326084adf93c1c2d8a"
+      }
+    },
+    {
+      "key": "module:fs",
+      "attributes": {
+        "label": "fs",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    },
+    {
+      "key": "module:globals",
+      "attributes": {
+        "label": "globals",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 19,
+        "communityLabel": "vite-project-react/eslint.config.js",
+        "communityHash": "36172cf7464ca5ee1f7659f990a052c0ba66c4b6578718326084adf93c1c2d8a"
+      }
+    },
+    {
+      "key": "module:path",
+      "attributes": {
+        "label": "path",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    },
+    {
+      "key": "module:prop-types",
+      "attributes": {
+        "label": "prop-types",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 23,
+        "communityLabel": "vite-project-react/src/compoents/AboutCard.tsx",
+        "communityHash": "2739532e37ab8b6879610fb2a9f828b5a498ee4a23868eb72c45a2a36fee30a6"
+      }
+    },
+    {
+      "key": "module:react",
+      "attributes": {
+        "label": "react",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "module:react-dom/client",
+      "attributes": {
+        "label": "react-dom/client",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "module:react-router-dom",
+      "attributes": {
+        "label": "react-router-dom",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "module:typescript-eslint",
+      "attributes": {
+        "label": "typescript-eslint",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 19,
+        "communityLabel": "vite-project-react/eslint.config.js",
+        "communityHash": "36172cf7464ca5ee1f7659f990a052c0ba66c4b6578718326084adf93c1c2d8a"
+      }
+    },
+    {
+      "key": "module:url",
+      "attributes": {
+        "label": "url",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    },
+    {
+      "key": "module:urql",
+      "attributes": {
+        "label": "urql",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "module:vite",
+      "attributes": {
+        "label": "vite",
+        "sourceFile": "<external>",
+        "sourceLocation": "L1",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    },
+    {
+      "key": "vite-project-react/eslint.config.js",
+      "attributes": {
+        "label": "vite-project-react/eslint.config.js",
+        "sourceFile": "vite-project-react/eslint.config.js",
+        "sourceLocation": "L1",
+        "community": 19,
+        "communityLabel": "vite-project-react/eslint.config.js",
+        "communityHash": "36172cf7464ca5ee1f7659f990a052c0ba66c4b6578718326084adf93c1c2d8a"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js",
+      "attributes": {
+        "label": "vite-project-react/scripts/init-components.js",
+        "sourceFile": "vite-project-react/scripts/init-components.js",
+        "sourceLocation": "L1",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js::createCssFile",
+      "attributes": {
+        "label": "function createCssFile",
+        "sourceFile": "vite-project-react/scripts/init-components.js",
+        "sourceLocation": "L16",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js::walk",
+      "attributes": {
+        "label": "function walk",
+        "sourceFile": "vite-project-react/scripts/init-components.js",
+        "sourceLocation": "L9",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    },
+    {
+      "key": "vite-project-react/src/apis/graphql/client.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/apis/graphql/client.tsx",
+        "sourceFile": "vite-project-react/src/apis/graphql/client.tsx",
+        "sourceLocation": "L1",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "vite-project-react/src/apis/graphql/client.tsx::client",
+      "attributes": {
+        "label": "const client",
+        "sourceFile": "vite-project-react/src/apis/graphql/client.tsx",
+        "sourceLocation": "L4",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "vite-project-react/src/App.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/App.tsx",
+        "sourceFile": "vite-project-react/src/App.tsx",
+        "sourceLocation": "L1",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "vite-project-react/src/App.tsx::App",
+      "attributes": {
+        "label": "function App",
+        "sourceFile": "vite-project-react/src/App.tsx",
+        "sourceLocation": "L7",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/AboutCard.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/AboutCard.tsx",
+        "sourceFile": "vite-project-react/src/compoents/AboutCard.tsx",
+        "sourceLocation": "L1",
+        "community": 23,
+        "communityLabel": "vite-project-react/src/compoents/AboutCard.tsx",
+        "communityHash": "2739532e37ab8b6879610fb2a9f828b5a498ee4a23868eb72c45a2a36fee30a6"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/AboutCard.tsx::AboutCard",
+      "attributes": {
+        "label": "function AboutCard",
+        "sourceFile": "vite-project-react/src/compoents/AboutCard.tsx",
+        "sourceLocation": "L4",
+        "community": 23,
+        "communityLabel": "vite-project-react/src/compoents/AboutCard.tsx",
+        "communityHash": "2739532e37ab8b6879610fb2a9f828b5a498ee4a23868eb72c45a2a36fee30a6"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/BlogCard.tsx",
+        "sourceFile": "vite-project-react/src/compoents/BlogCard.tsx",
+        "sourceLocation": "L1",
+        "community": 24,
+        "communityLabel": "vite-project-react/src/compoents/BlogCard.tsx",
+        "communityHash": "03804175fae6a3ea2d9ab0494d164a3bf4f5458a9231ec1c41e798d6479076e0"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx::BlogAuthor",
+      "attributes": {
+        "label": "interface BlogAuthor",
+        "sourceFile": "vite-project-react/src/compoents/BlogCard.tsx",
+        "sourceLocation": "L4",
+        "community": 24,
+        "communityLabel": "vite-project-react/src/compoents/BlogCard.tsx",
+        "communityHash": "03804175fae6a3ea2d9ab0494d164a3bf4f5458a9231ec1c41e798d6479076e0"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx::BlogCard",
+      "attributes": {
+        "label": "function BlogCard",
+        "sourceFile": "vite-project-react/src/compoents/BlogCard.tsx",
+        "sourceLocation": "L81",
+        "community": 24,
+        "communityLabel": "vite-project-react/src/compoents/BlogCard.tsx",
+        "communityHash": "03804175fae6a3ea2d9ab0494d164a3bf4f5458a9231ec1c41e798d6479076e0"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx::BlogCardProps",
+      "attributes": {
+        "label": "interface BlogCardProps",
+        "sourceFile": "vite-project-react/src/compoents/BlogCard.tsx",
+        "sourceLocation": "L11",
+        "community": 24,
+        "communityLabel": "vite-project-react/src/compoents/BlogCard.tsx",
+        "communityHash": "03804175fae6a3ea2d9ab0494d164a3bf4f5458a9231ec1c41e798d6479076e0"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx::formatNumber",
+      "attributes": {
+        "label": "function formatNumber",
+        "sourceFile": "vite-project-react/src/compoents/BlogCard.tsx",
+        "sourceLocation": "L28",
+        "community": 24,
+        "communityLabel": "vite-project-react/src/compoents/BlogCard.tsx",
+        "communityHash": "03804175fae6a3ea2d9ab0494d164a3bf4f5458a9231ec1c41e798d6479076e0"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx::getTagClass",
+      "attributes": {
+        "label": "function getTagClass",
+        "sourceFile": "vite-project-react/src/compoents/BlogCard.tsx",
+        "sourceLocation": "L50",
+        "community": 24,
+        "communityLabel": "vite-project-react/src/compoents/BlogCard.tsx",
+        "communityHash": "03804175fae6a3ea2d9ab0494d164a3bf4f5458a9231ec1c41e798d6479076e0"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx::Icon",
+      "attributes": {
+        "label": "function Icon",
+        "sourceFile": "vite-project-react/src/compoents/BlogCard.tsx",
+        "sourceLocation": "L59",
+        "community": 24,
+        "communityLabel": "vite-project-react/src/compoents/BlogCard.tsx",
+        "communityHash": "03804175fae6a3ea2d9ab0494d164a3bf4f5458a9231ec1c41e798d6479076e0"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/CategoryTabs.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/CategoryTabs.tsx",
+        "sourceFile": "vite-project-react/src/compoents/CategoryTabs.tsx",
+        "sourceLocation": "L1",
+        "community": 25,
+        "communityLabel": "vite-project-react/src/compoents/CategoryTabs.tsx",
+        "communityHash": "fd10f7f3e843cc6f444913f2abac4a5da465eeb1fcf485e82c5362c0a1804587"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/CategoryTabs.tsx::CategoryTabs",
+      "attributes": {
+        "label": "function CategoryTabs",
+        "sourceFile": "vite-project-react/src/compoents/CategoryTabs.tsx",
+        "sourceLocation": "L22",
+        "community": 25,
+        "communityLabel": "vite-project-react/src/compoents/CategoryTabs.tsx",
+        "communityHash": "fd10f7f3e843cc6f444913f2abac4a5da465eeb1fcf485e82c5362c0a1804587"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/CategoryTabs.tsx::CategoryTabsProps",
+      "attributes": {
+        "label": "interface CategoryTabsProps",
+        "sourceFile": "vite-project-react/src/compoents/CategoryTabs.tsx",
+        "sourceLocation": "L8",
+        "community": 25,
+        "communityLabel": "vite-project-react/src/compoents/CategoryTabs.tsx",
+        "communityHash": "fd10f7f3e843cc6f444913f2abac4a5da465eeb1fcf485e82c5362c0a1804587"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/HotArticles.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/HotArticles.tsx",
+        "sourceFile": "vite-project-react/src/compoents/HotArticles.tsx",
+        "sourceLocation": "L1",
+        "community": 26,
+        "communityLabel": "vite-project-react/src/compoents/HotArticles.tsx",
+        "communityHash": "d17fcecec7c84b336d9d94ba0a97fd32c4d518b0477708cdab03e6f11e6c5ead"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/HotArticles.tsx::HotArticle",
+      "attributes": {
+        "label": "interface HotArticle",
+        "sourceFile": "vite-project-react/src/compoents/HotArticles.tsx",
+        "sourceLocation": "L8",
+        "community": 26,
+        "communityLabel": "vite-project-react/src/compoents/HotArticles.tsx",
+        "communityHash": "d17fcecec7c84b336d9d94ba0a97fd32c4d518b0477708cdab03e6f11e6c5ead"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/HotArticles.tsx::HotArticles",
+      "attributes": {
+        "label": "function HotArticles",
+        "sourceFile": "vite-project-react/src/compoents/HotArticles.tsx",
+        "sourceLocation": "L26",
+        "community": 26,
+        "communityLabel": "vite-project-react/src/compoents/HotArticles.tsx",
+        "communityHash": "d17fcecec7c84b336d9d94ba0a97fd32c4d518b0477708cdab03e6f11e6c5ead"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/HotArticles.tsx::HotArticlesProps",
+      "attributes": {
+        "label": "interface HotArticlesProps",
+        "sourceFile": "vite-project-react/src/compoents/HotArticles.tsx",
+        "sourceLocation": "L16",
+        "community": 26,
+        "communityLabel": "vite-project-react/src/compoents/HotArticles.tsx",
+        "communityHash": "d17fcecec7c84b336d9d94ba0a97fd32c4d518b0477708cdab03e6f11e6c5ead"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Navbar.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/Navbar.tsx",
+        "sourceFile": "vite-project-react/src/compoents/Navbar.tsx",
+        "sourceLocation": "L1",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Navbar.tsx::Navbar",
+      "attributes": {
+        "label": "function Navbar",
+        "sourceFile": "vite-project-react/src/compoents/Navbar.tsx",
+        "sourceLocation": "L29",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Navbar.tsx::NavbarProps",
+      "attributes": {
+        "label": "interface NavbarProps",
+        "sourceFile": "vite-project-react/src/compoents/Navbar.tsx",
+        "sourceLocation": "L8",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.css",
+      "attributes": {
+        "label": "./circleFuctionButton.css",
+        "sourceFile": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.css",
+        "sourceLocation": "L1",
+        "community": 27,
+        "communityLabel": "./circleFuctionButton.css",
+        "communityHash": "288e278a22c1da5fe3015acc05753cf55a50ce457124d9c4dfc1b0f0609403c7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx",
+        "sourceFile": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx",
+        "sourceLocation": "L1",
+        "community": 21,
+        "communityLabel": "@mui/icons-material/WhatsApp",
+        "communityHash": "49ee43185fded54f762d8ce8f83e194ece825e88660805857963d42faec7a1f4"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx::CircleFuctionButton",
+      "attributes": {
+        "label": "function CircleFuctionButton",
+        "sourceFile": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx",
+        "sourceLocation": "L4",
+        "community": 21,
+        "communityLabel": "@mui/icons-material/WhatsApp",
+        "communityHash": "49ee43185fded54f762d8ce8f83e194ece825e88660805857963d42faec7a1f4"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.css",
+      "attributes": {
+        "label": "./iconsFunctionButton.css",
+        "sourceFile": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.css",
+        "sourceLocation": "L1",
+        "community": 28,
+        "communityLabel": "./iconsFunctionButton.css",
+        "communityHash": "3128787685c7088336b6cb7fd76f4b6354a37910baee6426951e26c5cd83a551"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx",
+        "sourceFile": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx",
+        "sourceLocation": "L1",
+        "community": 21,
+        "communityLabel": "@mui/icons-material/WhatsApp",
+        "communityHash": "49ee43185fded54f762d8ce8f83e194ece825e88660805857963d42faec7a1f4"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx::IconsFunctionButton",
+      "attributes": {
+        "label": "function IconsFunctionButton",
+        "sourceFile": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx",
+        "sourceLocation": "L4",
+        "community": 21,
+        "communityLabel": "@mui/icons-material/WhatsApp",
+        "communityHash": "49ee43185fded54f762d8ce8f83e194ece825e88660805857963d42faec7a1f4"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.css",
+      "attributes": {
+        "label": "./squareFuctionButton.css",
+        "sourceFile": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.css",
+        "sourceLocation": "L1",
+        "community": 29,
+        "communityLabel": "./squareFuctionButton.css",
+        "communityHash": "6d01f5dcba67b55b3c20df5cf0e6abe5b5f3c683369085891851ceed56c80765"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx",
+        "sourceFile": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx",
+        "sourceLocation": "L1",
+        "community": 20,
+        "communityLabel": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx",
+        "communityHash": "334463db2d6c7692314126c07c74788d010b3b8393bbc56327206ce4a0d9f6c1"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx::SquareFuctionButton",
+      "attributes": {
+        "label": "function SquareFuctionButton",
+        "sourceFile": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx",
+        "sourceLocation": "L4",
+        "community": 20,
+        "communityLabel": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx",
+        "communityHash": "334463db2d6c7692314126c07c74788d010b3b8393bbc56327206ce4a0d9f6c1"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/LinkButton/linkButton.css",
+      "attributes": {
+        "label": "./linkButton.css",
+        "sourceFile": "vite-project-react/src/compoents/old/LinkButton/linkButton.css",
+        "sourceLocation": "L1",
+        "community": 30,
+        "communityLabel": "./linkButton.css",
+        "communityHash": "a1ec1145907c47e9deebfd08923098ba962f46bb4672698172f7c393d8c2de42"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx",
+        "sourceFile": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx",
+        "sourceLocation": "L1",
+        "community": 31,
+        "communityLabel": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx",
+        "communityHash": "3ce9c74c9968d7fbd1b38f505c74f58eb7ff193f38e3de59e18937f4a398a0ae"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx::LinkButton",
+      "attributes": {
+        "label": "function LinkButton",
+        "sourceFile": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx",
+        "sourceLocation": "L3",
+        "community": 31,
+        "communityLabel": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx",
+        "communityHash": "3ce9c74c9968d7fbd1b38f505c74f58eb7ff193f38e3de59e18937f4a398a0ae"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/NavMenu/navMenu.css",
+      "attributes": {
+        "label": "./navMenu.css",
+        "sourceFile": "vite-project-react/src/compoents/old/NavMenu/navMenu.css",
+        "sourceLocation": "L1",
+        "community": 32,
+        "communityLabel": "./navMenu.css",
+        "communityHash": "d28cbeb54d7f900f89971eb5baf44fb47233c666241d74534844f2a637b6c624"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx",
+        "sourceFile": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx",
+        "sourceLocation": "L1",
+        "community": 33,
+        "communityLabel": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx",
+        "communityHash": "b65a0158ca8f1f544fc4084830053905f2a4fdca13914b5ce1da397d22007427"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx::NavMenu",
+      "attributes": {
+        "label": "function NavMenu",
+        "sourceFile": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx",
+        "sourceLocation": "L3",
+        "community": 33,
+        "communityLabel": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx",
+        "communityHash": "b65a0158ca8f1f544fc4084830053905f2a4fdca13914b5ce1da397d22007427"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/PersonButton/personButton.css",
+      "attributes": {
+        "label": "./personButton.css",
+        "sourceFile": "vite-project-react/src/compoents/old/PersonButton/personButton.css",
+        "sourceLocation": "L1",
+        "community": 34,
+        "communityLabel": "./personButton.css",
+        "communityHash": "40eba859040a9db04ba23ecebb5d18577150e821172c838b06d2909c80f55524"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx",
+        "sourceFile": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx",
+        "sourceLocation": "L1",
+        "community": 35,
+        "communityLabel": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx",
+        "communityHash": "7887f47c33d7db482149e4f89f3a3712b99551c1350605249689ef4149694855"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx::PersonButton",
+      "attributes": {
+        "label": "function PersonButton",
+        "sourceFile": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx",
+        "sourceLocation": "L3",
+        "community": 35,
+        "communityLabel": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx",
+        "communityHash": "7887f47c33d7db482149e4f89f3a3712b99551c1350605249689ef4149694855"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.css",
+      "attributes": {
+        "label": "./searchTextFiled.css",
+        "sourceFile": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.css",
+        "sourceLocation": "L1",
+        "community": 36,
+        "communityLabel": "./searchTextFiled.css",
+        "communityHash": "e47619dcb1512a155a1497eb87246a6df1629327b65250ac3b824b377d3f91b2"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx",
+        "sourceFile": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx",
+        "sourceLocation": "L1",
+        "community": 37,
+        "communityLabel": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx",
+        "communityHash": "4d28127d9270751ebfc2f6cf301d2575b13c32331ada3e22f3a838b32de8c395"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx::SearchTextFiled",
+      "attributes": {
+        "label": "function SearchTextFiled",
+        "sourceFile": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx",
+        "sourceLocation": "L3",
+        "community": 37,
+        "communityLabel": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx",
+        "communityHash": "4d28127d9270751ebfc2f6cf301d2575b13c32331ada3e22f3a838b32de8c395"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+        "sourceFile": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+        "sourceLocation": "L1",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthor",
+      "attributes": {
+        "label": "interface RecommendedAuthor",
+        "sourceFile": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+        "sourceLocation": "L8",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthors",
+      "attributes": {
+        "label": "function RecommendedAuthors",
+        "sourceFile": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+        "sourceLocation": "L29",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthorsProps",
+      "attributes": {
+        "label": "interface RecommendedAuthorsProps",
+        "sourceFile": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+        "sourceLocation": "L19",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Sidebar.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/Sidebar.tsx",
+        "sourceFile": "vite-project-react/src/compoents/Sidebar.tsx",
+        "sourceLocation": "L1",
+        "community": 0,
+        "communityLabel": "vite-project-react/src/compoents/Sidebar.tsx",
+        "communityHash": "0eb9d67872c1dc04b659e13ca2e181782c42d85f6e0290fa7458133f7c3e9af9"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Sidebar.tsx::Sidebar",
+      "attributes": {
+        "label": "function Sidebar",
+        "sourceFile": "vite-project-react/src/compoents/Sidebar.tsx",
+        "sourceLocation": "L23",
+        "community": 0,
+        "communityLabel": "vite-project-react/src/compoents/Sidebar.tsx",
+        "communityHash": "0eb9d67872c1dc04b659e13ca2e181782c42d85f6e0290fa7458133f7c3e9af9"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Sidebar.tsx::SidebarProps",
+      "attributes": {
+        "label": "interface SidebarProps",
+        "sourceFile": "vite-project-react/src/compoents/Sidebar.tsx",
+        "sourceLocation": "L11",
+        "community": 0,
+        "communityLabel": "vite-project-react/src/compoents/Sidebar.tsx",
+        "communityHash": "0eb9d67872c1dc04b659e13ca2e181782c42d85f6e0290fa7458133f7c3e9af9"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/SortToolbar.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/compoents/SortToolbar.tsx",
+        "sourceFile": "vite-project-react/src/compoents/SortToolbar.tsx",
+        "sourceLocation": "L1",
+        "community": 38,
+        "communityLabel": "vite-project-react/src/compoents/SortToolbar.tsx",
+        "communityHash": "2b6877d1860cf2af7474338588d25891d38f14bcb2a5f3f1bc25a9efe439c0df"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/SortToolbar.tsx::SortToolbar",
+      "attributes": {
+        "label": "function SortToolbar",
+        "sourceFile": "vite-project-react/src/compoents/SortToolbar.tsx",
+        "sourceLocation": "L24",
+        "community": 38,
+        "communityLabel": "vite-project-react/src/compoents/SortToolbar.tsx",
+        "communityHash": "2b6877d1860cf2af7474338588d25891d38f14bcb2a5f3f1bc25a9efe439c0df"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/SortToolbar.tsx::SortToolbarProps",
+      "attributes": {
+        "label": "interface SortToolbarProps",
+        "sourceFile": "vite-project-react/src/compoents/SortToolbar.tsx",
+        "sourceLocation": "L8",
+        "community": 38,
+        "communityLabel": "vite-project-react/src/compoents/SortToolbar.tsx",
+        "communityHash": "2b6877d1860cf2af7474338588d25891d38f14bcb2a5f3f1bc25a9efe439c0df"
+      }
+    },
+    {
+      "key": "vite-project-react/src/index.css",
+      "attributes": {
+        "label": "./index.css",
+        "sourceFile": "vite-project-react/src/index.css",
+        "sourceLocation": "L1",
+        "community": 39,
+        "communityLabel": "./index.css",
+        "communityHash": "a11b368e6f88b92fc8f1f0862dbac8d44605d7a6cf6d512d0058087ce0337eab"
+      }
+    },
+    {
+      "key": "vite-project-react/src/main.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/main.tsx",
+        "sourceFile": "vite-project-react/src/main.tsx",
+        "sourceLocation": "L1",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/layouts/mainLayout.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/layouts/mainLayout.tsx",
+        "sourceFile": "vite-project-react/src/view/layouts/mainLayout.tsx",
+        "sourceLocation": "L1",
+        "community": 2,
+        "communityLabel": "vite-project-react/src/view/layouts/mainLayout.tsx",
+        "communityHash": "cb5ebcccac20dfa5f2d048ca81eb8825e2722f95c37a91b5566f93a08a4f46b4"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/layouts/mainLayout.tsx::MainLayout",
+      "attributes": {
+        "label": "function MainLayout",
+        "sourceFile": "vite-project-react/src/view/layouts/mainLayout.tsx",
+        "sourceLocation": "L8",
+        "community": 2,
+        "communityLabel": "vite-project-react/src/view/layouts/mainLayout.tsx",
+        "communityHash": "cb5ebcccac20dfa5f2d048ca81eb8825e2722f95c37a91b5566f93a08a4f46b4"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/App.css",
+      "attributes": {
+        "label": "./App.css",
+        "sourceFile": "vite-project-react/src/view/pages/demo/demo001/App.css",
+        "sourceLocation": "L1",
+        "community": 40,
+        "communityLabel": "./App.css",
+        "communityHash": "20b0ae02682a7543c9028b5f3b7fc54ca98435fcbb524192d50fb0d80c60c6f9"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/assets/hero.png",
+      "attributes": {
+        "label": "./assets/hero.png",
+        "sourceFile": "vite-project-react/src/view/pages/demo/demo001/assets/hero.png",
+        "sourceLocation": "L1",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/assets/react.svg",
+      "attributes": {
+        "label": "./assets/react.svg",
+        "sourceFile": "vite-project-react/src/view/pages/demo/demo001/assets/react.svg",
+        "sourceLocation": "L1",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/assets/vite.svg",
+      "attributes": {
+        "label": "./assets/vite.svg",
+        "sourceFile": "vite-project-react/src/view/pages/demo/demo001/assets/vite.svg",
+        "sourceLocation": "L1",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx",
+        "sourceLocation": "L1",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx::Demo001",
+      "attributes": {
+        "label": "function Demo001",
+        "sourceFile": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx",
+        "sourceLocation": "L11",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/graphql_demo_page/event.ts",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/demo/graphql_demo_page/event.ts",
+        "sourceFile": "vite-project-react/src/view/pages/demo/graphql_demo_page/event.ts",
+        "sourceLocation": "L1",
+        "community": 41,
+        "communityLabel": "vite-project-react/src/view/pages/demo/graphql_demo_page/event.ts",
+        "communityHash": "ae295269acd0de7d86674cceb5b9de6b1c560cb31a81a1bd99d679647ded407f"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx",
+        "sourceLocation": "L1",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx::GraphqlDemoPage",
+      "attributes": {
+        "label": "function GraphqlDemoPage",
+        "sourceFile": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx",
+        "sourceLocation": "L9",
+        "community": 14,
+        "communityLabel": "vite-project-react/src/App.tsx",
+        "communityHash": "412c16a8b5c0289c26ed86c76af4d8cfd998ce76fc5defe0fd201b10f6a0fc25"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "sourceLocation": "L1",
+        "community": 42,
+        "communityLabel": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "communityHash": "cde6e8a45bb1690628637b94411364e1bea49c9013c0a28126150faf9c7572c7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::EditBlogPage",
+      "attributes": {
+        "label": "function EditBlogPage",
+        "sourceFile": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "sourceLocation": "L109",
+        "community": 42,
+        "communityLabel": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "communityHash": "cde6e8a45bb1690628637b94411364e1bea49c9013c0a28126150faf9c7572c7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::htmlToMarkdown",
+      "attributes": {
+        "label": "function htmlToMarkdown",
+        "sourceFile": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "sourceLocation": "L35",
+        "community": 42,
+        "communityLabel": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "communityHash": "cde6e8a45bb1690628637b94411364e1bea49c9013c0a28126150faf9c7572c7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::loadSavedDocs",
+      "attributes": {
+        "label": "function loadSavedDocs",
+        "sourceFile": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "sourceLocation": "L18",
+        "community": 42,
+        "communityLabel": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "communityHash": "cde6e8a45bb1690628637b94411364e1bea49c9013c0a28126150faf9c7572c7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::SavedMarkdownDoc",
+      "attributes": {
+        "label": "interface SavedMarkdownDoc",
+        "sourceFile": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "sourceLocation": "L7",
+        "community": 42,
+        "communityLabel": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "communityHash": "cde6e8a45bb1690628637b94411364e1bea49c9013c0a28126150faf9c7572c7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::saveDocToStorage",
+      "attributes": {
+        "label": "function saveDocToStorage",
+        "sourceFile": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "sourceLocation": "L29",
+        "community": 42,
+        "communityLabel": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+        "communityHash": "cde6e8a45bb1690628637b94411364e1bea49c9013c0a28126150faf9c7572c7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/logic.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/old/login/logic.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/old/login/logic.tsx",
+        "sourceLocation": "L1",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/logic.tsx::dataInterface",
+      "attributes": {
+        "label": "interface dataInterface",
+        "sourceFile": "vite-project-react/src/view/pages/old/login/logic.tsx",
+        "sourceLocation": "L76",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/logic.tsx::useViewLogicState",
+      "attributes": {
+        "label": "function useViewLogicState",
+        "sourceFile": "vite-project-react/src/view/pages/old/login/logic.tsx",
+        "sourceLocation": "L4",
+        "community": 3,
+        "communityLabel": "react",
+        "communityHash": "1816276c9fd827a083b5d656f967605367ddca70779f1298bf76b1f512fe7aef"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/login.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/old/login/login.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/old/login/login.tsx",
+        "sourceLocation": "L1",
+        "community": 16,
+        "communityLabel": "@/view/page/login/logic",
+        "communityHash": "844dbf02085ffe4d09b882dd47d47a5847655231057dbd7ff29055c99ec1c1aa"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/login.tsx::LoginPage",
+      "attributes": {
+        "label": "function LoginPage",
+        "sourceFile": "vite-project-react/src/view/pages/old/login/login.tsx",
+        "sourceLocation": "L4",
+        "community": 16,
+        "communityLabel": "@/view/page/login/logic",
+        "communityHash": "844dbf02085ffe4d09b882dd47d47a5847655231057dbd7ff29055c99ec1c1aa"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/main/logic.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/old/main/logic.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/old/main/logic.tsx",
+        "sourceLocation": "L1",
+        "community": 43,
+        "communityLabel": "vite-project-react/src/view/pages/old/main/logic.tsx",
+        "communityHash": "4739f70586b3d485a2ddaed7a496e6a016b7bed1d0393996a6e79fc8cd1211cc"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/main/main.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/old/main/main.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/old/main/main.tsx",
+        "sourceLocation": "L1",
+        "community": 16,
+        "communityLabel": "@/view/page/login/logic",
+        "communityHash": "844dbf02085ffe4d09b882dd47d47a5847655231057dbd7ff29055c99ec1c1aa"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/main/main.tsx::MainPage",
+      "attributes": {
+        "label": "function MainPage",
+        "sourceFile": "vite-project-react/src/view/pages/old/main/main.tsx",
+        "sourceLocation": "L4",
+        "community": 16,
+        "communityLabel": "@/view/page/login/logic",
+        "communityHash": "844dbf02085ffe4d09b882dd47d47a5847655231057dbd7ff29055c99ec1c1aa"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+        "sourceLocation": "L1",
+        "community": 44,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+        "communityHash": "60ba24940c3d638937cd2f0958cc04fbacd016385b90e2a94fb07d107437ec0e"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::renderContentWithMentions",
+      "attributes": {
+        "label": "function renderContentWithMentions",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+        "sourceLocation": "L222",
+        "community": 44,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+        "communityHash": "60ba24940c3d638937cd2f0958cc04fbacd016385b90e2a94fb07d107437ec0e"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::ShowBlogPage",
+      "attributes": {
+        "label": "function ShowBlogPage",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+        "sourceLocation": "L1",
+        "community": 44,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+        "communityHash": "60ba24940c3d638937cd2f0958cc04fbacd016385b90e2a94fb07d107437ec0e"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceLocation": "L1",
+        "community": 45,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "communityHash": "becf6ef65bde3e5c1a22675fa0e9a3503d45594406829a9fad520c9bb83224f7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::CommentItem",
+      "attributes": {
+        "label": "interface CommentItem",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceLocation": "L15",
+        "community": 45,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "communityHash": "becf6ef65bde3e5c1a22675fa0e9a3503d45594406829a9fad520c9bb83224f7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::formatDate",
+      "attributes": {
+        "label": "function formatDate",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceLocation": "L53",
+        "community": 45,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "communityHash": "becf6ef65bde3e5c1a22675fa0e9a3503d45594406829a9fad520c9bb83224f7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadComments",
+      "attributes": {
+        "label": "function loadComments",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceLocation": "L26",
+        "community": 45,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "communityHash": "becf6ef65bde3e5c1a22675fa0e9a3503d45594406829a9fad520c9bb83224f7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadSavedDocs",
+      "attributes": {
+        "label": "function loadSavedDocs",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceLocation": "L42",
+        "community": 45,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "communityHash": "becf6ef65bde3e5c1a22675fa0e9a3503d45594406829a9fad520c9bb83224f7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::renderContentWithMentions",
+      "attributes": {
+        "label": "function renderContentWithMentions",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceLocation": "L64",
+        "community": 45,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "communityHash": "becf6ef65bde3e5c1a22675fa0e9a3503d45594406829a9fad520c9bb83224f7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::saveComments",
+      "attributes": {
+        "label": "function saveComments",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceLocation": "L37",
+        "community": 45,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "communityHash": "becf6ef65bde3e5c1a22675fa0e9a3503d45594406829a9fad520c9bb83224f7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::SavedMarkdownDoc",
+      "attributes": {
+        "label": "interface SavedMarkdownDoc",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceLocation": "L4",
+        "community": 45,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "communityHash": "becf6ef65bde3e5c1a22675fa0e9a3503d45594406829a9fad520c9bb83224f7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage",
+      "attributes": {
+        "label": "function ShowBlogPage",
+        "sourceFile": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "sourceLocation": "L83",
+        "community": 45,
+        "communityLabel": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+        "communityHash": "becf6ef65bde3e5c1a22675fa0e9a3503d45594406829a9fad520c9bb83224f7"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "sourceLocation": "L1",
+        "community": 1,
+        "communityLabel": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "communityHash": "937315f08859ae202d37d15e26ed407d8f33d08e303dddd0418689555430b0c3"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx::BlogPost",
+      "attributes": {
+        "label": "interface BlogPost",
+        "sourceFile": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "sourceLocation": "L13",
+        "community": 1,
+        "communityLabel": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "communityHash": "937315f08859ae202d37d15e26ed407d8f33d08e303dddd0418689555430b0c3"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx::TechCommunityPage",
+      "attributes": {
+        "label": "function TechCommunityPage",
+        "sourceFile": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "sourceLocation": "L37",
+        "community": 1,
+        "communityLabel": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+        "communityHash": "937315f08859ae202d37d15e26ed407d8f33d08e303dddd0418689555430b0c3"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/test/TestPage.tsx",
+      "attributes": {
+        "label": "vite-project-react/src/view/pages/test/TestPage.tsx",
+        "sourceFile": "vite-project-react/src/view/pages/test/TestPage.tsx",
+        "sourceLocation": "L1",
+        "community": 0,
+        "communityLabel": "vite-project-react/src/compoents/Sidebar.tsx",
+        "communityHash": "0eb9d67872c1dc04b659e13ca2e181782c42d85f6e0290fa7458133f7c3e9af9"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/test/TestPage.tsx::TestPage",
+      "attributes": {
+        "label": "function TestPage",
+        "sourceFile": "vite-project-react/src/view/pages/test/TestPage.tsx",
+        "sourceLocation": "L5",
+        "community": 0,
+        "communityLabel": "vite-project-react/src/compoents/Sidebar.tsx",
+        "communityHash": "0eb9d67872c1dc04b659e13ca2e181782c42d85f6e0290fa7458133f7c3e9af9"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts",
+      "attributes": {
+        "label": "vite-project-react/vite.config.ts",
+        "sourceFile": "vite-project-react/vite.config.ts",
+        "sourceLocation": "L1",
+        "community": 22,
+        "communityLabel": "vite-project-react/vite.config.ts",
+        "communityHash": "7114f66cb6b303714dc93bda4c034762145c05c3fe3fe353e2216e4e754f8ca8"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "vite-project-react/eslint.config.js|imports|module:@eslint/js",
+      "source": "vite-project-react/eslint.config.js",
+      "target": "module:@eslint/js",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/eslint.config.js|imports|module:eslint-plugin-react-hooks",
+      "source": "vite-project-react/eslint.config.js",
+      "target": "module:eslint-plugin-react-hooks",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/eslint.config.js|imports|module:eslint-plugin-react-refresh",
+      "source": "vite-project-react/eslint.config.js",
+      "target": "module:eslint-plugin-react-refresh",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/eslint.config.js|calls|module:eslint/config",
+      "source": "vite-project-react/eslint.config.js",
+      "target": "module:eslint/config",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/eslint.config.js|imports_from|module:eslint/config",
+      "source": "vite-project-react/eslint.config.js",
+      "target": "module:eslint/config",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/eslint.config.js|imports|module:globals",
+      "source": "vite-project-react/eslint.config.js",
+      "target": "module:globals",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/eslint.config.js|imports|module:typescript-eslint",
+      "source": "vite-project-react/eslint.config.js",
+      "target": "module:typescript-eslint",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js|imports|module:fs",
+      "source": "vite-project-react/scripts/init-components.js",
+      "target": "module:fs",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js|calls|module:path",
+      "source": "vite-project-react/scripts/init-components.js",
+      "target": "module:path",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js|imports|module:path",
+      "source": "vite-project-react/scripts/init-components.js",
+      "target": "module:path",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js|calls|module:url",
+      "source": "vite-project-react/scripts/init-components.js",
+      "target": "module:url",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js|imports_from|module:url",
+      "source": "vite-project-react/scripts/init-components.js",
+      "target": "module:url",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js|contains|vite-project-react/scripts/init-components.js::createCssFile",
+      "source": "vite-project-react/scripts/init-components.js",
+      "target": "vite-project-react/scripts/init-components.js::createCssFile",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js|calls|vite-project-react/scripts/init-components.js::walk",
+      "source": "vite-project-react/scripts/init-components.js",
+      "target": "vite-project-react/scripts/init-components.js::walk",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js|contains|vite-project-react/scripts/init-components.js::walk",
+      "source": "vite-project-react/scripts/init-components.js",
+      "target": "vite-project-react/scripts/init-components.js::walk",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js::createCssFile|calls|module:fs",
+      "source": "vite-project-react/scripts/init-components.js::createCssFile",
+      "target": "module:fs",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js::createCssFile|calls|module:path",
+      "source": "vite-project-react/scripts/init-components.js::createCssFile",
+      "target": "module:path",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js::walk|calls|module:fs",
+      "source": "vite-project-react/scripts/init-components.js::walk",
+      "target": "module:fs",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js::walk|calls|module:path",
+      "source": "vite-project-react/scripts/init-components.js::walk",
+      "target": "module:path",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/scripts/init-components.js::walk|calls|vite-project-react/scripts/init-components.js::walk",
+      "source": "vite-project-react/scripts/init-components.js::walk",
+      "target": "vite-project-react/scripts/init-components.js::walk",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/apis/graphql/client.tsx|imports_from|module:urql",
+      "source": "vite-project-react/src/apis/graphql/client.tsx",
+      "target": "module:urql",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/apis/graphql/client.tsx|contains|vite-project-react/src/apis/graphql/client.tsx::client",
+      "source": "vite-project-react/src/apis/graphql/client.tsx",
+      "target": "vite-project-react/src/apis/graphql/client.tsx::client",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/App.tsx|imports|module:@/view/layouts/mainLayout",
+      "source": "vite-project-react/src/App.tsx",
+      "target": "module:@/view/layouts/mainLayout",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/App.tsx|imports_from|module:react-router-dom",
+      "source": "vite-project-react/src/App.tsx",
+      "target": "module:react-router-dom",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/App.tsx|imports_from|module:urql",
+      "source": "vite-project-react/src/App.tsx",
+      "target": "module:urql",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/App.tsx|imports_from|vite-project-react/src/apis/graphql/client.tsx",
+      "source": "vite-project-react/src/App.tsx",
+      "target": "vite-project-react/src/apis/graphql/client.tsx",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/App.tsx|contains|vite-project-react/src/App.tsx::App",
+      "source": "vite-project-react/src/App.tsx",
+      "target": "vite-project-react/src/App.tsx::App",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/App.tsx|imports|vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "source": "vite-project-react/src/App.tsx",
+      "target": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/App.tsx|imports|vite-project-react/src/view/pages/test/TestPage.tsx",
+      "source": "vite-project-react/src/App.tsx",
+      "target": "vite-project-react/src/view/pages/test/TestPage.tsx",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/AboutCard.tsx|calls|module:prop-types",
+      "source": "vite-project-react/src/compoents/AboutCard.tsx",
+      "target": "module:prop-types",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/AboutCard.tsx|imports|module:prop-types",
+      "source": "vite-project-react/src/compoents/AboutCard.tsx",
+      "target": "module:prop-types",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/AboutCard.tsx|contains|vite-project-react/src/compoents/AboutCard.tsx::AboutCard",
+      "source": "vite-project-react/src/compoents/AboutCard.tsx",
+      "target": "vite-project-react/src/compoents/AboutCard.tsx::AboutCard",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx|imports|module:react",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx|contains|vite-project-react/src/compoents/BlogCard.tsx::BlogAuthor",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx",
+      "target": "vite-project-react/src/compoents/BlogCard.tsx::BlogAuthor",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx|contains|vite-project-react/src/compoents/BlogCard.tsx::BlogCard",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx",
+      "target": "vite-project-react/src/compoents/BlogCard.tsx::BlogCard",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx|contains|vite-project-react/src/compoents/BlogCard.tsx::BlogCardProps",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx",
+      "target": "vite-project-react/src/compoents/BlogCard.tsx::BlogCardProps",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx|contains|vite-project-react/src/compoents/BlogCard.tsx::formatNumber",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx",
+      "target": "vite-project-react/src/compoents/BlogCard.tsx::formatNumber",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx|contains|vite-project-react/src/compoents/BlogCard.tsx::getTagClass",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx",
+      "target": "vite-project-react/src/compoents/BlogCard.tsx::getTagClass",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx|contains|vite-project-react/src/compoents/BlogCard.tsx::Icon",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx",
+      "target": "vite-project-react/src/compoents/BlogCard.tsx::Icon",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx::BlogCard|calls|module:react",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx::BlogCard",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx::BlogCard|calls|vite-project-react/src/compoents/BlogCard.tsx::formatNumber",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx::BlogCard",
+      "target": "vite-project-react/src/compoents/BlogCard.tsx::formatNumber",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/BlogCard.tsx::BlogCard|calls|vite-project-react/src/compoents/BlogCard.tsx::getTagClass",
+      "source": "vite-project-react/src/compoents/BlogCard.tsx::BlogCard",
+      "target": "vite-project-react/src/compoents/BlogCard.tsx::getTagClass",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/CategoryTabs.tsx|imports|module:react",
+      "source": "vite-project-react/src/compoents/CategoryTabs.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/CategoryTabs.tsx|contains|vite-project-react/src/compoents/CategoryTabs.tsx::CategoryTabs",
+      "source": "vite-project-react/src/compoents/CategoryTabs.tsx",
+      "target": "vite-project-react/src/compoents/CategoryTabs.tsx::CategoryTabs",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/CategoryTabs.tsx|contains|vite-project-react/src/compoents/CategoryTabs.tsx::CategoryTabsProps",
+      "source": "vite-project-react/src/compoents/CategoryTabs.tsx",
+      "target": "vite-project-react/src/compoents/CategoryTabs.tsx::CategoryTabsProps",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/HotArticles.tsx|imports|module:react",
+      "source": "vite-project-react/src/compoents/HotArticles.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/HotArticles.tsx|contains|vite-project-react/src/compoents/HotArticles.tsx::HotArticle",
+      "source": "vite-project-react/src/compoents/HotArticles.tsx",
+      "target": "vite-project-react/src/compoents/HotArticles.tsx::HotArticle",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/HotArticles.tsx|contains|vite-project-react/src/compoents/HotArticles.tsx::HotArticles",
+      "source": "vite-project-react/src/compoents/HotArticles.tsx",
+      "target": "vite-project-react/src/compoents/HotArticles.tsx::HotArticles",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/HotArticles.tsx|contains|vite-project-react/src/compoents/HotArticles.tsx::HotArticlesProps",
+      "source": "vite-project-react/src/compoents/HotArticles.tsx",
+      "target": "vite-project-react/src/compoents/HotArticles.tsx::HotArticlesProps",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Navbar.tsx|imports|module:react",
+      "source": "vite-project-react/src/compoents/Navbar.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Navbar.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/compoents/Navbar.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Navbar.tsx|contains|vite-project-react/src/compoents/Navbar.tsx::Navbar",
+      "source": "vite-project-react/src/compoents/Navbar.tsx",
+      "target": "vite-project-react/src/compoents/Navbar.tsx::Navbar",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Navbar.tsx|contains|vite-project-react/src/compoents/Navbar.tsx::NavbarProps",
+      "source": "vite-project-react/src/compoents/Navbar.tsx",
+      "target": "vite-project-react/src/compoents/Navbar.tsx::NavbarProps",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Navbar.tsx::Navbar|calls|module:react",
+      "source": "vite-project-react/src/compoents/Navbar.tsx::Navbar",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx|imports|module:@mui/icons-material/WhatsApp",
+      "source": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx",
+      "target": "module:@mui/icons-material/WhatsApp",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx|contains|vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx::CircleFuctionButton",
+      "source": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx",
+      "target": "vite-project-react/src/compoents/old/FunctionButton/circleFuctionButton.tsx::CircleFuctionButton",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx|imports|module:@mui/icons-material/WhatsApp",
+      "source": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx",
+      "target": "module:@mui/icons-material/WhatsApp",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx|contains|vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx::IconsFunctionButton",
+      "source": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx",
+      "target": "vite-project-react/src/compoents/old/FunctionButton/iconsFunctionButton.tsx::IconsFunctionButton",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx|imports|module:@mui/icons-material/Home",
+      "source": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx",
+      "target": "module:@mui/icons-material/Home",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx|contains|vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx::SquareFuctionButton",
+      "source": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx",
+      "target": "vite-project-react/src/compoents/old/FunctionButton/squareFuctionButton.tsx::SquareFuctionButton",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx|contains|vite-project-react/src/compoents/old/LinkButton/linkButton.tsx::LinkButton",
+      "source": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx",
+      "target": "vite-project-react/src/compoents/old/LinkButton/linkButton.tsx::LinkButton",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx|contains|vite-project-react/src/compoents/old/NavMenu/navMenu.tsx::NavMenu",
+      "source": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx",
+      "target": "vite-project-react/src/compoents/old/NavMenu/navMenu.tsx::NavMenu",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx|contains|vite-project-react/src/compoents/old/PersonButton/personButton.tsx::PersonButton",
+      "source": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx",
+      "target": "vite-project-react/src/compoents/old/PersonButton/personButton.tsx::PersonButton",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx|contains|vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx::SearchTextFiled",
+      "source": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx",
+      "target": "vite-project-react/src/compoents/old/searchTextFiled/searchTextFiled.tsx::SearchTextFiled",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx|imports|module:react",
+      "source": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx|contains|vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthor",
+      "source": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+      "target": "vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthor",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx|contains|vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthors",
+      "source": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+      "target": "vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthors",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx|contains|vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthorsProps",
+      "source": "vite-project-react/src/compoents/RecommendedAuthors.tsx",
+      "target": "vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthorsProps",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthors|calls|module:react",
+      "source": "vite-project-react/src/compoents/RecommendedAuthors.tsx::RecommendedAuthors",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Sidebar.tsx|imports|module:@/compoents/AboutCard",
+      "source": "vite-project-react/src/compoents/Sidebar.tsx",
+      "target": "module:@/compoents/AboutCard",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Sidebar.tsx|imports|module:@/compoents/HotArticles",
+      "source": "vite-project-react/src/compoents/Sidebar.tsx",
+      "target": "module:@/compoents/HotArticles",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Sidebar.tsx|imports|module:@/compoents/RecommendedAuthors",
+      "source": "vite-project-react/src/compoents/Sidebar.tsx",
+      "target": "module:@/compoents/RecommendedAuthors",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Sidebar.tsx|imports|module:react",
+      "source": "vite-project-react/src/compoents/Sidebar.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Sidebar.tsx|contains|vite-project-react/src/compoents/Sidebar.tsx::Sidebar",
+      "source": "vite-project-react/src/compoents/Sidebar.tsx",
+      "target": "vite-project-react/src/compoents/Sidebar.tsx::Sidebar",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/Sidebar.tsx|contains|vite-project-react/src/compoents/Sidebar.tsx::SidebarProps",
+      "source": "vite-project-react/src/compoents/Sidebar.tsx",
+      "target": "vite-project-react/src/compoents/Sidebar.tsx::SidebarProps",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/SortToolbar.tsx|imports|module:react",
+      "source": "vite-project-react/src/compoents/SortToolbar.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/SortToolbar.tsx|contains|vite-project-react/src/compoents/SortToolbar.tsx::SortToolbar",
+      "source": "vite-project-react/src/compoents/SortToolbar.tsx",
+      "target": "vite-project-react/src/compoents/SortToolbar.tsx::SortToolbar",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/compoents/SortToolbar.tsx|contains|vite-project-react/src/compoents/SortToolbar.tsx::SortToolbarProps",
+      "source": "vite-project-react/src/compoents/SortToolbar.tsx",
+      "target": "vite-project-react/src/compoents/SortToolbar.tsx::SortToolbarProps",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/main.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/main.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/main.tsx|calls|module:react-dom/client",
+      "source": "vite-project-react/src/main.tsx",
+      "target": "module:react-dom/client",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/main.tsx|imports_from|module:react-dom/client",
+      "source": "vite-project-react/src/main.tsx",
+      "target": "module:react-dom/client",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/main.tsx|imports|vite-project-react/src/App.tsx",
+      "source": "vite-project-react/src/main.tsx",
+      "target": "vite-project-react/src/App.tsx",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/layouts/mainLayout.tsx|imports|module:@/compoents/old/NavMenu/navMenu",
+      "source": "vite-project-react/src/view/layouts/mainLayout.tsx",
+      "target": "module:@/compoents/old/NavMenu/navMenu",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/layouts/mainLayout.tsx|imports|module:@mui/material/Autocomplete",
+      "source": "vite-project-react/src/view/layouts/mainLayout.tsx",
+      "target": "module:@mui/material/Autocomplete",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/layouts/mainLayout.tsx|imports|module:@mui/material/Divider",
+      "source": "vite-project-react/src/view/layouts/mainLayout.tsx",
+      "target": "module:@mui/material/Divider",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/layouts/mainLayout.tsx|imports|module:@mui/material/TextField",
+      "source": "vite-project-react/src/view/layouts/mainLayout.tsx",
+      "target": "module:@mui/material/TextField",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/layouts/mainLayout.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/view/layouts/mainLayout.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/layouts/mainLayout.tsx|contains|vite-project-react/src/view/layouts/mainLayout.tsx::MainLayout",
+      "source": "vite-project-react/src/view/layouts/mainLayout.tsx",
+      "target": "vite-project-react/src/view/layouts/mainLayout.tsx::MainLayout",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/layouts/mainLayout.tsx::MainLayout|calls|module:react",
+      "source": "vite-project-react/src/view/layouts/mainLayout.tsx::MainLayout",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx|imports|vite-project-react/src/view/pages/demo/demo001/assets/hero.png",
+      "source": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx",
+      "target": "vite-project-react/src/view/pages/demo/demo001/assets/hero.png",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx|imports|vite-project-react/src/view/pages/demo/demo001/assets/react.svg",
+      "source": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx",
+      "target": "vite-project-react/src/view/pages/demo/demo001/assets/react.svg",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx|imports|vite-project-react/src/view/pages/demo/demo001/assets/vite.svg",
+      "source": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx",
+      "target": "vite-project-react/src/view/pages/demo/demo001/assets/vite.svg",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx|contains|vite-project-react/src/view/pages/demo/demo001/demo001.tsx::Demo001",
+      "source": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx",
+      "target": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx::Demo001",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx::Demo001|calls|module:react",
+      "source": "vite-project-react/src/view/pages/demo/demo001/demo001.tsx::Demo001",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx|imports|module:@mui/material/Button",
+      "source": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx",
+      "target": "module:@mui/material/Button",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx|imports_from|module:urql",
+      "source": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx",
+      "target": "module:urql",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx|contains|vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx::GraphqlDemoPage",
+      "source": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx",
+      "target": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx::GraphqlDemoPage",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx::GraphqlDemoPage|calls|module:react",
+      "source": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx::GraphqlDemoPage",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx::GraphqlDemoPage|calls|module:urql",
+      "source": "vite-project-react/src/view/pages/demo/graphql_demo_page/graphqlDemo.tsx::GraphqlDemoPage",
+      "target": "module:urql",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx|contains|vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::EditBlogPage",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::EditBlogPage",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx|contains|vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::htmlToMarkdown",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::htmlToMarkdown",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx|contains|vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::loadSavedDocs",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::loadSavedDocs",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx|contains|vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::SavedMarkdownDoc",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::SavedMarkdownDoc",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx|contains|vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::saveDocToStorage",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::saveDocToStorage",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::EditBlogPage|calls|module:react",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::EditBlogPage",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::EditBlogPage|calls|vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::htmlToMarkdown",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::EditBlogPage",
+      "target": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::htmlToMarkdown",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::EditBlogPage|calls|vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::saveDocToStorage",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::EditBlogPage",
+      "target": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::saveDocToStorage",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::saveDocToStorage|calls|vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::loadSavedDocs",
+      "source": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::saveDocToStorage",
+      "target": "vite-project-react/src/view/pages/old/editBlog/editBlog.tsx::loadSavedDocs",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/logic.tsx|imports_from|module:@/store/g0001",
+      "source": "vite-project-react/src/view/pages/old/login/logic.tsx",
+      "target": "module:@/store/g0001",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/logic.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/view/pages/old/login/logic.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/logic.tsx|contains|vite-project-react/src/view/pages/old/login/logic.tsx::dataInterface",
+      "source": "vite-project-react/src/view/pages/old/login/logic.tsx",
+      "target": "vite-project-react/src/view/pages/old/login/logic.tsx::dataInterface",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/logic.tsx|contains|vite-project-react/src/view/pages/old/login/logic.tsx::useViewLogicState",
+      "source": "vite-project-react/src/view/pages/old/login/logic.tsx",
+      "target": "vite-project-react/src/view/pages/old/login/logic.tsx::useViewLogicState",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/logic.tsx::useViewLogicState|calls|module:@/store/g0001",
+      "source": "vite-project-react/src/view/pages/old/login/logic.tsx::useViewLogicState",
+      "target": "module:@/store/g0001",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/logic.tsx::useViewLogicState|calls|module:react",
+      "source": "vite-project-react/src/view/pages/old/login/logic.tsx::useViewLogicState",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/login.tsx|imports_from|module:@/view/page/login/logic",
+      "source": "vite-project-react/src/view/pages/old/login/login.tsx",
+      "target": "module:@/view/page/login/logic",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/login.tsx|contains|vite-project-react/src/view/pages/old/login/login.tsx::LoginPage",
+      "source": "vite-project-react/src/view/pages/old/login/login.tsx",
+      "target": "vite-project-react/src/view/pages/old/login/login.tsx::LoginPage",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/login/login.tsx::LoginPage|calls|module:@/view/page/login/logic",
+      "source": "vite-project-react/src/view/pages/old/login/login.tsx::LoginPage",
+      "target": "module:@/view/page/login/logic",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/main/main.tsx|imports_from|module:@/view/page/login/logic",
+      "source": "vite-project-react/src/view/pages/old/main/main.tsx",
+      "target": "module:@/view/page/login/logic",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/main/main.tsx|contains|vite-project-react/src/view/pages/old/main/main.tsx::MainPage",
+      "source": "vite-project-react/src/view/pages/old/main/main.tsx",
+      "target": "vite-project-react/src/view/pages/old/main/main.tsx::MainPage",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/main/main.tsx::MainPage|calls|module:@/view/page/login/logic",
+      "source": "vite-project-react/src/view/pages/old/main/main.tsx::MainPage",
+      "target": "module:@/view/page/login/logic",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx|contains|vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::renderContentWithMentions",
+      "source": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::renderContentWithMentions",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx|contains|vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::ShowBlogPage",
+      "source": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::ShowBlogPage",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::ShowBlogPage|calls|vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::renderContentWithMentions",
+      "source": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::ShowBlogPage",
+      "target": "vite-project-react/src/view/pages/old/showBlog/component/showBlogComment.tsx::renderContentWithMentions",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx|contains|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::CommentItem",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::CommentItem",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx|contains|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::formatDate",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::formatDate",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx|contains|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadComments",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadComments",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx|contains|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadSavedDocs",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadSavedDocs",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx|contains|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::renderContentWithMentions",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::renderContentWithMentions",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx|contains|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::saveComments",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::saveComments",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx|contains|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::SavedMarkdownDoc",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::SavedMarkdownDoc",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx|contains|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage|calls|module:react",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage|calls|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::formatDate",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::formatDate",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage|calls|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadComments",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadComments",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage|calls|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadSavedDocs",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::loadSavedDocs",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage|calls|vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::saveComments",
+      "source": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::ShowBlogPage",
+      "target": "vite-project-react/src/view/pages/old/showBlog/showBlog.tsx::saveComments",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx|imports|module:@/compoents/BlogCard",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "target": "module:@/compoents/BlogCard",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx|imports|module:@/compoents/CategoryTabs",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "target": "module:@/compoents/CategoryTabs",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx|imports|module:@/compoents/Navbar",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "target": "module:@/compoents/Navbar",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx|imports|module:@/compoents/Sidebar",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "target": "module:@/compoents/Sidebar",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx|imports|module:@/compoents/SortToolbar",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "target": "module:@/compoents/SortToolbar",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx|imports|module:react",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx|imports_from|module:react",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "target": "module:react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx|contains|vite-project-react/src/view/pages/TechCommunityPage.tsx::BlogPost",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "target": "vite-project-react/src/view/pages/TechCommunityPage.tsx::BlogPost",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx|contains|vite-project-react/src/view/pages/TechCommunityPage.tsx::TechCommunityPage",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx",
+      "target": "vite-project-react/src/view/pages/TechCommunityPage.tsx::TechCommunityPage",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/TechCommunityPage.tsx::TechCommunityPage|calls|module:react",
+      "source": "vite-project-react/src/view/pages/TechCommunityPage.tsx::TechCommunityPage",
+      "target": "module:react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/test/TestPage.tsx|imports|module:@/compoents/BlogCard",
+      "source": "vite-project-react/src/view/pages/test/TestPage.tsx",
+      "target": "module:@/compoents/BlogCard",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/test/TestPage.tsx|imports|module:@/compoents/HotArticles",
+      "source": "vite-project-react/src/view/pages/test/TestPage.tsx",
+      "target": "module:@/compoents/HotArticles",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/test/TestPage.tsx|imports|module:@/compoents/RecommendedAuthors",
+      "source": "vite-project-react/src/view/pages/test/TestPage.tsx",
+      "target": "module:@/compoents/RecommendedAuthors",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/src/view/pages/test/TestPage.tsx|contains|vite-project-react/src/view/pages/test/TestPage.tsx::TestPage",
+      "source": "vite-project-react/src/view/pages/test/TestPage.tsx",
+      "target": "vite-project-react/src/view/pages/test/TestPage.tsx::TestPage",
+      "attributes": {
+        "relation": "contains",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts|calls|module:@rolldown/plugin-babel",
+      "source": "vite-project-react/vite.config.ts",
+      "target": "module:@rolldown/plugin-babel",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts|imports|module:@rolldown/plugin-babel",
+      "source": "vite-project-react/vite.config.ts",
+      "target": "module:@rolldown/plugin-babel",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts|calls|module:@vitejs/plugin-react",
+      "source": "vite-project-react/vite.config.ts",
+      "target": "module:@vitejs/plugin-react",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts|imports|module:@vitejs/plugin-react",
+      "source": "vite-project-react/vite.config.ts",
+      "target": "module:@vitejs/plugin-react",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts|imports_from|module:@vitejs/plugin-react",
+      "source": "vite-project-react/vite.config.ts",
+      "target": "module:@vitejs/plugin-react",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts|calls|module:path",
+      "source": "vite-project-react/vite.config.ts",
+      "target": "module:path",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts|imports|module:path",
+      "source": "vite-project-react/vite.config.ts",
+      "target": "module:path",
+      "attributes": {
+        "relation": "imports",
+        "confidence": "EXTRACTED"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts|calls|module:vite",
+      "source": "vite-project-react/vite.config.ts",
+      "target": "module:vite",
+      "attributes": {
+        "relation": "calls",
+        "confidence": "INFERRED"
+      }
+    },
+    {
+      "key": "vite-project-react/vite.config.ts|imports_from|module:vite",
+      "source": "vite-project-react/vite.config.ts",
+      "target": "module:vite",
+      "attributes": {
+        "relation": "imports_from",
+        "confidence": "EXTRACTED"
+      }
+    }
+  ]
+}

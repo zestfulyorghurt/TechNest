@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSDN 文章编辑发布页原型</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f4f7f9;
+            --panel: #ffffff;
+            --text: #1a2a3a;
+            --text-soft: #4a5a6a;
+            --muted: #8a9aaa;
+            --placeholder: #b4bdc8;
+            --line: #e8edf4;
+            --line-strong: #d5dfdc;
+            --soft: #f8f9fa;
+            --primary: #4f6ef7;
+            --primary-dark: #3b5de7;
+            --brand: #fc5531;
+            --brand-dark: #e74420;
+            --green: #247b63;
+            --shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 16px 40px rgba(26, 42, 58, 0.10);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 128px 24px 96px;
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .icon-sprite {
+            display: none;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .icon-sm {
+            width: 16px;
+            height: 16px;
+        }
+
+        .topbar {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 30;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            background: var(--panel);
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        .topbar__left,
+        .topbar__right,
+        .page-title,
+        .sync-pill,
+        .notice-link {
+            display: flex;
+            align-items: center;
+        }
+
+        .topbar__left {
+            gap: 24px;
+            min-width: 0;
+        }
+
+        .logo {
+            font-size: 30px;
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: 0;
+            color: #3d3f46;
+            white-space: nowrap;
+            transform: skew(-8deg);
+        }
+
+        .logo::first-letter {
+            color: var(--brand);
+        }
+
+        .page-title {
+            gap: 12px;
+            color: #111827;
+            font-size: 22px;
+            white-space: nowrap;
+        }
+
+        .page-title__back {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #111827;
+        }
+
+        .page-title__caret {
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 8px solid #111827;
+            margin-left: 2px;
+        }
+
+        .topbar__right {
+            gap: 24px;
+            color: #1f2937;
+        }
+
+        .sync-pill {
+            gap: 6px;
+            height: 38px;
+            padding: 0 10px;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            background: #fff;
+            color: #111827;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        .sync-pill__mark {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--brand);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 50% 28%, #ffe4c8 0 10%, transparent 11%),
+                linear-gradient(145deg, #2d3748 0 44%, #6b8fb8 45% 100%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        .notice-link {
+            position: relative;
+            gap: 2px;
+            color: #111827;
+            font-size: 16px;
+        }
+
+        .notice-link::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            right: -8px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--brand);
+        }
+
+        .toolbar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            z-index: 29;
+            height: 68px;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            background: var(--panel);
+            border-bottom: 1px solid var(--line);
+            box-shadow: 0 1px 2px rgba(26, 42, 58, 0.02);
+        }
+
+        .toolbar__scroll {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            max-width: 1660px;
+            padding: 0 32px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .tool-btn {
+            width: 48px;
+            height: 56px;
+            border: 0;
+            border-radius: 6px;
+            background: transparent;
+            color: #5a5d6e;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: background 0.18s ease, color 0.18s ease;
+        }
+
+        .tool-btn:hover,
+        .tool-btn.is-active {
+            color: var(--primary);
+            background: #f1f5ff;
+        }
+
+        .tool-btn__label {
+            display: block;
+            line-height: 18px;
+        }
+
+        .tool-separator {
+            width: 1px;
+            height: 32px;
+            background: var(--line);
+            margin: 0 8px;
+            flex-shrink: 0;
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: minmax(260px, 350px) minmax(620px, 1020px) minmax(112px, 130px);
+            gap: 60px;
+            align-items: start;
+            max-width: 1848px;
+            margin: 38px auto 0;
+        }
+
+        .catalog-panel {
+            position: sticky;
+            top: 166px;
+            min-height: calc(100vh - 236px);
+            background: var(--panel);
+            border-radius: 6px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .catalog-panel__header {
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 1px solid var(--line);
+            color: #222631;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .catalog-panel__collapse {
+            width: 32px;
+            height: 32px;
+            border: 0;
+            background: transparent;
+            color: #111827;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .catalog-panel__body {
+            padding: 24px 22px;
+        }
+
+        .outline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            color: var(--text-soft);
+            font-size: 14px;
+        }
+
+        .outline-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 28px;
+            padding: 5px 8px;
+            border-radius: 6px;
+            color: #4a5a6a;
+            transition: background 0.18s ease, color 0.18s ease;
+        }
+
+        .outline-item:hover {
+            background: var(--soft);
+            color: var(--primary);
+        }
+
+        .outline-item::before {
+            content: "";
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: 0.55;
+        }
+
+        .outline-item.level-3 {
+            margin-left: 18px;
+            color: #6b7a8a;
+        }
+
+        .outline-empty {
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #3d4658;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .editor-area {
+            min-width: 0;
+        }
+
+        .editor-paper {
+            min-height: calc(100vh - 198px);
+            background: var(--panel);
+            border-radius: 6px;
+            box-shadow: var(--shadow);
+            padding: 40px 80px 84px;
+        }
+
+        .title-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 24px;
+            align-items: start;
+            min-height: 70px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 22px;
+        }
+
+        .article-title {
+            min-height: 44px;
+            color: #1d2939;
+            font-size: 28px;
+            line-height: 44px;
+            font-weight: 700;
+            outline: none;
+            word-break: break-word;
+        }
+
+        .article-title:empty::before {
+            content: attr(data-placeholder);
+            color: #a8b2c1;
+        }
+
+        .title-helper {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 2px;
+            color: #111827;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .magic-btn {
+            width: 40px;
+            height: 40px;
+            border: 0;
+            border-radius: 8px;
+            background: #f3f5f8;
+            color: #303646;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.18s ease, color 0.18s ease;
+        }
+
+        .magic-btn:hover {
+            background: #eef3ff;
+            color: var(--primary);
+        }
+
+        .title-helper__text.is-ready {
+            color: var(--green);
+        }
+
+        .title-helper__text.is-warning {
+            color: var(--brand);
+        }
+
+        .editor-body-wrap {
+            position: relative;
+            min-height: 520px;
+            padding-top: 34px;
+        }
+
+        .article-editor {
+            position: relative;
+            z-index: 2;
+            min-height: 520px;
+            outline: none;
+            color: #243142;
+            font-size: 17px;
+            line-height: 1.9;
+            word-break: break-word;
+        }
+
+        .article-editor h2 {
+            margin: 28px 0 12px;
+            color: #182233;
+            font-size: 24px;
+            line-height: 1.45;
+        }
+
+        .article-editor h3 {
+            margin: 22px 0 10px;
+            color: #1f2a3a;
+            font-size: 19px;
+            line-height: 1.45;
+        }
+
+        .article-editor p {
+            margin-bottom: 14px;
+        }
+
+        .article-editor blockquote {
+            margin: 16px 0;
+            padding: 10px 14px;
+            border-left: 4px solid var(--primary);
+            background: #f5f7ff;
+            color: #4a5a6a;
+            border-radius: 4px;
+        }
+
+        .article-editor pre {
+            margin: 16px 0;
+            padding: 16px;
+            border-radius: 8px;
+            background: #1e2a3a;
+            color: #e8edf4;
+            overflow-x: auto;
+            line-height: 1.65;
+            font-size: 14px;
+        }
+
+        .editor-hints {
+            position: absolute;
+            z-index: 1;
+            top: 34px;
+            left: 0;
+            right: 0;
+            pointer-events: none;
+            color: #b7bdc6;
+            font-size: 20px;
+            line-height: 2;
+        }
+
+        .editor-hints.is-hidden {
+            display: none;
+        }
+
+        .editor-hints strong {
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .ai-panel {
+            position: sticky;
+            top: 170px;
+            width: 130px;
+            background: var(--panel);
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .ai-panel__header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            height: 54px;
+            border-bottom: 1px solid #f1f3f6;
+            color: #222631;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .ai-panel__mark {
+            width: 25px;
+            height: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 7px;
+            color: #fff;
+            background: linear-gradient(135deg, #a879ff, #6f8cff);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .ai-panel__body {
+            padding: 10px 0;
+        }
+
+        .ai-action {
+            width: 100%;
+            height: 46px;
+            border: 0;
+            background: #fff;
+            color: #222631;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 14px;
+            transition: background 0.18s ease, color 0.18s ease;
+        }
+
+        .ai-action:hover {
+            background: #f6f8ff;
+            color: var(--primary);
+        }
+
+        .bottom-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 32;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--panel);
+            border-top: 1px solid var(--line);
+            box-shadow: 0 -2px 8px rgba(26, 42, 58, 0.03);
+        }
+
+        .bottom-bar__inner {
+            width: min(1100px, calc(100vw - 48px));
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .word-count {
+            color: #111827;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        .publish-settings {
+            position: relative;
+        }
+
+        .settings-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: 0;
+            background: transparent;
+            color: #111827;
+            font-size: 18px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .settings-trigger .icon {
+            transition: transform 0.18s ease;
+        }
+
+        .publish-settings.is-open .settings-trigger .icon {
+            transform: rotate(180deg);
+        }
+
+        .bottom-spacer {
+            flex: 1;
+        }
+
+        .footer-btn {
+            height: 50px;
+            min-width: 145px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 7px;
+            border: 1px solid var(--line-strong);
+            background: #fff;
+            color: #111827;
+            font-size: 18px;
+            font-weight: 700;
+            transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+        }
+
+        .footer-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #f8fbff;
+        }
+
+        .footer-btn--primary {
+            min-width: 120px;
+            border-color: var(--brand);
+            color: #fff;
+            background: var(--brand);
+        }
+
+        .footer-btn--primary:hover {
+            border-color: var(--brand-dark);
+            background: var(--brand-dark);
+            color: #fff;
+        }
+
+        .settings-popover {
+            position: absolute;
+            left: -80px;
+            bottom: 56px;
+            width: 520px;
+            padding: 22px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid #eef1f5;
+            transform: translateY(8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .publish-settings.is-open .settings-popover {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .settings-popover__title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .settings-popover__status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 16px;
+            background: #eaf5f1;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .setting-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .setting-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .setting-field--full {
+            grid-column: 1 / -1;
+        }
+
+        .setting-label {
+            color: #4a5a6a;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .field-control {
+            height: 40px;
+            border: 1px solid var(--line-strong);
+            border-radius: 7px;
+            background: #fff;
+            color: #1a2a3a;
+            padding: 0 12px;
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .field-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.10);
+        }
+
+        .tag-row,
+        .type-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            min-height: 34px;
+            padding: 7px 12px;
+            border: 1px solid var(--line-strong);
+            border-radius: 18px;
+            background: #fff;
+            color: #4a5a6a;
+            font-size: 13px;
+            transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+        }
+
+        .chip.is-selected {
+            border-color: var(--primary);
+            background: #eef3ff;
+            color: var(--primary);
+        }
+
+        .settings-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .mini-btn {
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 7px;
+            border: 1px solid var(--line-strong);
+            background: #fff;
+            color: #1a2a3a;
+            font-weight: 600;
+        }
+
+        .mini-btn--primary {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .feedback-tab {
+            position: fixed;
+            right: 0;
+            top: 64%;
+            z-index: 25;
+            width: 42px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffd3c5;
+            border-right: 0;
+            border-radius: 9px 0 0 9px;
+            background: #fff8f5;
+            color: var(--brand);
+            font-weight: 700;
+            writing-mode: vertical-rl;
+            letter-spacing: 0;
+        }
+
+        .publish-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(17, 24, 39, 0.38);
+            padding: 24px;
+        }
+
+        .publish-modal.is-open {
+            display: flex;
+        }
+
+        .publish-dialog {
+            width: min(620px, 100%);
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 22px 68px rgba(0, 0, 0, 0.18);
+            overflow: hidden;
+        }
+
+        .publish-dialog__header {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px;
+            border-bottom: 1px solid var(--line);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 50%;
+            background: transparent;
+            color: #4a5a6a;
+        }
+
+        .close-btn:hover {
+            background: var(--soft);
+        }
+
+        .publish-dialog__body {
+            padding: 22px;
+        }
+
+        .publish-summary {
+            padding: 16px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fbfcfd;
+        }
+
+        .publish-summary__title {
+            margin-bottom: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .publish-summary__meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            color: #6b7a8a;
+            font-size: 13px;
+        }
+
+        .summary-pill {
+            display: inline-flex;
+            align-items: center;
+            height: 26px;
+            padding: 0 10px;
+            border-radius: 13px;
+            background: #eef3ff;
+            color: var(--primary);
+        }
+
+        .publish-checklist {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .check-item {
+            min-height: 46px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            color: #4a5a6a;
+            font-size: 14px;
+        }
+
+        .check-item .icon {
+            color: var(--green);
+        }
+
+        .publish-dialog__footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 18px 22px;
+            border-top: 1px solid var(--line);
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 96px;
+            z-index: 60;
+            min-width: 180px;
+            padding: 11px 18px;
+            border-radius: 8px;
+            background: rgba(26, 42, 58, 0.92);
+            color: #fff;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transform: translate(-50%, 10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .toast.is-show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        @media (max-width: 1280px) {
+            body {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .workspace {
+                grid-template-columns: 260px minmax(560px, 1fr) 118px;
+                gap: 24px;
+            }
+
+            .editor-paper {
+                padding: 36px 48px 78px;
+            }
+        }
+
+        @media (max-width: 980px) {
+            body {
+                padding-top: 116px;
+                padding-bottom: 118px;
+            }
+
+            .topbar {
+                padding: 0 16px;
+            }
+
+            .logo {
+                font-size: 26px;
+            }
+
+            .page-title {
+                font-size: 18px;
+            }
+
+            .sync-pill {
+                display: none;
+            }
+
+            .toolbar {
+                top: 60px;
+                height: 56px;
+            }
+
+            .toolbar__scroll {
+                padding: 0 12px;
+            }
+
+            .tool-btn {
+                width: 44px;
+                height: 48px;
+                font-size: 12px;
+            }
+
+            .workspace {
+                display: block;
+                margin-top: 24px;
+            }
+
+            .catalog-panel,
+            .ai-panel {
+                position: static;
+                width: 100%;
+                min-height: auto;
+                margin-bottom: 16px;
+            }
+
+            .ai-panel__body {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .editor-paper {
+                min-height: 620px;
+                padding: 28px 22px 72px;
+            }
+
+            .title-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .title-helper {
+                justify-content: flex-start;
+            }
+
+            .bottom-bar {
+                height: auto;
+                min-height: 92px;
+                padding: 12px 0;
+            }
+
+            .bottom-bar__inner {
+                width: calc(100vw - 24px);
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .bottom-spacer {
+                display: none;
+            }
+
+            .footer-btn {
+                flex: 1;
+                min-width: 0;
+                height: 44px;
+                font-size: 15px;
+            }
+
+            .publish-settings {
+                order: 2;
+            }
+
+            .settings-popover {
+                position: fixed;
+                left: 12px;
+                right: 12px;
+                bottom: 104px;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .topbar__left {
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .page-title {
+                font-size: 16px;
+            }
+
+            .topbar__right {
+                gap: 14px;
+            }
+
+            .notice-link span,
+            .tool-btn__label {
+                display: none;
+            }
+
+            .tool-btn {
+                width: 40px;
+                height: 44px;
+            }
+
+            .catalog-panel__body {
+                padding: 14px 16px;
+            }
+
+            .outline-empty {
+                min-height: 120px;
+            }
+
+            .editor-paper {
+                padding: 22px 16px 62px;
+            }
+
+            .article-title {
+                font-size: 22px;
+                line-height: 34px;
+            }
+
+            .editor-hints {
+                font-size: 16px;
+            }
+
+            .setting-grid,
+            .publish-checklist {
+                grid-template-columns: 1fr;
+            }
+
+            .feedback-tab {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <svg class="icon-sprite" aria-hidden="true">
+        <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+        <symbol id="icon-chevron-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+        <symbol id="icon-chevron-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+        <symbol id="icon-collapse" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/><path d="M21 4v16"/></symbol>
+        <symbol id="icon-undo" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></symbol>
+        <symbol id="icon-redo" viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></symbol>
+        <symbol id="icon-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v6l4 2"/></symbol>
+        <symbol id="icon-heading" viewBox="0 0 24 24"><path d="M6 4v16"/><path d="M18 4v16"/><path d="M6 12h12"/></symbol>
+        <symbol id="icon-bold" viewBox="0 0 24 24"><path d="M7 5h7a4 4 0 0 1 0 8H7z"/><path d="M7 13h8a4 4 0 0 1 0 8H7z"/></symbol>
+        <symbol id="icon-underline" viewBox="0 0 24 24"><path d="M6 4v7a6 6 0 0 0 12 0V4"/><path d="M4 21h16"/></symbol>
+        <symbol id="icon-fill" viewBox="0 0 24 24"><path d="M12 3l8 8-7 7H5l-2-2 9-13z"/><path d="M18 16s3 2.2 3 4a2 2 0 0 1-4 0c0-1.8 1-4 1-4z"/></symbol>
+        <symbol id="icon-more" viewBox="0 0 24 24"><path d="M5 12h.01"/><path d="M12 12h.01"/><path d="M19 12h.01"/></symbol>
+        <symbol id="icon-list" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></symbol>
+        <symbol id="icon-align" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M7 12h10"/><path d="M4 18h16"/></symbol>
+        <symbol id="icon-quote" viewBox="0 0 24 24"><path d="M8 12H5a4 4 0 0 1 4-4v8a3 3 0 0 1-3 3"/><path d="M18 12h-3a4 4 0 0 1 4-4v8a3 3 0 0 1-3 3"/></symbol>
+        <symbol id="icon-code" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/><path d="M14 4l-4 16"/></symbol>
+        <symbol id="icon-upload" viewBox="0 0 24 24"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M4 14v5h16v-5"/></symbol>
+        <symbol id="icon-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 4v16"/></symbol>
+        <symbol id="icon-image" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M21 16l-5-5L5 19"/></symbol>
+        <symbol id="icon-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></symbol>
+        <symbol id="icon-sigma" viewBox="0 0 24 24"><path d="M18 4H7l6 8-6 8h11"/></symbol>
+        <symbol id="icon-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1 0l-2 2a5 5 0 0 0 7.1 7.1l1.1-1.1"/></symbol>
+        <symbol id="icon-template" viewBox="0 0 24 24"><path d="M4 5h16v4H4z"/><path d="M4 13h7v6H4z"/><path d="M15 13h5v6h-5z"/></symbol>
+        <symbol id="icon-catalog" viewBox="0 0 24 24"><path d="M7 5h14"/><path d="M7 12h14"/><path d="M7 19h14"/><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/></symbol>
+        <symbol id="icon-vote" viewBox="0 0 24 24"><path d="M12 3l7 4-7 4-7-4z"/><path d="M5 10v7l7 4 7-4v-7"/><path d="M12 11v10"/></symbol>
+        <symbol id="icon-fullscreen" viewBox="0 0 24 24"><path d="M8 3H3v5"/><path d="M16 3h5v5"/><path d="M21 16v5h-5"/><path d="M3 16v5h5"/></symbol>
+        <symbol id="icon-switch" viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M21 3l-7 7"/><path d="M8 21H3v-5"/><path d="M3 21l7-7"/></symbol>
+        <symbol id="icon-wand" viewBox="0 0 24 24"><path d="M15 4l5 5L9 20H4v-5z"/><path d="M14 5l5 5"/><path d="M6 3v3"/><path d="M4.5 4.5h3"/><path d="M20 16v3"/><path d="M18.5 17.5h3"/></symbol>
+        <symbol id="icon-lines" viewBox="0 0 24 24"><path d="M4 6h12"/><path d="M4 12h16"/><path d="M4 18h10"/></symbol>
+        <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+        <symbol id="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+        <symbol id="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></symbol>
+    </svg>
+
+    <header class="topbar">
+        <div class="topbar__left">
+            <div class="logo">TEST</div>
+            <div class="page-title" aria-label="发布文章">
+                <span class="page-title__back"><svg class="icon"><use href="#icon-arrow-left" /></svg></span>
+                <span>发布文章</span>
+                <span class="page-title__caret" aria-hidden="true"></span>
+            </div>
+        </div>
+        <div class="topbar__right">
+            <button class="sync-pill" type="button">
+                <span class="sync-pill__mark">C</span>
+                <span>TEST同步助手</span>
+                <svg class="icon icon-sm"><use href="#icon-chevron-down" /></svg>
+            </button>
+            <div class="avatar" aria-label="用户头像"></div>
+            <div class="notice-link">
+                <span>消息</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="toolbar" aria-label="编辑工具栏">
+        <div class="toolbar__scroll">
+            <button class="tool-btn" type="button" data-command="undo" title="撤销">
+                <svg class="icon"><use href="#icon-undo" /></svg><span class="tool-btn__label">撤销</span>
+            </button>
+            <button class="tool-btn" type="button" data-command="redo" title="重做">
+                <svg class="icon"><use href="#icon-redo" /></svg><span class="tool-btn__label">重做</span>
+            </button>
+            <button class="tool-btn" type="button" title="历史">
+                <svg class="icon"><use href="#icon-history" /></svg><span class="tool-btn__label">历史</span>
+            </button>
+            <span class="tool-separator"></span>
+            <button class="tool-btn" type="button" data-block="h2" title="格式">
+                <svg class="icon"><use href="#icon-heading" /></svg><span class="tool-btn__label">格式</span>
+            </button>
+            <button class="tool-btn" type="button" data-command="bold" title="加粗">
+                <svg class="icon"><use href="#icon-bold" /></svg><span class="tool-btn__label">加粗</span>
+            </button>
+            <button class="tool-btn" type="button" data-command="underline" title="颜色">
+                <svg class="icon"><use href="#icon-underline" /></svg><span class="tool-btn__label">颜色</span>
+            </button>
+            <button class="tool-btn" type="button" title="背景">
+                <svg class="icon"><use href="#icon-fill" /></svg><span class="tool-btn__label">背景</span>
+            </button>
+            <button class="tool-btn" type="button" title="其他">
+                <svg class="icon"><use href="#icon-more" /></svg><span class="tool-btn__label">其他</span>
+            </button>
+            <span class="tool-separator"></span>
+            <button class="tool-btn" type="button" data-command="insertUnorderedList" title="列表">
+                <svg class="icon"><use href="#icon-list" /></svg><span class="tool-btn__label">列表</span>
+            </button>
+            <button class="tool-btn" type="button" data-command="justifyCenter" title="对齐">
+                <svg class="icon"><use href="#icon-align" /></svg><span class="tool-btn__label">对齐</span>
+            </button>
+            <button class="tool-btn" type="button" data-command="insertHorizontalRule" title="水平线">
+                <svg class="icon"><use href="#icon-align" /></svg><span class="tool-btn__label">水平线</span>
+            </button>
+            <button class="tool-btn" type="button" data-block="blockquote" title="块引用">
+                <svg class="icon"><use href="#icon-quote" /></svg><span class="tool-btn__label">块引用</span>
+            </button>
+            <button class="tool-btn" type="button" data-insert="code" title="代码">
+                <svg class="icon"><use href="#icon-code" /></svg><span class="tool-btn__label">代码</span>
+            </button>
+            <button class="tool-btn" type="button" title="资源绑定">
+                <svg class="icon"><use href="#icon-upload" /></svg><span class="tool-btn__label">资源绑定</span>
+            </button>
+            <button class="tool-btn" type="button" data-insert="table" title="表格">
+                <svg class="icon"><use href="#icon-table" /></svg><span class="tool-btn__label">表格</span>
+            </button>
+            <span class="tool-separator"></span>
+            <button class="tool-btn" type="button" data-insert="image" title="图像">
+                <svg class="icon"><use href="#icon-image" /></svg><span class="tool-btn__label">图像</span>
+            </button>
+            <button class="tool-btn" type="button" title="视频">
+                <svg class="icon"><use href="#icon-video" /></svg><span class="tool-btn__label">视频</span>
+            </button>
+            <button class="tool-btn" type="button" title="公式">
+                <svg class="icon"><use href="#icon-sigma" /></svg><span class="tool-btn__label">公式</span>
+            </button>
+            <button class="tool-btn" type="button" data-insert="link" title="链接">
+                <svg class="icon"><use href="#icon-link" /></svg><span class="tool-btn__label">链接</span>
+            </button>
+            <button class="tool-btn" type="button" title="模板">
+                <svg class="icon"><use href="#icon-template" /></svg><span class="tool-btn__label">模板</span>
+            </button>
+            <button class="tool-btn" type="button" title="目录">
+                <svg class="icon"><use href="#icon-catalog" /></svg><span class="tool-btn__label">目录</span>
+            </button>
+            <button class="tool-btn" type="button" title="投票">
+                <svg class="icon"><use href="#icon-vote" /></svg><span class="tool-btn__label">投票</span>
+            </button>
+            <button class="tool-btn" type="button" title="宽屏">
+                <svg class="icon"><use href="#icon-fullscreen" /></svg><span class="tool-btn__label">宽屏</span>
+            </button>
+            <span class="tool-separator"></span>
+            <button class="tool-btn" type="button" id="mdSwitch" title="使用 MD 编辑器">
+                <svg class="icon"><use href="#icon-switch" /></svg><span class="tool-btn__label">使用 MD 编辑器</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="workspace">
+        <aside class="catalog-panel">
+            <div class="catalog-panel__header">
+                <span>目录</span>
+                <button class="catalog-panel__collapse" type="button" title="收起目录">
+                    <svg class="icon"><use href="#icon-collapse" /></svg>
+                </button>
+            </div>
+            <div class="catalog-panel__body">
+                <div id="outlineList" class="outline-list" aria-live="polite"></div>
+                <div id="outlineEmpty" class="outline-empty">为文内增加标题，这里将生成目录</div>
+            </div>
+        </aside>
+
+        <section class="editor-area" aria-label="文章编辑区">
+            <article class="editor-paper">
+                <div class="title-row">
+                    <h1 id="titleEditor" class="article-title" contenteditable="true" data-placeholder="请输入文章标题（5～100个字）"></h1>
+                    <div class="title-helper">
+                        <button class="magic-btn" type="button" id="titleMagic" title="AI 优化标题">
+                            <svg class="icon"><use href="#icon-wand" /></svg>
+                        </button>
+                        <span id="titleRemain" class="title-helper__text">还需输入5个字</span>
+                    </div>
+                </div>
+
+                <div class="editor-body-wrap">
+                    <div id="articleEditor" class="article-editor" contenteditable="true" aria-label="文章正文"></div>
+                    <div id="editorHints" class="editor-hints">
+                        <strong>#创作灵感</strong>
+                        <p>• 记录工作实践、项目复盘</p>
+                        <p>• 写技术笔记巩固知识要点</p>
+                        <p>• 发表职场感悟心得</p>
+                        <p>• 搬运自己的原创文章到这</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <aside class="ai-panel" aria-label="AI助手">
+            <div class="ai-panel__header">
+                <span class="ai-panel__mark">AI</span>
+                <span>AI助手</span>
+                <svg class="icon icon-sm"><use href="#icon-chevron-right" /></svg>
+            </div>
+            <div class="ai-panel__body">
+                <button class="ai-action" type="button" data-ai="outline">
+                    <svg class="icon icon-sm"><use href="#icon-lines" /></svg>
+                    <span>大纲生成</span>
+                </button>
+                <button class="ai-action" type="button" data-ai="code">
+                    <svg class="icon icon-sm"><use href="#icon-code" /></svg>
+                    <span>代码生成</span>
+                </button>
+                <button class="ai-action" type="button" data-ai="search">
+                    <svg class="icon icon-sm"><use href="#icon-search" /></svg>
+                    <span>学术搜索</span>
+                </button>
+            </div>
+        </aside>
+    </main>
+
+    <div class="feedback-tab">反馈</div>
+
+    <footer class="bottom-bar">
+        <div class="bottom-bar__inner">
+            <span id="wordCount" class="word-count">共 0 字</span>
+            <div id="publishSettings" class="publish-settings">
+                <button id="settingsTrigger" class="settings-trigger" type="button">
+                    <span>发布设置</span>
+                    <svg class="icon icon-sm"><use href="#icon-chevron-down" /></svg>
+                </button>
+                <section class="settings-popover" aria-label="发布设置面板">
+                    <div class="settings-popover__title">
+                        <span>发布设置</span>
+                        <span class="settings-popover__status">
+                            <svg class="icon icon-sm"><use href="#icon-check" /></svg>
+                            草稿待完善
+                        </span>
+                    </div>
+                    <div class="setting-grid">
+                        <label class="setting-field">
+                            <span class="setting-label">文章类型</span>
+                            <select id="articleType" class="field-control">
+                                <option>原创</option>
+                                <option>转载</option>
+                                <option>翻译</option>
+                            </select>
+                        </label>
+                        <label class="setting-field">
+                            <span class="setting-label">发布形式</span>
+                            <select id="publishScope" class="field-control">
+                                <option>公开可见</option>
+                                <option>粉丝可见</option>
+                                <option>私密文章</option>
+                            </select>
+                        </label>
+                        <label class="setting-field">
+                            <span class="setting-label">文章分类</span>
+                            <select id="articleCategory" class="field-control">
+                                <option>前端开发</option>
+                                <option>后端开发</option>
+                                <option>人工智能</option>
+                                <option>项目复盘</option>
+                            </select>
+                        </label>
+                        <label class="setting-field">
+                            <span class="setting-label">发布专栏</span>
+                            <select id="articleColumn" class="field-control">
+                                <option>技术成长笔记</option>
+                                <option>工程实践</option>
+                                <option>AI 应用探索</option>
+                            </select>
+                        </label>
+                        <div class="setting-field setting-field--full">
+                            <span class="setting-label">文章标签</span>
+                            <div class="tag-row">
+                                <button class="chip is-selected" type="button">JavaScript</button>
+                                <button class="chip is-selected" type="button">前端</button>
+                                <button class="chip" type="button">Vue</button>
+                                <button class="chip" type="button">性能优化</button>
+                                <button class="chip" type="button">工程化</button>
+                            </div>
+                        </div>
+                        <div class="setting-field setting-field--full">
+                            <span class="setting-label">推荐声明</span>
+                            <div class="type-row">
+                                <button class="chip is-selected" type="button">允许评论</button>
+                                <button class="chip is-selected" type="button">展示目录</button>
+                                <button class="chip" type="button">同步到社区</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-actions">
+                        <button class="mini-btn" type="button" id="settingsClose">取消</button>
+                        <button class="mini-btn mini-btn--primary" type="button" id="settingsDone">完成</button>
+                    </div>
+                </section>
+            </div>
+            <span class="bottom-spacer"></span>
+            <button id="saveDraft" class="footer-btn" type="button">
+                <span>保存草稿</span>
+                <svg class="icon icon-sm"><use href="#icon-chevron-down" /></svg>
+            </button>
+            <button id="scheduleBtn" class="footer-btn" type="button">
+                <span>定时发布</span>
+                <svg class="icon icon-sm"><use href="#icon-chevron-right" /></svg>
+            </button>
+            <button id="publishBtn" class="footer-btn footer-btn--primary" type="button">发布博客</button>
+        </div>
+    </footer>
+
+    <section id="publishModal" class="publish-modal" aria-label="发布确认">
+        <div class="publish-dialog">
+            <div class="publish-dialog__header">
+                <span>发布确认</span>
+                <button id="modalClose" class="close-btn" type="button" title="关闭">
+                    <svg class="icon"><use href="#icon-x" /></svg>
+                </button>
+            </div>
+            <div class="publish-dialog__body">
+                <div class="publish-summary">
+                    <div id="summaryTitle" class="publish-summary__title">未填写标题</div>
+                    <div class="publish-summary__meta">
+                        <span class="summary-pill">原创</span>
+                        <span class="summary-pill">前端开发</span>
+                        <span class="summary-pill">技术成长笔记</span>
+                        <span id="summaryWords" class="summary-pill">0 字</span>
+                    </div>
+                </div>
+                <div class="publish-checklist">
+                    <div class="check-item">
+                        <svg class="icon icon-sm"><use href="#icon-check" /></svg>
+                        <span>标题长度已检测</span>
+                    </div>
+                    <div class="check-item">
+                        <svg class="icon icon-sm"><use href="#icon-check" /></svg>
+                        <span>分类与专栏已选择</span>
+                    </div>
+                    <div class="check-item">
+                        <svg class="icon icon-sm"><use href="#icon-check" /></svg>
+                        <span>标签可继续补充</span>
+                    </div>
+                    <div class="check-item">
+                        <svg class="icon icon-sm"><use href="#icon-check" /></svg>
+                        <span>草稿自动保存开启</span>
+                    </div>
+                </div>
+            </div>
+            <div class="publish-dialog__footer">
+                <button class="mini-btn" type="button" id="modalCancel">继续编辑</button>
+                <button class="mini-btn mini-btn--primary" type="button" id="modalPublish">确认发布</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="toast" class="toast">已保存草稿</div>
+
+    <script>
+        const titleEditor = document.getElementById("titleEditor");
+        const articleEditor = document.getElementById("articleEditor");
+        const editorHints = document.getElementById("editorHints");
+        const wordCount = document.getElementById("wordCount");
+        const titleRemain = document.getElementById("titleRemain");
+        const outlineList = document.getElementById("outlineList");
+        const outlineEmpty = document.getElementById("outlineEmpty");
+        const publishSettings = document.getElementById("publishSettings");
+        const settingsTrigger = document.getElementById("settingsTrigger");
+        const settingsClose = document.getElementById("settingsClose");
+        const settingsDone = document.getElementById("settingsDone");
+        const publishModal = document.getElementById("publishModal");
+        const publishBtn = document.getElementById("publishBtn");
+        const modalClose = document.getElementById("modalClose");
+        const modalCancel = document.getElementById("modalCancel");
+        const modalPublish = document.getElementById("modalPublish");
+        const saveDraft = document.getElementById("saveDraft");
+        const scheduleBtn = document.getElementById("scheduleBtn");
+        const toast = document.getElementById("toast");
+        const summaryTitle = document.getElementById("summaryTitle");
+        const summaryWords = document.getElementById("summaryWords");
+
+        function plainLength(text) {
+            return text.replace(/\s/g, "").length;
+        }
+
+        function getArticleLength() {
+            return plainLength(articleEditor.innerText || "");
+        }
+
+        function updateStats() {
+            const bodyLength = getArticleLength();
+            const titleLength = plainLength(titleEditor.innerText || "");
+            wordCount.textContent = `共 ${bodyLength} 字`;
+            titleRemain.classList.remove("is-ready", "is-warning");
+
+            if (titleLength < 5) {
+                titleRemain.textContent = `还需输入${5 - titleLength}个字`;
+            } else if (titleLength > 100) {
+                titleRemain.textContent = `已超出${titleLength - 100}个字`;
+                titleRemain.classList.add("is-warning");
+            } else {
+                titleRemain.textContent = "标题可用";
+                titleRemain.classList.add("is-ready");
+            }
+
+            editorHints.classList.toggle("is-hidden", bodyLength > 0);
+            buildOutline();
+        }
+
+        function buildOutline() {
+            const headings = articleEditor.querySelectorAll("h2, h3");
+            outlineList.innerHTML = "";
+            outlineEmpty.style.display = headings.length ? "none" : "flex";
+
+            headings.forEach((heading, index) => {
+                const text = heading.innerText.trim();
+                if (!text) return;
+                if (!heading.id) heading.id = `heading-${index + 1}`;
+                const item = document.createElement("button");
+                item.type = "button";
+                item.className = `outline-item level-${heading.tagName === "H3" ? "3" : "2"}`;
+                item.textContent = text;
+                item.addEventListener("click", () => heading.scrollIntoView({ behavior: "smooth", block: "center" }));
+                outlineList.appendChild(item);
+            });
+        }
+
+        function focusEditor() {
+            articleEditor.focus();
+            const range = document.createRange();
+            range.selectNodeContents(articleEditor);
+            range.collapse(false);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+
+        function insertHtml(html) {
+            focusEditor();
+            document.execCommand("insertHTML", false, html);
+            updateStats();
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add("is-show");
+            window.clearTimeout(showToast.timer);
+            showToast.timer = window.setTimeout(() => toast.classList.remove("is-show"), 1800);
+        }
+
+        function openPublishModal() {
+            const title = titleEditor.innerText.trim();
+            summaryTitle.textContent = title || "未填写标题";
+            summaryWords.textContent = `${getArticleLength()} 字`;
+            publishModal.classList.add("is-open");
+        }
+
+        function closePublishModal() {
+            publishModal.classList.remove("is-open");
+        }
+
+        document.querySelectorAll(".tool-btn").forEach((button) => {
+            button.addEventListener("click", () => {
+                const command = button.dataset.command;
+                const block = button.dataset.block;
+                const insert = button.dataset.insert;
+
+                if (command) {
+                    focusEditor();
+                    document.execCommand(command, false, null);
+                }
+
+                if (block === "h2") insertHtml("<h2>新的章节标题</h2><p>在这里展开你的观点。</p>");
+                if (block === "blockquote") insertHtml("<blockquote>这里是一段引用内容，可以放结论、来源或关键提醒。</blockquote>");
+                if (insert === "code") insertHtml("<pre><code>function publishArticle() {\n  return \"hello CSDN\";\n}</code></pre><p><br></p>");
+                if (insert === "table") insertHtml("<p>| 阶段 | 内容 | 状态 |</p><p>| 需求 | 梳理编辑与发布流程 | 已完成 |</p>");
+                if (insert === "image") insertHtml("<p>[图片占位] 上传封面或正文配图后将显示在这里。</p>");
+                if (insert === "link") insertHtml('<p><a href="#">参考链接标题</a></p>');
+
+                if (button.id === "mdSwitch") {
+                    button.classList.toggle("is-active");
+                    showToast(button.classList.contains("is-active") ? "已切换为 MD 编辑器视图" : "已切换为富文本编辑视图");
+                }
+
+                updateStats();
+            });
+        });
+
+        document.querySelectorAll(".ai-action").forEach((button) => {
+            button.addEventListener("click", () => {
+                const type = button.dataset.ai;
+                if (type === "outline") {
+                    insertHtml("<h2>一、问题背景</h2><p>说明你遇到的业务场景、技术挑战和目标。</p><h2>二、解决思路</h2><p>拆解关键方案，补充架构、流程或代码片段。</p><h2>三、实践总结</h2><p>沉淀经验、边界条件和后续优化方向。</p>");
+                    showToast("已生成文章大纲");
+                }
+                if (type === "code") {
+                    insertHtml("<pre><code>const editorState = {\n  title: \"文章标题\",\n  status: \"draft\",\n  tags: [\"前端\", \"工程化\"]\n};</code></pre><p>这段代码可以替换为你的真实示例。</p>");
+                    showToast("已插入代码示例");
+                }
+                if (type === "search") {
+                    insertHtml("<blockquote>学术搜索结果占位：可在这里引用论文、标准文档或权威资料。</blockquote>");
+                    showToast("已插入资料引用占位");
+                }
+            });
+        });
+
+        document.querySelectorAll(".chip").forEach((chip) => {
+            chip.addEventListener("click", () => chip.classList.toggle("is-selected"));
+        });
+
+        titleEditor.addEventListener("input", updateStats);
+        articleEditor.addEventListener("input", updateStats);
+        articleEditor.addEventListener("focus", () => editorHints.classList.add("is-hidden"));
+        articleEditor.addEventListener("blur", updateStats);
+
+        document.getElementById("titleMagic").addEventListener("click", () => {
+            if (!titleEditor.innerText.trim()) {
+                titleEditor.innerText = "从项目实践到技术沉淀：一次完整的开发复盘";
+            } else {
+                titleEditor.innerText = `${titleEditor.innerText.trim()}：实践经验与复盘`;
+            }
+            updateStats();
+            showToast("已优化标题");
+        });
+
+        settingsTrigger.addEventListener("click", () => {
+            publishSettings.classList.toggle("is-open");
+        });
+
+        settingsClose.addEventListener("click", () => {
+            publishSettings.classList.remove("is-open");
+        });
+
+        settingsDone.addEventListener("click", () => {
+            publishSettings.classList.remove("is-open");
+            showToast("发布设置已保存");
+        });
+
+        saveDraft.addEventListener("click", () => {
+            showToast("草稿已保存到云端");
+        });
+
+        scheduleBtn.addEventListener("click", () => {
+            publishSettings.classList.add("is-open");
+            showToast("可在发布设置中选择定时策略");
+        });
+
+        publishBtn.addEventListener("click", openPublishModal);
+        modalClose.addEventListener("click", closePublishModal);
+        modalCancel.addEventListener("click", closePublishModal);
+        modalPublish.addEventListener("click", () => {
+            closePublishModal();
+            showToast("发布成功，等待内容审核");
+        });
+
+        publishModal.addEventListener("click", (event) => {
+            if (event.target === publishModal) closePublishModal();
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!publishSettings.contains(event.target) && event.target !== settingsTrigger) {
+                publishSettings.classList.remove("is-open");
+            }
+        });
+
+        updateStats();
+    </script>
+</body>
+</html>

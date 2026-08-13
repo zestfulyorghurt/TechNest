@@ -1,0 +1,388 @@
+/* ================================================================
+   AuthPage（注册登录界面）样式
+   ================================================================ */
+
+.auth-page {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f4f8;
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
+}
+
+/* ===== 粒子背景 ===== */
+.auth-page .particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.auth-page .particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(79, 110, 247, 0.15);
+    border-radius: 50%;
+    animation: auth-float linear infinite;
+    bottom: 0;
+}
+
+.auth-page .particle:nth-child(1) { left: 10%; width: 8px; height: 8px; animation-duration: 18s; background: rgba(79, 110, 247, 0.12); }
+.auth-page .particle:nth-child(2) { left: 20%; animation-duration: 22s; animation-delay: 2s; }
+.auth-page .particle:nth-child(3) { left: 30%; width: 10px; height: 10px; animation-duration: 20s; animation-delay: 4s; background: rgba(123, 97, 255, 0.10); }
+.auth-page .particle:nth-child(4) { left: 40%; animation-duration: 25s; animation-delay: 1s; }
+.auth-page .particle:nth-child(5) { left: 50%; width: 7px; height: 7px; animation-duration: 19s; animation-delay: 3s; background: rgba(79, 110, 247, 0.18); }
+.auth-page .particle:nth-child(6) { left: 60%; animation-duration: 23s; animation-delay: 5s; }
+.auth-page .particle:nth-child(7) { left: 70%; width: 9px; height: 9px; animation-duration: 21s; animation-delay: 2s; background: rgba(123, 97, 255, 0.12); }
+.auth-page .particle:nth-child(8) { left: 80%; animation-duration: 24s; animation-delay: 4s; }
+.auth-page .particle:nth-child(9) { left: 90%; width: 7px; height: 7px; animation-duration: 17s; animation-delay: 1s; }
+.auth-page .particle:nth-child(10) { left: 15%; animation-duration: 26s; animation-delay: 3s; width: 8px; height: 8px; }
+.auth-page .particle:nth-child(11) { left: 45%; animation-duration: 20s; background: rgba(123, 97, 255, 0.10); }
+.auth-page .particle:nth-child(12) { left: 75%; animation-duration: 22s; animation-delay: 5s; width: 10px; height: 10px; }
+.auth-page .particle:nth-child(13) { left: 55%; animation-duration: 19s; animation-delay: 2s; }
+.auth-page .particle:nth-child(14) { left: 85%; animation-duration: 21s; animation-delay: 4s; background: rgba(123, 97, 255, 0.10); }
+.auth-page .particle:nth-child(15) { left: 5%; animation-duration: 24s; animation-delay: 1s; width: 7px; height: 7px; }
+
+@keyframes auth-float {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* ===== 主容器 ===== */
+.auth-page .auth-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.auth-page .brand {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.auth-page .brand .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a2a3a;
+    text-decoration: none;
+}
+
+.auth-page .brand .logo-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #4f6ef7, #7b61ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(79, 110, 247, 0.25);
+}
+
+.auth-page .brand .logo span {
+    color: #4f6ef7;
+}
+
+.auth-page .brand .slogan {
+    color: #8a9aaa;
+    font-size: 14px;
+    margin-top: 6px;
+    letter-spacing: 2px;
+}
+
+/* ===== 卡片 ===== */
+.auth-page .auth-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 36px 32px 32px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e8edf4;
+}
+
+/* ===== 模式切换 ===== */
+.auth-page .mode-tabs {
+    display: flex;
+    gap: 4px;
+    background: #f0f2f5;
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 28px;
+}
+
+.auth-page .mode-tabs .tab-btn {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 11px;
+    background: transparent;
+    color: #6b7a8a;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.auth-page .mode-tabs .tab-btn.active {
+    background: linear-gradient(135deg, #4f6ef7, #7b61ff);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(79, 110, 247, 0.25);
+}
+
+/* ===== 认证方式切换 ===== */
+.auth-page .auth-type-tabs {
+    display: flex;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e8edf4;
+}
+
+.auth-page .auth-type-tabs .type-btn {
+    padding: 10px 0;
+    border: none;
+    background: transparent;
+    color: #8a9aaa;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    position: relative;
+    flex: 1;
+    text-align: center;
+}
+
+.auth-page .auth-type-tabs .type-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #4f6ef7, #7b61ff);
+    transition: 0.3s ease;
+    border-radius: 2px;
+}
+
+.auth-page .auth-type-tabs .type-btn.active {
+    color: #1a2a3a;
+}
+
+.auth-page .auth-type-tabs .type-btn.active::after {
+    width: 40%;
+}
+
+/* ===== 表单 ===== */
+.auth-page .form-group {
+    margin-bottom: 18px;
+}
+
+.auth-page .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4a5a6a;
+    margin-bottom: 6px;
+}
+
+.auth-page .form-group .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1.5px solid #e8edf4;
+    transition: 0.3s ease;
+}
+
+.auth-page .form-group .input-wrap:focus-within {
+    border-color: #4f6ef7;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(79, 110, 247, 0.08);
+}
+
+.auth-page .form-group .input-icon {
+    padding: 0 12px 0 14px;
+    color: #8a9aaa;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.auth-page .form-group input {
+    width: 100%;
+    padding: 12px 14px 12px 0;
+    border: none;
+    background: transparent;
+    color: #1a2a3a;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+}
+
+.auth-page .form-group input::placeholder {
+    color: #b0b8c0;
+}
+
+.auth-page .form-group .captcha-btn {
+    padding: 8px 16px;
+    margin-right: 6px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(79, 110, 247, 0.10);
+    color: #4f6ef7;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.auth-page .form-group .captcha-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.auth-page .form-group .toggle-pwd {
+    padding: 0 14px 0 8px;
+    background: none;
+    border: none;
+    color: #8a9aaa;
+    cursor: pointer;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.auth-page .form-group .checkbox-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 4px;
+}
+
+.auth-page .form-group .checkbox-wrap input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: #4f6ef7;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.auth-page .form-group .checkbox-wrap label {
+    font-size: 13px;
+    color: #6b7a8a;
+    font-weight: 400;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.auth-page .form-group .checkbox-wrap label a {
+    color: #4f6ef7;
+    text-decoration: none;
+}
+
+.auth-page .btn-submit {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #4f6ef7, #7b61ff);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+}
+
+.auth-page .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(79, 110, 247, 0.30);
+}
+
+.auth-page .btn-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.auth-page .social-login {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+}
+
+.auth-page .social-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid #e8edf4;
+    background: #f8f9fa;
+    color: #6b7a8a;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-page .social-btn:hover {
+    background: #ffffff;
+    border-color: #4f6ef7;
+    color: #4f6ef7;
+    transform: translateY(-3px);
+}
+
+.auth-page .switch-hint {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 13px;
+    color: #8a9aaa;
+}
+
+.auth-page .switch-link {
+    color: #4f6ef7;
+    cursor: pointer;
+    font-weight: 500;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 520px) {
+    .auth-page .auth-card {
+        padding: 28px 20px 24px;
+        border-radius: 20px;
+    }
+    .auth-page .brand .logo {
+        font-size: 22px;
+    }
+    .auth-page .brand .logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    .auth-page .social-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 17px;
+    }
+}

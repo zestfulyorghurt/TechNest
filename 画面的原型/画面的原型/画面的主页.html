@@ -1,0 +1,2353 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="ocean"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeHub · 开发者灵感社区</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THEME VARIABLES — 5 color schemes (via data-theme on <html>)
+   ============================================================ */
+:root,
+html[data-theme="ocean"] {
+  --c-primary:        #3B82F6;
+  --c-primary-rgb:    59, 130, 246;
+  --c-primary-soft:   #DBEAFE;
+  --c-primary-deep:   #1D4ED8;
+  --c-accent:         #06B6D4;
+  --c-accent-rgb:     6, 182, 212;
+
+  --bg-page:          #F0F6FF;
+  --bg-page-2:        #E6EEFB;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(59, 130, 246, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(59, 130, 246, 0.22);
+
+  --text-1:           #0F172A;
+  --text-2:           #334155;
+  --text-3:           #64748B;
+  --text-4:           #94A3B8;
+  --text-on-primary:  #FFFFFF;
+
+  --shadow-glass:     0 8px 32px rgba(15, 30, 80, 0.08), 0 2px 6px rgba(15, 30, 80, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(15, 30, 80, 0.10), 0 4px 12px rgba(15, 30, 80, 0.05);
+  --shadow-primary:   0 6px 20px rgba(59, 130, 246, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(59,130,246,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(6,182,212,0.22) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(139,92,246,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, var(--c-primary) 0%, var(--c-accent) 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(6,182,212,0.15) 100%);
+}
+html[data-theme="mint"] {
+  --c-primary:        #10B981;
+  --c-primary-rgb:    16, 185, 129;
+  --c-primary-soft:   #D1FAE5;
+  --c-primary-deep:   #047857;
+  --c-accent:         #0EA5E9;
+  --c-accent-rgb:     14, 165, 233;
+
+  --bg-page:          #EEFBF5;
+  --bg-page-2:        #DFF5E8;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(16, 185, 129, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(16, 185, 129, 0.22);
+
+  --text-1:           #0B3D2E;
+  --text-2:           #1B5E46;
+  --text-3:           #4D806B;
+  --text-4:           #8BA89A;
+
+  --shadow-glass:     0 8px 32px rgba(10, 60, 40, 0.08), 0 2px 6px rgba(10, 60, 40, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(10, 60, 40, 0.10), 0 4px 12px rgba(10, 60, 40, 0.05);
+  --shadow-primary:   0 6px 20px rgba(16, 185, 129, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(16,185,129,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(14,165,233,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(34,197,94,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #10B981 0%, #0EA5E9 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(14,165,233,0.15) 100%);
+}
+html[data-theme="coral"] {
+  --c-primary:        #F97316;
+  --c-primary-rgb:    249, 115, 22;
+  --c-primary-soft:   #FFEDD5;
+  --c-primary-deep:   #C2410C;
+  --c-accent:         #F43F5E;
+  --c-accent-rgb:     244, 63, 94;
+
+  --bg-page:          #FFF7F0;
+  --bg-page-2:        #FFEBDB;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(249, 115, 22, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(249, 115, 22, 0.22);
+
+  --text-1:           #3F1E0A;
+  --text-2:           #6B3410;
+  --text-3:           #985A30;
+  --text-4:           #C48A64;
+
+  --shadow-glass:     0 8px 32px rgba(80, 30, 10, 0.08), 0 2px 6px rgba(80, 30, 10, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(80, 30, 10, 0.10), 0 4px 12px rgba(80, 30, 10, 0.05);
+  --shadow-primary:   0 6px 20px rgba(249, 115, 22, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(249,115,22,0.22) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(244,63,94,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(251,146,60,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #F97316 0%, #F43F5E 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(244,63,94,0.15) 100%);
+}
+html[data-theme="lilac"] {
+  --c-primary:        #8B5CF6;
+  --c-primary-rgb:    139, 92, 246;
+  --c-primary-soft:   #EDE9FE;
+  --c-primary-deep:   #6D28D9;
+  --c-accent:         #EC4899;
+  --c-accent-rgb:     236, 72, 153;
+
+  --bg-page:          #F7F2FF;
+  --bg-page-2:        #ECE3FB;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(139, 92, 246, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(139, 92, 246, 0.22);
+
+  --text-1:           #2A1458;
+  --text-2:           #472A82;
+  --text-3:           #7355A8;
+  --text-4:           #A38DCC;
+
+  --shadow-glass:     0 8px 32px rgba(60, 20, 120, 0.08), 0 2px 6px rgba(60, 20, 120, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(60, 20, 120, 0.10), 0 4px 12px rgba(60, 20, 120, 0.05);
+  --shadow-primary:   0 6px 20px rgba(139, 92, 246, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(139,92,246,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(236,72,153,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(167,139,250,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.15) 100%);
+}
+html[data-theme="amber"] {
+  --c-primary:        #D97706;
+  --c-primary-rgb:    217, 119, 6;
+  --c-primary-soft:   #FEF3C7;
+  --c-primary-deep:   #92400E;
+  --c-accent:         #DC2626;
+  --c-accent-rgb:     220, 38, 38;
+
+  --bg-page:          #FFFBF0;
+  --bg-page-2:        #FFF3DC;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(217, 119, 6, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(217, 119, 6, 0.22);
+
+  --text-1:           #3D2405;
+  --text-2:           #6B4308;
+  --text-3:           #986A1A;
+  --text-4:           #C4974A;
+
+  --shadow-glass:     0 8px 32px rgba(80, 50, 10, 0.08), 0 2px 6px rgba(80, 50, 10, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(80, 50, 10, 0.10), 0 4px 12px rgba(80, 50, 10, 0.05);
+  --shadow-primary:   0 6px 20px rgba(217, 119, 6, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(217,119,6,0.22) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(220,38,38,0.18) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(245,158,11,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #D97706 0%, #DC2626 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(217,119,6,0.15) 0%, rgba(220,38,38,0.15) 100%);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--text-1);
+  line-height: 1.6;
+  min-height: 100vh;
+  background:
+    var(--grad-hero),
+    linear-gradient(180deg, var(--bg-page) 0%, var(--bg-page-2) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* soft floating blobs */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: var(--grad-primary-soft);
+  filter: blur(100px);
+  border-radius: 50%;
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+  animation: float-b 20s ease-in-out infinite;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -25%;
+  left: -15%;
+  width: 500px;
+  height: 500px;
+  background: var(--grad-primary-soft);
+  filter: blur(90px);
+  border-radius: 50%;
+  opacity: 0.45;
+  z-index: 0;
+  pointer-events: none;
+  animation: float-a 18s ease-in-out infinite;
+}
+
+#app { position: relative; z-index: 2; }
+
+/* ============================================================
+   GLASS UTILITY
+   ============================================================ */
+.glass {
+  background: var(--bg-blur);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-glass);
+}
+.glass-strong {
+  background: var(--bg-blur-strong);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-glass-lg);
+}
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px) saturate(1.25);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: var(--shadow-glass);
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s, border-color 0.35s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glass-lg);
+  border-color: var(--border-strong);
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--c-primary-rgb), 0.25);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--c-primary-rgb), 0.45);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.font-mono    { font-family: 'JetBrains Mono', monospace; }
+
+/* ============================================================
+   THEME SWITCHER
+   ============================================================ */
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  box-shadow: var(--shadow-glass);
+}
+.theme-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.theme-dot::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 6px;
+  background: inherit;
+  filter: brightness(1.05);
+}
+.theme-dot:hover {
+  transform: scale(1.12);
+}
+.theme-dot.active {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px rgba(var(--c-primary-rgb), 0.18);
+}
+.theme-dot.active::before {
+  content: '✓';
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.theme-ocean  { background: linear-gradient(135deg, #3B82F6, #06B6D4); }
+.theme-mint   { background: linear-gradient(135deg, #10B981, #0EA5E9); }
+.theme-coral  { background: linear-gradient(135deg, #F97316, #F43F5E); }
+.theme-lilac  { background: linear-gradient(135deg, #8B5CF6, #EC4899); }
+.theme-amber  { background: linear-gradient(135deg, #D97706, #DC2626); }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  margin: 16px auto 0;
+  max-width: 1400px;
+  padding: 0 24px;
+}
+.nav-inner {
+  height: 68px;
+  padding: 0 18px 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-1);
+}
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--grad-primary);
+  box-shadow: var(--shadow-primary);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, transparent 50%);
+  pointer-events: none;
+}
+.logo-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+}
+.logo-text em {
+  font-style: normal;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+}
+.nav-link {
+  position: relative;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+.nav-link:hover {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+.nav-link.active {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+  font-weight: 600;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  width: 280px;
+  transition: all 0.25s;
+}
+.search-box:focus-within {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.12);
+  background: #fff;
+}
+.search-box svg { width: 16px; height: 16px; color: var(--text-3); flex-shrink: 0; }
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 14px;
+}
+.search-box input::placeholder { color: var(--text-4); }
+.search-kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 3px 6px;
+  background: var(--bg-chip);
+  border-radius: 5px;
+  color: var(--c-primary);
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn svg { width: 16px; height: 16px; }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+}
+.btn-ghost:hover {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+.btn-primary {
+  background: var(--grad-primary);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-primary);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(var(--c-primary-rgb), 0.38);
+}
+.btn-outline {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  color: var(--text-2);
+}
+.btn-outline:hover {
+  color: var(--c-primary);
+  border-color: var(--c-primary);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-card-solid);
+  background: var(--grad-primary);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 12px rgba(var(--c-primary-rgb), 0.25);
+}
+.avatar:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(var(--c-primary-rgb), 0.35);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 56px 24px 32px;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  background: var(--bg-chip);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-primary-deep);
+  margin-bottom: 22px;
+}
+.badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--c-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.2);
+  animation: pulse 2s infinite;
+}
+
+.hero-title {
+  font-size: clamp(40px, 5.2vw, 64px);
+  font-weight: 800;
+  line-height: 1.05;
+  margin-bottom: 22px;
+}
+.hero-title .grad {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+.hero-title .grad::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 10px;
+  background: rgba(var(--c-primary-rgb), 0.15);
+  border-radius: 4px;
+  z-index: -1;
+}
+
+.hero-sub {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-2);
+  margin-bottom: 32px;
+  max-width: 520px;
+}
+.hero-sub strong { color: var(--text-1); font-weight: 700; }
+
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 540px;
+}
+.stat-mini {
+  padding: 16px 18px;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-mini::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grad-primary-soft);
+  opacity: 0.9;
+}
+.stat-mini > * { position: relative; z-index: 1; }
+.stat-n {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--c-primary-deep);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-l {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: 0.01em;
+}
+
+/* Code card */
+.code-card {
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+.code-card::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 280px;
+  height: 280px;
+  background: var(--grad-primary-soft);
+  filter: blur(50px);
+  border-radius: 50%;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(12px);
+}
+.code-dots { display: flex; gap: 7px; }
+.code-dots span {
+  width: 12px; height: 12px; border-radius: 50%;
+}
+.code-dots span:nth-child(1) { background: #FF6057; }
+.code-dots span:nth-child(2) { background: #FEBC2E; }
+.code-dots span:nth-child(3) { background: #28C840; }
+.code-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.code-lang {
+  padding: 3px 8px;
+  background: var(--bg-chip);
+  color: var(--c-primary);
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 10px;
+}
+.code-body {
+  padding: 22px 24px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px;
+  line-height: 1.8;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.ln {
+  display: inline-block;
+  width: 28px;
+  color: var(--text-4);
+  user-select: none;
+  font-weight: 500;
+}
+.t-kw   { color: #A855F7; font-weight: 600; }
+.t-fn   { color: var(--c-primary-deep); font-weight: 600; }
+.t-str  { color: var(--c-primary); }
+.t-num  { color: #EA580C; font-weight: 600; }
+.t-var  { color: var(--c-accent); }
+.t-com  { color: var(--text-4); font-style: italic; }
+.t-bool { color: #DC2626; font-weight: 600; }
+.t-punc { color: var(--text-3); }
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--c-primary);
+  margin-left: 2px;
+  vertical-align: middle;
+  border-radius: 1px;
+  animation: blink 1s step-end infinite;
+}
+
+/* ============================================================
+   SECTION
+   ============================================================ */
+.section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 56px 24px;
+}
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-title .bar {
+  width: 5px;
+  height: 32px;
+  background: var(--grad-primary);
+  border-radius: 3px;
+  box-shadow: 0 0 16px rgba(var(--c-primary-rgb), 0.4);
+}
+.section-title h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+.section-title p {
+  font-size: 13px;
+  color: var(--text-3);
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 4px;
+}
+
+.pill-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill {
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.22s;
+}
+.pill:hover {
+  color: var(--c-primary);
+  border-color: var(--border-strong);
+}
+.pill.on {
+  background: var(--grad-primary);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: var(--shadow-primary);
+}
+
+/* ============================================================
+   ACTIVITY GRID
+   ============================================================ */
+.activity {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.acard {
+  padding: 22px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.acard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--grad-primary);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease;
+}
+.acard:hover::before { transform: scaleX(1); transform-origin: left; }
+.acard-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.ai {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-chip);
+  color: var(--c-primary);
+}
+.ai svg { width: 20px; height: 20px; }
+.trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.trend.up   { background: rgba(16,185,129,0.12); color: #047857; }
+.trend.down { background: rgba(239,68,68,0.12);  color: #B91C1C; }
+.alabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.anumber {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-1);
+}
+
+/* ============================================================
+   POSTS GRID
+   ============================================================ */
+.posts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.post {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.post-cover {
+  height: 170px;
+  position: relative;
+  overflow: hidden;
+  background: var(--grad-primary-soft);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.post-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(255,255,255,0.7) 100%);
+  pointer-events: none;
+}
+.post-code {
+  position: absolute;
+  inset: 0;
+  padding: 18px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-2);
+  opacity: 0.75;
+  overflow: hidden;
+}
+.post-code .pc1 { color: var(--c-primary); font-weight: 600; }
+.post-code .pc2 { color: var(--c-accent); }
+.post-code .pc3 { color: var(--c-primary-deep); font-weight: 600; }
+.post-code .pc4 { color: #A855F7; }
+
+.post-tag {
+  position: absolute;
+  top: 14px; left: 14px;
+  z-index: 3;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 8px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.tag-hot { background: linear-gradient(135deg, #F59E0B, #EF4444); color: #fff; }
+.tag-tut { background: linear-gradient(135deg, #3B82F6, #06B6D4); color: #fff; }
+.tag-dis { background: linear-gradient(135deg, #8B5CF6, #EC4899); color: #fff; }
+.tag-new { background: linear-gradient(135deg, #10B981, #22D3EE); color: #fff; }
+
+.post-body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.post-title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-1);
+  transition: color 0.22s;
+  cursor: pointer;
+}
+.post:hover .post-title { color: var(--c-primary); }
+.post-desc {
+  font-size: 13.5px;
+  color: var(--text-3);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.post-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  margin-top: auto;
+  border-top: 1px dashed var(--border-subtle);
+}
+.pauthor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pavatar {
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.pname {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.pstats {
+  display: flex;
+  gap: 14px;
+}
+.ps {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.ps svg { width: 14px; height: 14px; }
+.ps:hover { color: var(--c-primary); }
+
+/* ============================================================
+   DISCUSSIONS
+   ============================================================ */
+.discuss-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 28px;
+}
+.discuss-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.discuss {
+  display: flex;
+  gap: 18px;
+  padding: 20px 22px;
+  align-items: stretch;
+}
+.votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  padding-right: 18px;
+  border-right: 1px dashed var(--border-subtle);
+}
+.vn {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--c-primary);
+  line-height: 1;
+}
+.vl {
+  font-size: 10px;
+  color: var(--text-4);
+  letter-spacing: 0.08em;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+.dc-main { flex: 1; min-width: 0; }
+.dc-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.35;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.discuss:hover .dc-title { color: var(--c-primary); }
+.dc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.dt {
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 7px;
+  background: var(--bg-chip);
+  color: var(--c-primary-deep);
+}
+.dc-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.dc-meta .m {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.dc-meta .m svg { width: 13px; height: 13px; }
+.dc-meta .mu {
+  color: var(--c-primary);
+  font-weight: 700;
+}
+
+/* Sidebar */
+.side { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 100px; align-self: start; }
+.scard { padding: 0; overflow: hidden; }
+.scard-head {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.4);
+}
+.scard-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.scard-title::before {
+  content: '#';
+  color: var(--c-primary);
+  font-weight: 800;
+}
+.scard-body { padding: 8px; }
+.tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tag-row:hover {
+  background: var(--bg-chip);
+}
+.tag-row:hover .tr-n { color: var(--c-primary); }
+.tr-i {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tr-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.tr-n {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: color 0.2s;
+}
+.tr-c {
+  padding: 3px 9px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-subtle);
+  border-radius: 7px;
+}
+
+.usr-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.usr-row:hover { background: var(--bg-chip); }
+.ur-rank {
+  width: 22px;
+  text-align: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+.ur-rank.r1 { color: #D97706; }
+.ur-rank.r2 { color: #6B7280; }
+.ur-rank.r3 { color: #92400E; }
+.ur-rank.r4, .ur-rank.r5 { color: var(--text-4); }
+.ur-ava {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+  flex-shrink: 0;
+}
+.ur-info { flex: 1; min-width: 0; }
+.ur-n {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-1);
+}
+.ur-p {
+  font-size: 11.5px;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+.ur-p svg { width: 11px; height: 11px; color: var(--c-primary); }
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.cta-sec { max-width: 1400px; margin: 0 auto; padding: 48px 24px 80px; }
+.cta {
+  padding: 64px 48px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 30%, var(--grad-primary-soft) 0%, transparent 45%),
+    radial-gradient(circle at 85% 70%, var(--grad-primary-soft) 0%, transparent 45%);
+  pointer-events: none;
+}
+.cta-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(var(--c-primary-rgb), 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--c-primary-rgb), 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+.cta > * { position: relative; z-index: 1; }
+
+.cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  background: rgba(var(--c-primary-rgb), 0.1);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c-primary-deep);
+  margin-bottom: 22px;
+}
+.cta-badge svg { width: 14px; height: 14px; }
+
+.cta h2 {
+  font-size: clamp(28px, 3.8vw, 44px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.cta h2 .em {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cta p {
+  font-size: 16px;
+  color: var(--text-2);
+  max-width: 560px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+}
+.cta-form {
+  display: flex;
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto 12px;
+}
+.cta-input {
+  flex: 1;
+  padding: 14px 18px;
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.25s;
+}
+.cta-input::placeholder { color: var(--text-4); }
+.cta-input:focus {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.12);
+}
+.cta-note {
+  font-size: 12.5px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot {
+  padding: 56px 24px 28px;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 40px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(16px);
+}
+.foot-inner { max-width: 1400px; margin: 0 auto; }
+.foot-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.foot-brand p {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.75;
+  margin: 16px 0 22px;
+  max-width: 380px;
+}
+.socials { display: flex; gap: 10px; }
+.soc {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-2);
+  transition: all 0.25s;
+}
+.soc svg { width: 17px; height: 17px; }
+.soc:hover {
+  color: #fff;
+  background: var(--grad-primary);
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: var(--shadow-primary);
+}
+
+.fcol h4 {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  margin-bottom: 18px;
+}
+.fcol ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.fcol a {
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 500;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.fcol a::before {
+  content: '›';
+  color: var(--text-4);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s;
+  font-weight: 700;
+}
+.fcol a:hover {
+  color: var(--c-primary);
+  padding-left: 0;
+}
+.fcol a:hover::before { opacity: 1; transform: translateX(0); color: var(--c-primary); }
+
+.foot-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.foot-copy {
+  font-size: 13px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.heart { color: var(--c-accent); display: inline-block; animation: beat 1.4s ease-in-out infinite; }
+.foot-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.foot-meta span::before {
+  content: '● ';
+  color: var(--c-primary);
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.2); }
+  50%      { box-shadow: 0 0 0 8px rgba(var(--c-primary-rgb), 0.05); }
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  25%      { transform: scale(1.2); }
+  50%      { transform: scale(1); }
+  75%      { transform: scale(1.15); }
+}
+@keyframes float-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(30px, -40px) scale(1.1); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-40px, 30px) scale(1.05); }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; }
+.reveal.shown { animation: fade-in-up 0.65s cubic-bezier(.2,.8,.2,1) forwards; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1200px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .posts { grid-template-columns: repeat(2, 1fr); }
+  .activity { grid-template-columns: repeat(2, 1fr); }
+  .discuss-grid { grid-template-columns: 1fr; }
+  .side { position: static; }
+  .foot-top { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .search-box { width: 180px; }
+  .search-kbd { display: none; }
+  .theme-switcher { display: none; }
+  .hero { padding: 40px 20px 24px; }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat-n { font-size: 20px; }
+  .section { padding: 40px 20px; }
+  .posts { grid-template-columns: 1fr; }
+  .activity { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .cta { padding: 40px 24px; }
+  .cta-form { flex-direction: column; }
+  .foot { padding: 40px 20px 20px; }
+  .foot-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; }
+  .code-body { font-size: 12px; padding: 18px 18px 20px; }
+}
+@media (max-width: 520px) {
+  .nav-inner { padding: 0 12px; }
+  .btn-outline { display: none; }
+  .activity { grid-template-columns: 1fr; }
+  .anumber { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner glass-strong">
+    <a href="#" class="logo">
+      <div class="logo-mark">C</div>
+      <div class="logo-text">Code<em>Hub</em></div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#home" class="nav-link active">首页</a></li>
+      <li><a href="#posts" class="nav-link">文章</a></li>
+      <li><a href="#discuss" class="nav-link">讨论</a></li>
+      <li><a href="#" class="nav-link">开源</a></li>
+      <li><a href="#" class="nav-link">活动</a></li>
+      <li><a href="#" class="nav-link">招聘</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <!-- Theme switcher -->
+      <div class="theme-switcher" title="切换主题颜色">
+        <div class="theme-dot theme-ocean  active" data-theme="ocean"></div>
+        <div class="theme-dot theme-mint" data-theme="mint"></div>
+        <div class="theme-dot theme-coral" data-theme="coral"></div>
+        <div class="theme-dot theme-lilac" data-theme="lilac"></div>
+        <div class="theme-dot theme-amber" data-theme="amber"></div>
+      </div>
+
+      <div class="search-box">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input type="text" placeholder="搜索文章、用户、话题...">
+        <span class="search-kbd">⌘K</span>
+      </div>
+      <a href="#" class="btn btn-ghost">登录</a>
+      <a href="#" class="btn btn-primary">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+        注册
+      </a>
+      <div class="avatar">你</div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="hero-grid">
+    <div>
+      <div class="badge reveal">12,483 位开发者正在创作与讨论</div>
+      <h1 class="hero-title reveal" style="animation-delay:.05s">
+        连接灵感的<br>
+        <span class="grad">开发者社区</span>
+      </h1>
+      <p class="hero-sub reveal" style="animation-delay:.1s">
+        面向工程师、设计师、开源贡献者的现代化技术社区。
+        <br>在这里<strong>分享技术洞见</strong>、<strong>讨论架构问题</strong>、<strong>协作开源项目</strong>，与志同道合的伙伴一起成长。
+      </p>
+      <div class="hero-cta reveal" style="animation-delay:.15s">
+        <a href="#posts" class="btn btn-primary">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          开始探索
+        </a>
+        <a href="#" class="btn btn-outline">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          观看介绍
+        </a>
+      </div>
+      <div class="hero-stats reveal" style="animation-delay:.2s">
+        <div class="stat-mini glass">
+          <div class="stat-n" data-count="128476">0</div>
+          <div class="stat-l">注册成员</div>
+        </div>
+        <div class="stat-mini glass">
+          <div class="stat-n" data-count="342981">0</div>
+          <div class="stat-l">技术文章</div>
+        </div>
+        <div class="stat-mini glass">
+          <div class="stat-n" data-count="56234">0</div>
+          <div class="stat-l">开源项目</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Code card -->
+    <div class="code-card card reveal" style="animation-delay:.25s">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <div class="code-title">
+          welcome.ts
+          <span class="code-lang">TS</span>
+        </div>
+        <div style="width:58px"></div>
+      </div>
+      <div class="code-body">
+        <div><span class="ln">01</span><span class="t-com">// 加入 CodeHub 社区</span></div>
+        <div><span class="ln">02</span><span class="t-kw">import</span> { <span class="t-var">CodeHub</span> } <span class="t-kw">from</span> <span class="t-str">'@codehub/sdk'</span>;</div>
+        <div style="height:6px"></div>
+        <div><span class="ln">03</span><span class="t-kw">const</span> me = <span class="t-kw">await</span> <span class="t-fn">CodeHub</span>.<span class="t-fn">join</span>({</div>
+        <div><span class="ln">04</span>&nbsp;&nbsp;<span class="t-var">name</span>: <span class="t-str">'你好, 开发者'</span>,</div>
+        <div><span class="ln">05</span>&nbsp;&nbsp;<span class="t-var">interests</span>: [</div>
+        <div><span class="ln">06</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">'系统设计'</span>, <span class="t-str">'AI/ML'</span>,</div>
+        <div><span class="ln">07</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">'Rust'</span>, <span class="t-str">'开源'</span></div>
+        <div><span class="ln">08</span>&nbsp;&nbsp;],</div>
+        <div><span class="ln">09</span>&nbsp;&nbsp;<span class="t-var">goals</span>: <span class="t-num">1024</span>,</div>
+        <div><span class="ln">10</span>&nbsp;&nbsp;<span class="t-var">notifications</span>: <span class="t-bool">true</span><span class="t-punc">,</span></div>
+        <div><span class="ln">11</span>});</div>
+        <div style="height:10px"></div>
+        <div><span class="ln">12</span><span class="t-com">// 发现 128,476 名伙伴…</span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACTIVITY ============ -->
+<section class="section">
+  <div class="activity">
+    <div class="acard card reveal">
+      <div class="acard-head">
+        <div class="ai">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+        </div>
+        <div class="trend up">↑ 12.4%</div>
+      </div>
+      <div class="alabel">今日发布</div>
+      <div class="anumber">1,247</div>
+    </div>
+    <div class="acard card reveal" style="animation-delay:.04s">
+      <div class="acard-head">
+        <div class="ai" style="color: var(--c-accent); background: rgba(var(--c-accent-rgb), 0.12);">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+        </div>
+        <div class="trend up">↑ 8.7%</div>
+      </div>
+      <div class="alabel">活跃讨论</div>
+      <div class="anumber">892</div>
+    </div>
+    <div class="acard card reveal" style="animation-delay:.08s">
+      <div class="acard-head">
+        <div class="ai" style="color: #D97706; background: rgba(249,115,22,0.12);">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+        </div>
+        <div class="trend up">↑ 23.1%</div>
+      </div>
+      <div class="alabel">代码提交</div>
+      <div class="anumber">5,632</div>
+    </div>
+    <div class="acard card reveal" style="animation-delay:.12s">
+      <div class="acard-head">
+        <div class="ai" style="color: #EC4899; background: rgba(236,72,153,0.12);">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        </div>
+        <div class="trend down">↓ 2.3%</div>
+      </div>
+      <div class="alabel">新成员</div>
+      <div class="anumber">348</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POSTS ============ -->
+<section class="section" id="posts">
+  <div class="section-head">
+    <div class="section-title">
+      <div class="bar"></div>
+      <div>
+        <h2>精选文章</h2>
+        <p><span class="font-mono">// community.featured_posts[]</span></p>
+      </div>
+    </div>
+    <div class="pill-group">
+      <button class="pill on">全部</button>
+      <button class="pill">前端</button>
+      <button class="pill">后端</button>
+      <button class="pill">AI/ML</button>
+      <button class="pill">DevOps</button>
+    </div>
+  </div>
+
+  <div class="posts">
+    <!-- 1 -->
+    <article class="post card reveal">
+      <div class="post-cover">
+        <span class="post-tag tag-hot">精选</span>
+        <div class="post-code">
+<span class="pc4">use</span> <span class="pc2">tokio</span>::runtime::<span class="pc1">Runtime</span>;<br>
+<span class="pc4">use</span> <span class="pc2">std</span>::<span class="pc3">future</span>::<span class="pc3">Future</span>;<br><br>
+<span class="pc4">fn</span> <span class="pc3">main</span>() {<br>
+&nbsp;&nbsp;<span class="pc4">let</span> rt = <span class="pc1">Runtime</span>::<span class="pc3">new</span>()<span class="pc2">?</span>;<br>
+&nbsp;&nbsp;rt.<span class="pc3">block_on</span>(<span class="pc4">async</span> {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc2">println!</span>(<span class="pc1">"Rust 异步 🚀"</span>);<br>
+&nbsp;&nbsp;});<br>
+}
+        </div>
+      </div>
+      <div class="post-body">
+        <h3 class="post-title">深入 Rust 异步运行时：从 Future 到底层调度器</h3>
+        <p class="post-desc">从 Future trait 的定义出发，逐步剖析 Tokio 运行时的唤醒机制、调度队列、工作窃取算法等核心设计。</p>
+        <div class="post-foot">
+          <div class="pauthor">
+            <div class="pavatar" style="background: linear-gradient(135deg, #F97316, #DC2626);">RS</div>
+            <span class="pname">rust_sage</span>
+          </div>
+          <div class="pstats">
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              2.4k
+            </span>
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              186
+            </span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="post card reveal" style="animation-delay:.05s">
+      <div class="post-cover">
+        <span class="post-tag tag-tut">教程</span>
+        <div class="post-code">
+<span class="pc4">from</span> <span class="pc2">langchain</span> <span class="pc4">import</span> <span class="pc1">Agent</span><br><br>
+<span class="pc4">class</span> <span class="pc1">DevAgent</span>(<span class="pc3">Agent</span>):<br>
+&nbsp;&nbsp;<span class="pc4">def</span> <span class="pc3">think</span>(self, task):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tools = [<span class="pc2">"search"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc2">"code"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc2">"shell"</span>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc4">return</span> <span class="pc1">Plan</span>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task, tools<br>
+&nbsp;&nbsp;&nbsp;&nbsp;)
+        </div>
+      </div>
+      <div class="post-body">
+        <h3 class="post-title">从零构建 LLM Agent：完整指南（LangChain × AutoGen）</h3>
+        <p class="post-desc">详解 Prompt 工程、工具调用、记忆系统、多 Agent 协作，并对比当下最主流的两套开发框架。</p>
+        <div class="post-foot">
+          <div class="pauthor">
+            <div class="pavatar" style="background: var(--grad-primary);">AI</div>
+            <span class="pname">ai_pioneer</span>
+          </div>
+          <div class="pstats">
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              5.8k
+            </span>
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              423
+            </span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="post card reveal" style="animation-delay:.1s">
+      <div class="post-cover">
+        <span class="post-tag tag-dis">讨论</span>
+        <div class="post-code">
+<span class="pc4">package</span> main<br><br>
+<span class="pc4">import</span> <span class="pc1">"net/http"</span><br><br>
+<span class="pc4">func</span> <span class="pc3">main</span>() {<br>
+&nbsp;&nbsp;mux := http.<span class="pc1">NewServeMux</span>()<br>
+&nbsp;&nbsp;mux.<span class="pc3">HandleFunc</span>(<span class="pc2">"/"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc4">func</span>(w http.<span class="pc3">ResponseWriter</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r *http.<span class="pc3">Request</span>) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w.<span class="pc3">Write</span>([]<span class="pc1">byte</span>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc2">"Go 1.23 🎉"</span>))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})<br>
+}
+        </div>
+      </div>
+      <div class="post-body">
+        <h3 class="post-title">Go 1.23 迭代器语法上线：社区爱恨情仇录</h3>
+        <p class="post-desc">Go 终于引入 range-over-func。兼容现有生态？泛型何去何从？来看看不同阵营的真实看法。</p>
+        <div class="post-foot">
+          <div class="pauthor">
+            <div class="pavatar" style="background: linear-gradient(135deg, #0EA5E9, #0284C7);">GO</div>
+            <span class="pname">gopher_dev</span>
+          </div>
+          <div class="pstats">
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              3.1k
+            </span>
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              567
+            </span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="post card reveal" style="animation-delay:.15s">
+      <div class="post-cover">
+        <span class="post-tag tag-tut">教程</span>
+        <div class="post-code">
+<span class="pc4">FROM</span> <span class="pc3">ubuntu</span>:24.04<br><br>
+<span class="pc4">WORKDIR</span> /app<br><br>
+<span class="pc4">COPY</span> requirements.txt .<br>
+<span class="pc4">RUN</span> pip install -r \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;requirements.txt \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; pip cache purge<br><br>
+<span class="pc4">COPY</span> . .<br>
+<span class="pc4">CMD</span> [<span class="pc1">"python"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc1">"app.py"</span>]
+        </div>
+      </div>
+      <div class="post-body">
+        <h3 class="post-title">Dockerfile 最佳实践 2026：从 1.2G → 86M 的瘦身实录</h3>
+        <p class="post-desc">基础镜像选择、多阶段构建、层缓存、distroless、BuildKit 加速，手把手写出生产级镜像。</p>
+        <div class="post-foot">
+          <div class="pauthor">
+            <div class="pavatar" style="background: linear-gradient(135deg, #0EA5E9, #38BDF8);">DK</div>
+            <span class="pname">cloud_ninja</span>
+          </div>
+          <div class="pstats">
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              1.9k
+            </span>
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              98
+            </span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="post card reveal" style="animation-delay:.2s">
+      <div class="post-cover">
+        <span class="post-tag tag-new">资讯</span>
+        <div class="post-code">
+<span class="pc4">const</span> adapter = <span class="pc4">await</span><br>
+&nbsp;&nbsp;navigator.<span class="pc2">gpu</span><br>
+&nbsp;&nbsp;&nbsp;.<span class="pc3">requestAdapter</span>();<br><br>
+<span class="pc4">const</span> device = <span class="pc4">await</span><br>
+&nbsp;&nbsp;adapter.<span class="pc3">requestDevice</span>();<br><br>
+<span class="pc4">const</span> encoder = device<br>
+&nbsp;&nbsp;.<span class="pc3">createCommandEncoder</span>();<br>
+<span class="pc1">// 浏览器 GPU 时代来临 🎮</span>
+        </div>
+      </div>
+      <div class="post-body">
+        <h3 class="post-title">WebGPU 全浏览器落地：前端 AI 推理会被颠覆吗？</h3>
+        <p class="post-desc">三大浏览器同步支持 WebGPU。前端图形、AI 推理、Web3D 从业者的真实机会与挑战全解析。</p>
+        <div class="post-foot">
+          <div class="pauthor">
+            <div class="pavatar" style="background: linear-gradient(135deg, #EC4899, #8B5CF6);">WG</div>
+            <span class="pname">webdev_expert</span>
+          </div>
+          <div class="pstats">
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              4.2k
+            </span>
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              312
+            </span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="post card reveal" style="animation-delay:.25s">
+      <div class="post-cover">
+        <span class="post-tag tag-hot">精选</span>
+        <div class="post-code">
+<span class="pc4">type</span> <span class="pc1">KafkaCluster</span> <span class="pc4">struct</span> {<br>
+&nbsp;&nbsp;Brokers&nbsp;&nbsp;[]<span class="pc4">string</span><br>
+&nbsp;&nbsp;Replicas&nbsp;<span class="pc4">int</span> <span class="pc2">// &gt;=3</span><br>
+&nbsp;&nbsp;ISR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc4">int</span> <span class="pc2">// &gt;=2</span><br>
+&nbsp;&nbsp;Retention <span class="pc2">time.Duration</span><br>
+}<br><br>
+<span class="pc2">// Exactly-Once semantics ✓</span>
+        </div>
+      </div>
+      <div class="post-body">
+        <h3 class="post-title">Kafka 高可用实战：万亿级消息下的零停机方案</h3>
+        <p class="post-desc">从 ISR 同步到 Exactly-Once 语义，从跨机房容灾到灰度升级，揭秘大厂 Kafka 的高可用设计内幕。</p>
+        <div class="post-foot">
+          <div class="pauthor">
+            <div class="pavatar" style="background: linear-gradient(135deg, #334155, #F97316);">KF</div>
+            <span class="pname">infra_guru</span>
+          </div>
+          <div class="pstats">
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              6.7k
+            </span>
+            <span class="ps">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              524
+            </span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ DISCUSSIONS ============ -->
+<section class="section" id="discuss">
+  <div class="section-head">
+    <div class="section-title">
+      <div class="bar" style="background: linear-gradient(135deg, var(--c-accent), var(--c-primary));"></div>
+      <div>
+        <h2>热门讨论</h2>
+        <p><span class="font-mono">// thread.sort(key=hot, reverse=True)</span></p>
+      </div>
+    </div>
+    <div class="pill-group">
+      <button class="pill on">最热</button>
+      <button class="pill">最新</button>
+      <button class="pill">悬赏</button>
+      <button class="pill">未解决</button>
+    </div>
+  </div>
+
+  <div class="discuss-grid">
+    <div class="discuss-list">
+      <!-- D1 -->
+      <div class="discuss card reveal">
+        <div class="votes"><div class="vn">847</div><div class="vl">Votes</div></div>
+        <div class="dc-main">
+          <h3 class="dc-title">2026 年了，微服务是不是已经走到了尽头？大厂都在回归单体？</h3>
+          <div class="dc-tags">
+            <span class="dt">架构</span><span class="dt">DevOps</span><span class="dt">趋势</span>
+          </div>
+          <div class="dc-meta">
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              1,243 回复
+            </span>
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              2 小时前
+            </span>
+            <span class="m mu">@arch_master</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- D2 -->
+      <div class="discuss card reveal" style="animation-delay:.05s">
+        <div class="votes"><div class="vn">523</div><div class="vl">Votes</div></div>
+        <div class="dc-main">
+          <h3 class="dc-title">7 年 Go 开发者转 Rust 三个月：语言之争背后的工程真相</h3>
+          <div class="dc-tags">
+            <span class="dt">Rust</span><span class="dt">Golang</span><span class="dt">后端</span>
+          </div>
+          <div class="dc-meta">
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              867 回复
+            </span>
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              5 小时前
+            </span>
+            <span class="m mu">@backend_sam</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- D3 -->
+      <div class="discuss card reveal" style="animation-delay:.1s">
+        <div class="votes"><div class="vn">398</div><div class="vl">Votes</div></div>
+        <div class="dc-main">
+          <h3 class="dc-title">如何设计一个支持 1000 万 QPS 的 API 网关？求实战派大佬指点</h3>
+          <div class="dc-tags">
+            <span class="dt">架构</span><span class="dt">性能</span><span class="dt">DevOps</span>
+          </div>
+          <div class="dc-meta">
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              432 回复
+            </span>
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              8 小时前
+            </span>
+            <span class="m mu">@new_bee</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- D4 -->
+      <div class="discuss card reveal" style="animation-delay:.15s">
+        <div class="votes"><div class="vn">312</div><div class="vl">Votes</div></div>
+        <div class="dc-main">
+          <h3 class="dc-title">Python 3.13 的 JIT 实测性能提升 2-5 倍，但我更担心生态兼容性…</h3>
+          <div class="dc-tags">
+            <span class="dt">Python</span><span class="dt">性能</span>
+          </div>
+          <div class="dc-meta">
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              298 回复
+            </span>
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              12 小时前
+            </span>
+            <span class="m mu">@pythonic</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- D5 -->
+      <div class="discuss card reveal" style="animation-delay:.2s">
+        <div class="votes"><div class="vn">256</div><div class="vl">Votes</div></div>
+        <div class="dc-main">
+          <h3 class="dc-title">面试现场：请手写 ConcurrentHashMap 原理，我当场懵了…</h3>
+          <div class="dc-tags">
+            <span class="dt">Java</span><span class="dt">面试</span><span class="dt">源码</span>
+          </div>
+          <div class="dc-meta">
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+              189 回复
+            </span>
+            <span class="m">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              1 天前
+            </span>
+            <span class="m mu">@java_man</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="side">
+      <div class="scard card reveal">
+        <div class="scard-head"><div class="scard-title">热门标签</div></div>
+        <div class="scard-body">
+          <div class="tag-row">
+            <div class="tr-i"><div class="tr-dot" style="background:#3B82F6;"></div><div class="tr-n">Rust</div></div>
+            <div class="tr-c">12.4k</div>
+          </div>
+          <div class="tag-row">
+            <div class="tr-i"><div class="tr-dot" style="background:#3776AB;"></div><div class="tr-n">Python</div></div>
+            <div class="tr-c">28.7k</div>
+          </div>
+          <div class="tag-row">
+            <div class="tr-i"><div class="tr-dot" style="background: var(--c-primary);"></div><div class="tr-n">AI / LLM</div></div>
+            <div class="tr-c">45.2k</div>
+          </div>
+          <div class="tag-row">
+            <div class="tr-i"><div class="tr-dot" style="background:#00ADD8;"></div><div class="tr-n">Golang</div></div>
+            <div class="tr-c">18.3k</div>
+          </div>
+          <div class="tag-row">
+            <div class="tr-i"><div class="tr-dot" style="background:#EC4899;"></div><div class="tr-n">TypeScript</div></div>
+            <div class="tr-c">22.1k</div>
+          </div>
+          <div class="tag-row">
+            <div class="tr-i"><div class="tr-dot" style="background:#8B5CF6;"></div><div class="tr-n">Kubernetes</div></div>
+            <div class="tr-c">9.8k</div>
+          </div>
+          <div class="tag-row">
+            <div class="tr-i"><div class="tr-dot" style="background:#F59E0B;"></div><div class="tr-n">WebGPU</div></div>
+            <div class="tr-c">3.4k</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scard card reveal" style="animation-delay:.05s">
+        <div class="scard-head"><div class="scard-title">本周榜单</div></div>
+        <div class="scard-body">
+          <div class="usr-row">
+            <div class="ur-rank r1">01</div>
+            <div class="ur-ava" style="background: linear-gradient(135deg, #F97316, #DC2626);">RS</div>
+            <div class="ur-info">
+              <div class="ur-n">rust_sage</div>
+              <div class="ur-p">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                24,891 积分
+              </div>
+            </div>
+          </div>
+          <div class="usr-row">
+            <div class="ur-rank r2">02</div>
+            <div class="ur-ava" style="background: linear-gradient(135deg, #8B5CF6, #EC4899);">AI</div>
+            <div class="ur-info">
+              <div class="ur-n">ai_pioneer</div>
+              <div class="ur-p">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                21,347 积分
+              </div>
+            </div>
+          </div>
+          <div class="usr-row">
+            <div class="ur-rank r3">03</div>
+            <div class="ur-ava" style="background: linear-gradient(135deg, #F97316, #EC4899);">IF</div>
+            <div class="ur-info">
+              <div class="ur-n">infra_guru</div>
+              <div class="ur-p">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                18,902 积分
+              </div>
+            </div>
+          </div>
+          <div class="usr-row">
+            <div class="ur-rank r4">04</div>
+            <div class="ur-ava" style="background: linear-gradient(135deg, #0EA5E9, #0284C7);">GO</div>
+            <div class="ur-info">
+              <div class="ur-n">gopher_dev</div>
+              <div class="ur-p">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                15,743 积分
+              </div>
+            </div>
+          </div>
+          <div class="usr-row">
+            <div class="ur-rank r5">05</div>
+            <div class="ur-ava" style="background: linear-gradient(135deg, #0EA5E9, #38BDF8);">DK</div>
+            <div class="ur-info">
+              <div class="ur-n">cloud_ninja</div>
+              <div class="ur-p">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                12,588 积分
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-sec">
+  <div class="cta card reveal">
+    <div class="cta-grid"></div>
+    <div class="cta-badge">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+      加入 128,476+ 名开发者
+    </div>
+    <h2>
+      准备好进入<br>
+      <span class="em">开发者的灵感空间</span>了吗？
+    </h2>
+    <p>
+      注册即享无限文章阅读、讨论参与、文章发布、开源项目协作、专属技术活动邀请。
+      <br>用一个邮箱，连接整个开发者世界。
+    </p>
+    <form class="cta-form" onsubmit="event.preventDefault();">
+      <input type="email" class="cta-input" placeholder="输入你的邮箱地址…" required="">
+      <button type="submit" class="btn btn-primary" style="padding: 14px 24px; font-size: 15px;">立即加入 →</button>
+    </form>
+    <p class="cta-note">无需信用卡 · 完全免费 · 随时可取消订阅</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#" class="logo">
+          <div class="logo-mark">C</div>
+          <div class="logo-text">Code<em>Hub</em></div>
+        </a>
+        <p>
+          为创作者而生的现代技术社区。分享、讨论、协作、成长 — 在 CodeHub，与全球 128,000+ 开发者一起构建更好的技术未来。
+        </p>
+        <div class="socials">
+          <a href="#" class="soc" title="GitHub">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.11.793-.26.793-.577v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0112 5.8c1.02.01 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.7.8.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"></path></svg>
+          </a>
+          <a href="#" class="soc" title="Twitter">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          </a>
+          <a href="#" class="soc" title="Discord">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.3 4.37A19.8 19.8 0 0015.43 2.86a.07.07 0 00-.08.04 13 13 0 00-.6 1.24 18.3 18.3 0 00-5.49 0 12.6 12.6 0 00-.62-1.25.08.08 0 00-.08-.04A19.7 19.7 0 003.68 4.37a.07.07 0 00-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 00.03.06 19.9 19.9 0 005.99 3.03.08.08 0 00.08-.03 14 14 0 001.23-2 14 14 0 01-1.87-.89.08.08 0 01-.01-.13c.12-.1.25-.2.37-.3a.07.07 0 01.08-.01 13.1 13.1 0 0012.06 0 .07.07 0 01.08.01c.12.1.25.19.37.29a.08.08 0 01-.01.128 12.3 12.3 0 01-1.87.89.08.08 0 00-.04.1c.36.7.77 1.37 1.22 2 .01.02.04.04.08.03a19.8 19.8 0 006-3.03.08.08 0 00.03-.05c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 00-.03-.03zM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.2 0 2.17 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.09-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.2 0 2.17 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42z"></path></svg>
+          </a>
+          <a href="#" class="soc" title="RSS">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.18 15.64a2.18 2.18 0 012.18 2.18M4 10.1a8.1 8.1 0 018.1 8.1M4 4.58a13.42 13.42 0 0113.42 13.42"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="fcol">
+        <h4>社区</h4>
+        <ul>
+          <li><a href="#">最新文章</a></li>
+          <li><a href="#">热门讨论</a></li>
+          <li><a href="#">开源项目</a></li>
+          <li><a href="#">技术活动</a></li>
+          <li><a href="#">招聘专区</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>内容</h4>
+        <ul>
+          <li><a href="#">专栏文章</a></li>
+          <li><a href="#">视频教程</a></li>
+          <li><a href="#">电子书</a></li>
+          <li><a href="#">每周精选</a></li>
+          <li><a href="#">技术周刊</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>开源</h4>
+        <ul>
+          <li><a href="#">推荐项目</a></li>
+          <li><a href="#">Good First Issue</a></li>
+          <li><a href="#">组织主页</a></li>
+          <li><a href="#">赞助商</a></li>
+          <li><a href="#">开源协议</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>关于</h4>
+        <ul>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">社区守则</a></li>
+          <li><a href="#">隐私政策</a></li>
+          <li><a href="#">服务条款</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div class="foot-copy">© 2026 CodeHub Community · 用 <span class="heart">♥</span> 为开发者构建</div>
+      <div class="foot-meta">
+        <span>v2.6.0</span>
+        <span>Build #20260418</span>
+        <span>Status: <b style="color:#10B981;">● 全部系统正常</b></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /#app -->
+
+<script>
+/* =========================================================
+   THEME SWITCHER
+   ========================================================= */
+(function initTheme() {
+  const saved = localStorage.getItem('codehub-theme') || 'ocean';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.querySelectorAll('.theme-dot').forEach(dot => {
+    dot.classList.toggle('active', dot.dataset.theme === saved);
+  });
+})();
+
+document.querySelectorAll('.theme-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    const theme = dot.dataset.theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('codehub-theme', theme);
+    document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+  });
+});
+
+/* =========================================================
+   PILL TOGGLE (visual only)
+   ========================================================= */
+document.querySelectorAll('.pill-group').forEach(group => {
+  group.addEventListener('click', e => {
+    if (!e.target.classList.contains('pill')) return;
+    group.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+    e.target.classList.add('on');
+  });
+});
+
+/* =========================================================
+   NAV LINK ACTIVE STATE
+   ========================================================= */
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    navLinks.forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+  });
+});
+
+/* =========================================================
+   SCROLL REVEAL ANIMATION
+   ========================================================= */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('shown');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => io.observe(el));
+
+/* =========================================================
+   COUNT-UP ANIMATION
+   ========================================================= */
+function animateCount(el) {
+  const target = parseInt(el.dataset.count, 10);
+  if (!target) return;
+  const duration = 1600;
+  const start = performance.now();
+  function tick(now) {
+    const p = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const val = Math.floor(target * eased);
+    el.textContent = val.toLocaleString();
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const counters = document.querySelectorAll('[data-count]');
+const cio = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCount(entry.target);
+      cio.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.4 });
+counters.forEach(c => cio.observe(c));
+
+/* =========================================================
+   KEYBOARD SHORTCUT: ⌘K / Ctrl+K focuses search
+   ========================================================= */
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    const input = document.querySelector('.search-box input');
+    if (input) input.focus();
+  }
+});
+
+/* =========================================================
+   CTA FORM — tiny feedback
+   ========================================================= */
+const ctaForm = document.querySelector('.cta-form');
+if (ctaForm) {
+  ctaForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = ctaForm.querySelector('button');
+    const orig = btn.textContent;
+    btn.textContent = '✓ 已发送邀请链接!';
+    btn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+      ctaForm.reset();
+    }, 2400);
+  });
+}
+</script>
+
+
+</body></html>

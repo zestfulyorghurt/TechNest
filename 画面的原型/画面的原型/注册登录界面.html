@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechNest · 登录注册</title>
+    <style>
+        /* ===== 全局重置 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f4f8;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* ================================================================
+           粒子背景（浅色版）
+           ================================================================ */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(79, 110, 247, 0.15);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        .particle:nth-child(1) {
+            left: 10%;
+            width: 8px;
+            height: 8px;
+            animation-duration: 18s;
+            animation-delay: 0s;
+            background: rgba(79, 110, 247, 0.12);
+        }
+        .particle:nth-child(2) {
+            left: 20%;
+            animation-duration: 22s;
+            animation-delay: 2s;
+        }
+        .particle:nth-child(3) {
+            left: 30%;
+            width: 10px;
+            height: 10px;
+            animation-duration: 20s;
+            animation-delay: 4s;
+            background: rgba(123, 97, 255, 0.10);
+        }
+        .particle:nth-child(4) {
+            left: 40%;
+            animation-duration: 25s;
+            animation-delay: 1s;
+        }
+        .particle:nth-child(5) {
+            left: 50%;
+            width: 7px;
+            height: 7px;
+            animation-duration: 19s;
+            animation-delay: 3s;
+            background: rgba(79, 110, 247, 0.18);
+        }
+        .particle:nth-child(6) {
+            left: 60%;
+            animation-duration: 23s;
+            animation-delay: 5s;
+        }
+        .particle:nth-child(7) {
+            left: 70%;
+            width: 9px;
+            height: 9px;
+            animation-duration: 21s;
+            animation-delay: 2s;
+            background: rgba(123, 97, 255, 0.12);
+        }
+        .particle:nth-child(8) {
+            left: 80%;
+            animation-duration: 24s;
+            animation-delay: 4s;
+        }
+        .particle:nth-child(9) {
+            left: 90%;
+            width: 7px;
+            height: 7px;
+            animation-duration: 17s;
+            animation-delay: 1s;
+            background: rgba(79, 110, 247, 0.15);
+        }
+        .particle:nth-child(10) {
+            left: 15%;
+            animation-duration: 26s;
+            animation-delay: 3s;
+            width: 8px;
+            height: 8px;
+        }
+        .particle:nth-child(11) {
+            left: 45%;
+            animation-duration: 20s;
+            animation-delay: 0s;
+            background: rgba(123, 97, 255, 0.10);
+        }
+        .particle:nth-child(12) {
+            left: 75%;
+            animation-duration: 22s;
+            animation-delay: 5s;
+            width: 10px;
+            height: 10px;
+            background: rgba(79, 110, 247, 0.08);
+        }
+        .particle:nth-child(13) {
+            left: 55%;
+            animation-duration: 19s;
+            animation-delay: 2s;
+        }
+        .particle:nth-child(14) {
+            left: 85%;
+            animation-duration: 21s;
+            animation-delay: 4s;
+            background: rgba(123, 97, 255, 0.10);
+        }
+        .particle:nth-child(15) {
+            left: 5%;
+            animation-duration: 24s;
+            animation-delay: 1s;
+            width: 7px;
+            height: 7px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* ================================================================
+           主容器
+           ================================================================ */
+        .auth-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* ===== 品牌标识 ===== */
+        .brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a2a3a;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .brand .logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #4f6ef7, #7b61ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(79, 110, 247, 0.25);
+        }
+
+        .brand .logo span {
+            color: #4f6ef7;
+        }
+
+        .brand .slogan {
+            color: #8a9aaa;
+            font-size: 14px;
+            margin-top: 6px;
+            letter-spacing: 2px;
+        }
+
+        /* ===== 卡片 ===== */
+        .auth-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 36px 32px 32px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+            transition: 0.3s ease;
+            border: 1px solid #e8edf4;
+        }
+
+        .auth-card:hover {
+            box-shadow: 0 8px 48px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        /* ===== 模式切换 ===== */
+        .mode-tabs {
+            display: flex;
+            gap: 4px;
+            background: #f0f2f5;
+            border-radius: 14px;
+            padding: 4px;
+            margin-bottom: 28px;
+        }
+
+        .mode-tabs .tab-btn {
+            flex: 1;
+            padding: 10px 0;
+            border: none;
+            border-radius: 11px;
+            background: transparent;
+            color: #6b7a8a;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+        }
+
+        .mode-tabs .tab-btn:hover {
+            color: #1a2a3a;
+        }
+
+        .mode-tabs .tab-btn.active {
+            background: linear-gradient(135deg, #4f6ef7, #7b61ff);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(79, 110, 247, 0.25);
+        }
+
+        /* ===== 登录/注册切换 ===== */
+        .auth-type-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e8edf4;
+        }
+
+        .auth-type-tabs .type-btn {
+            padding: 10px 0;
+            border: none;
+            background: transparent;
+            color: #8a9aaa;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: inherit;
+            position: relative;
+            flex: 1;
+            text-align: center;
+        }
+
+        .auth-type-tabs .type-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4f6ef7, #7b61ff);
+            transition: 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .auth-type-tabs .type-btn:hover {
+            color: #4a5a6a;
+        }
+
+        .auth-type-tabs .type-btn.active {
+            color: #1a2a3a;
+        }
+
+        .auth-type-tabs .type-btn.active::after {
+            width: 40%;
+        }
+
+        /* ===== 表单 ===== */
+        .form-panel {
+            display: none;
+            animation: fadeSlide 0.4s ease;
+        }
+
+        .form-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #4a5a6a;
+            margin-bottom: 6px;
+        }
+
+        .form-group .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1.5px solid #e8edf4;
+            transition: 0.3s ease;
+        }
+
+        .form-group .input-wrap:focus-within {
+            border-color: #4f6ef7;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(79, 110, 247, 0.08);
+        }
+
+        .form-group .input-wrap .input-icon {
+            padding: 0 12px 0 14px;
+            color: #8a9aaa;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .form-group .input-wrap input {
+            width: 100%;
+            padding: 12px 14px 12px 0;
+            border: none;
+            background: transparent;
+            color: #1a2a3a;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .form-group .input-wrap input::placeholder {
+            color: #b0b8c0;
+        }
+
+        .form-group .input-wrap .captcha-btn {
+            padding: 8px 16px;
+            margin-right: 6px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(79, 110, 247, 0.10);
+            color: #4f6ef7;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: inherit;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .form-group .input-wrap .captcha-btn:hover {
+            background: rgba(79, 110, 247, 0.18);
+        }
+
+        .form-group .input-wrap .captcha-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .form-group .input-wrap .toggle-pwd {
+            padding: 0 14px 0 8px;
+            background: none;
+            border: none;
+            color: #8a9aaa;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .form-group .input-wrap .toggle-pwd:hover {
+            color: #4a5a6a;
+        }
+
+        /* ---- 错误提示 ---- */
+        .form-group .error-text {
+            font-size: 12px;
+            color: #e74c3c;
+            margin-top: 4px;
+            display: none;
+            padding-left: 4px;
+        }
+
+        .form-group .error-text.show {
+            display: block;
+        }
+
+        .form-group .input-wrap.error {
+            border-color: #fca5a5;
+            background: #fef2f2;
+        }
+
+        /* ---- 复选框 ---- */
+        .form-group .checkbox-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding-top: 4px;
+        }
+
+        .form-group .checkbox-wrap input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: #4f6ef7;
+            cursor: pointer;
+            flex-shrink: 0;
+            border-radius: 4px;
+        }
+
+        .form-group .checkbox-wrap label {
+            font-size: 13px;
+            color: #6b7a8a;
+            font-weight: 400;
+            cursor: pointer;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        .form-group .checkbox-wrap label a {
+            color: #4f6ef7;
+            text-decoration: none;
+        }
+
+        .form-group .checkbox-wrap label a:hover {
+            text-decoration: underline;
+        }
+
+        /* ---- 提交按钮 ---- */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #4f6ef7, #7b61ff);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: 0.5s ease;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(79, 110, 247, 0.30);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ---- 分割线 ---- */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 22px 0 18px;
+            color: #b0b8c0;
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e8edf4;
+        }
+
+        /* ---- 第三方登录 ---- */
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .social-login .social-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid #e8edf4;
+            background: #f8f9fa;
+            color: #6b7a8a;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .social-login .social-btn:hover {
+            background: #ffffff;
+            border-color: #4f6ef7;
+            color: #4f6ef7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .social-login .social-btn.wechat:hover {
+            border-color: #07c160;
+            color: #07c160;
+        }
+        .social-login .social-btn.qq:hover {
+            border-color: #12b7f5;
+            color: #12b7f5;
+        }
+        .social-login .social-btn.alipay:hover {
+            border-color: #1677ff;
+            color: #1677ff;
+        }
+        .social-login .social-btn.github:hover {
+            border-color: #1a2a3a;
+            color: #1a2a3a;
+        }
+        .social-login .social-btn.google:hover {
+            border-color: #ea4335;
+            color: #ea4335;
+        }
+
+        /* ---- 切换提示 ---- */
+        .switch-hint {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 13px;
+            color: #8a9aaa;
+        }
+
+        .switch-hint .switch-link {
+            color: #4f6ef7;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s ease;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .switch-hint .switch-link:hover {
+            color: #7b61ff;
+        }
+
+        /* ================================================================
+           响应式
+           ================================================================ */
+        @media (max-width: 520px) {
+            .auth-card {
+                padding: 28px 20px 24px;
+                border-radius: 20px;
+            }
+
+            .brand .logo {
+                font-size: 22px;
+            }
+
+            .brand .logo .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .mode-tabs .tab-btn {
+                font-size: 13px;
+                padding: 8px 0;
+            }
+
+            .form-group .input-wrap input {
+                font-size: 14px;
+                padding: 10px 12px 10px 0;
+            }
+
+            .btn-submit {
+                padding: 12px;
+                font-size: 15px;
+            }
+
+            .social-login .social-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 17px;
+            }
+
+            .auth-type-tabs .type-btn {
+                font-size: 12px;
+                padding: 8px 0;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .auth-card {
+                padding: 20px 16px 18px;
+            }
+
+            .form-group .input-wrap .captcha-btn {
+                font-size: 10px;
+                padding: 6px 10px;
+            }
+
+            .social-login {
+                gap: 10px;
+            }
+            .social-login .social-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================ -->
+    <!-- 粒子背景（浅色版） -->
+    <!-- ================================================================ -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- 主容器 -->
+    <!-- ================================================================ -->
+    <div class="auth-container">
+
+        <!-- 品牌 -->
+        <div class="brand">
+            <a href="#" class="logo">
+                <span class="logo-icon">T</span>
+                Tech<span>Nest</span>
+            </a>
+            <div class="slogan">✦ 技术记录 · 分享 · 交友</div>
+        </div>
+
+        <!-- 认证卡片 -->
+        <div class="auth-card">
+
+            <!-- ===== 登录/注册切换 ===== -->
+            <div class="mode-tabs">
+                <button class="tab-btn active" data-mode="login" onclick="switchMode('login')">登录</button>
+                <button class="tab-btn" data-mode="register" onclick="switchMode('register')">注册</button>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 登录面板 -->
+            <!-- ============================================================ -->
+            <div class="form-panel active" id="loginPanel">
+
+                <!-- 登录方式切换 -->
+                <div class="auth-type-tabs">
+                    <button class="type-btn active" data-type="phone-login" onclick="switchLoginType('phone-login')">📱 手机号</button>
+                    <button class="type-btn" data-type="email-login" onclick="switchLoginType('email-login')">✉️ 邮箱</button>
+                    <button class="type-btn" data-type="social-login" onclick="switchLoginType('social-login')">🔗 第三方</button>
+                </div>
+
+                <!-- ===== 手机号登录 ===== -->
+                <div class="login-form active" id="phoneLoginForm">
+                    <div class="form-group">
+                        <label>手机号</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">📱</span>
+                            <input type="tel" placeholder="请输入手机号" id="loginPhone" />
+                        </div>
+                        <div class="error-text" id="loginPhoneError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>验证码</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">✉️</span>
+                            <input type="text" placeholder="请输入验证码" id="loginCaptcha" />
+                            <button class="captcha-btn" id="loginCaptchaBtn" onclick="sendLoginCaptcha()">获取验证码</button>
+                        </div>
+                        <div class="error-text" id="loginCaptchaError"></div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:6px;">
+                        <div class="checkbox-wrap">
+                            <input type="checkbox" id="loginAgree" checked />
+                            <label for="loginAgree">我已阅读并同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a></label>
+                        </div>
+                    </div>
+
+                    <button class="btn-submit" onclick="handleLogin()">登 录</button>
+
+                    <div class="switch-hint">
+                        还没有账号？<button class="switch-link" onclick="switchMode('register')">立即注册</button>
+                    </div>
+                </div>
+
+                <!-- ===== 邮箱登录 ===== -->
+                <div class="login-form" id="emailLoginForm" style="display:none;">
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">✉️</span>
+                            <input type="email" placeholder="请输入邮箱" id="loginEmail" />
+                        </div>
+                        <div class="error-text" id="loginEmailError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>密码</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" placeholder="请输入密码" id="loginPassword" />
+                            <button class="toggle-pwd" onclick="togglePwd(this)">👁️</button>
+                        </div>
+                        <div class="error-text" id="loginPasswordError"></div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:6px;">
+                        <div class="checkbox-wrap">
+                            <input type="checkbox" id="loginAgree2" checked />
+                            <label for="loginAgree2">我已阅读并同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a></label>
+                        </div>
+                    </div>
+
+                    <button class="btn-submit" onclick="handleLogin()">登 录</button>
+
+                    <div class="switch-hint">
+                        还没有账号？<button class="switch-link" onclick="switchMode('register')">立即注册</button>
+                    </div>
+                </div>
+
+                <!-- ===== 第三方登录 ===== -->
+                <div class="login-form" id="socialLoginForm" style="display:none;">
+                    <p style="color:#8a9aaa;font-size:14px;text-align:center;margin-bottom:20px;">
+                        使用以下第三方账号快速登录
+                    </p>
+
+                    <div class="social-login">
+                        <button class="social-btn wechat" onclick="socialLogin('微信')">💬</button>
+                        <button class="social-btn qq" onclick="socialLogin('QQ')">🐧</button>
+                        <button class="social-btn alipay" onclick="socialLogin('支付宝')">💳</button>
+                        <button class="social-btn github" onclick="socialLogin('GitHub')">🐙</button>
+                        <button class="social-btn google" onclick="socialLogin('Google')">🌐</button>
+                    </div>
+
+                    <div class="switch-hint" style="margin-top:20px;">
+                        还没有账号？<button class="switch-link" onclick="switchMode('register')">立即注册</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 注册面板 -->
+            <!-- ============================================================ -->
+            <div class="form-panel" id="registerPanel">
+
+                <!-- 注册方式切换 -->
+                <div class="auth-type-tabs">
+                    <button class="type-btn active" data-type="phone-register" onclick="switchRegisterType('phone-register')">📱 手机号</button>
+                    <button class="type-btn" data-type="email-register" onclick="switchRegisterType('email-register')">✉️ 邮箱</button>
+                    <button class="type-btn" data-type="social-register" onclick="switchRegisterType('social-register')">🔗 第三方</button>
+                </div>
+
+                <!-- ===== 手机号注册 ===== -->
+                <div class="register-form active" id="phoneRegisterForm">
+                    <div class="form-group">
+                        <label>手机号</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">📱</span>
+                            <input type="tel" placeholder="请输入手机号" id="regPhone" />
+                        </div>
+                        <div class="error-text" id="regPhoneError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>验证码</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">✉️</span>
+                            <input type="text" placeholder="请输入验证码" id="regCaptcha" />
+                            <button class="captcha-btn" id="regCaptchaBtn" onclick="sendRegCaptcha()">获取验证码</button>
+                        </div>
+                        <div class="error-text" id="regCaptchaError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>昵称</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">👤</span>
+                            <input type="text" placeholder="2-12个字符，中英文、数字、下划线" id="regNickname" />
+                        </div>
+                        <div class="error-text" id="regNicknameError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>密码</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" placeholder="8-20位，包含字母和数字" id="regPassword" />
+                            <button class="toggle-pwd" onclick="togglePwd(this)">👁️</button>
+                        </div>
+                        <div class="error-text" id="regPasswordError"></div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:6px;">
+                        <div class="checkbox-wrap">
+                            <input type="checkbox" id="regAgree" />
+                            <label for="regAgree">我已阅读并同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a></label>
+                        </div>
+                        <div class="error-text" id="regAgreeError"></div>
+                    </div>
+
+                    <button class="btn-submit" id="regSubmitBtn" disabled onclick="handleRegister()">注 册</button>
+
+                    <div class="switch-hint">
+                        已有账号？<button class="switch-link" onclick="switchMode('login')">立即登录</button>
+                    </div>
+                </div>
+
+                <!-- ===== 邮箱注册 ===== -->
+                <div class="register-form" id="emailRegisterForm" style="display:none;">
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">✉️</span>
+                            <input type="email" placeholder="请输入邮箱" id="regEmail" />
+                        </div>
+                        <div class="error-text" id="regEmailError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>验证码</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">✉️</span>
+                            <input type="text" placeholder="请输入验证码" id="regEmailCaptcha" />
+                            <button class="captcha-btn" id="regEmailCaptchaBtn" onclick="sendRegEmailCaptcha()">获取验证码</button>
+                        </div>
+                        <div class="error-text" id="regEmailCaptchaError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>昵称</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">👤</span>
+                            <input type="text" placeholder="2-12个字符，中英文、数字、下划线" id="regEmailNickname" />
+                        </div>
+                        <div class="error-text" id="regEmailNicknameError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>密码</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" placeholder="8-20位，包含字母和数字" id="regEmailPassword" />
+                            <button class="toggle-pwd" onclick="togglePwd(this)">👁️</button>
+                        </div>
+                        <div class="error-text" id="regEmailPasswordError"></div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:6px;">
+                        <div class="checkbox-wrap">
+                            <input type="checkbox" id="regAgree2" />
+                            <label for="regAgree2">我已阅读并同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a></label>
+                        </div>
+                        <div class="error-text" id="regAgree2Error"></div>
+                    </div>
+
+                    <button class="btn-submit" id="regEmailSubmitBtn" disabled onclick="handleRegister()">注 册</button>
+
+                    <div class="switch-hint">
+                        已有账号？<button class="switch-link" onclick="switchMode('login')">立即登录</button>
+                    </div>
+                </div>
+
+                <!-- ===== 第三方注册 ===== -->
+                <div class="register-form" id="socialRegisterForm" style="display:none;">
+                    <p style="color:#8a9aaa;font-size:14px;text-align:center;margin-bottom:20px;">
+                        使用以下第三方账号快速注册
+                    </p>
+
+                    <div class="social-login">
+                        <button class="social-btn wechat" onclick="socialRegister('微信')">💬</button>
+                        <button class="social-btn qq" onclick="socialRegister('QQ')">🐧</button>
+                        <button class="social-btn alipay" onclick="socialRegister('支付宝')">💳</button>
+                        <button class="social-btn github" onclick="socialRegister('GitHub')">🐙</button>
+                        <button class="social-btn google" onclick="socialRegister('Google')">🌐</button>
+                    </div>
+
+                    <div class="switch-hint" style="margin-top:20px;">
+                        已有账号？<button class="switch-link" onclick="switchMode('login')">立即登录</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        // 登录/注册模式切换
+        // ================================================================
+        function switchMode(mode) {
+            const tabs = document.querySelectorAll('.mode-tabs .tab-btn');
+            tabs.forEach(t => t.classList.remove('active'));
+
+            const loginPanel = document.getElementById('loginPanel');
+            const registerPanel = document.getElementById('registerPanel');
+
+            if (mode === 'login') {
+                tabs[0].classList.add('active');
+                loginPanel.classList.add('active');
+                registerPanel.classList.remove('active');
+                document.getElementById('regSubmitBtn').disabled = true;
+                document.getElementById('regEmailSubmitBtn').disabled = true;
+            } else {
+                tabs[1].classList.add('active');
+                registerPanel.classList.add('active');
+                loginPanel.classList.remove('active');
+            }
+
+            document.querySelectorAll('.error-text').forEach(el => {
+                el.classList.remove('show');
+                el.textContent = '';
+            });
+            document.querySelectorAll('.input-wrap').forEach(el => {
+                el.classList.remove('error');
+            });
+        }
+
+        // ================================================================
+        // 登录方式切换
+        // ================================================================
+        function switchLoginType(type) {
+            const btns = document.querySelectorAll('.auth-type-tabs .type-btn');
+            btns.forEach(b => b.classList.remove('active'));
+
+            const forms = document.querySelectorAll('.login-form');
+            forms.forEach(f => f.style.display = 'none');
+
+            if (type === 'phone-login') {
+                btns[0].classList.add('active');
+                document.getElementById('phoneLoginForm').style.display = 'block';
+            } else if (type === 'email-login') {
+                btns[1].classList.add('active');
+                document.getElementById('emailLoginForm').style.display = 'block';
+            } else {
+                btns[2].classList.add('active');
+                document.getElementById('socialLoginForm').style.display = 'block';
+            }
+
+            document.querySelectorAll('.error-text').forEach(el => {
+                el.classList.remove('show');
+                el.textContent = '';
+            });
+            document.querySelectorAll('.input-wrap').forEach(el => {
+                el.classList.remove('error');
+            });
+        }
+
+        // ================================================================
+        // 注册方式切换
+        // ================================================================
+        function switchRegisterType(type) {
+            const btns = document.querySelectorAll('.auth-type-tabs .type-btn');
+            btns.forEach(b => b.classList.remove('active'));
+
+            const forms = document.querySelectorAll('.register-form');
+            forms.forEach(f => f.style.display = 'none');
+
+            if (type === 'phone-register') {
+                btns[0].classList.add('active');
+                document.getElementById('phoneRegisterForm').style.display = 'block';
+            } else if (type === 'email-register') {
+                btns[1].classList.add('active');
+                document.getElementById('emailRegisterForm').style.display = 'block';
+            } else {
+                btns[2].classList.add('active');
+                document.getElementById('socialRegisterForm').style.display = 'block';
+            }
+
+            document.querySelectorAll('.error-text').forEach(el => {
+                el.classList.remove('show');
+                el.textContent = '';
+            });
+            document.querySelectorAll('.input-wrap').forEach(el => {
+                el.classList.remove('error');
+            });
+        }
+
+        // ================================================================
+        // 密码显示切换
+        // ================================================================
+        function togglePwd(btn) {
+            const input = btn.closest('.input-wrap').querySelector('input');
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+            }
+        }
+
+        // ================================================================
+        // 手机号注册 - 验证码倒计时
+        // ================================================================
+        let regCaptchaTimer = null;
+        let regCaptchaCountdown = 60;
+
+        function sendRegCaptcha() {
+            const phone = document.getElementById('regPhone').value.trim();
+            const btn = document.getElementById('regCaptchaBtn');
+            const errorEl = document.getElementById('regPhoneError');
+
+            if (!phone) {
+                errorEl.textContent = '请输入手机号';
+                errorEl.classList.add('show');
+                document.querySelector('#regPhone').closest('.input-wrap').classList.add('error');
+                return;
+            }
+            if (!/^1\d{10}$/.test(phone)) {
+                errorEl.textContent = '请输入有效的手机号';
+                errorEl.classList.add('show');
+                document.querySelector('#regPhone').closest('.input-wrap').classList.add('error');
+                return;
+            }
+
+            errorEl.classList.remove('show');
+            document.querySelector('#regPhone').closest('.input-wrap').classList.remove('error');
+
+            btn.disabled = true;
+            regCaptchaCountdown = 60;
+            btn.textContent = regCaptchaCountdown + 's';
+
+            regCaptchaTimer = setInterval(() => {
+                regCaptchaCountdown--;
+                btn.textContent = regCaptchaCountdown + 's';
+                if (regCaptchaCountdown <= 0) {
+                    clearInterval(regCaptchaTimer);
+                    btn.textContent = '获取验证码';
+                    btn.disabled = false;
+                }
+            }, 1000);
+
+            alert('📱 验证码已发送至 ' + phone);
+        }
+
+        // ================================================================
+        // 邮箱注册 - 验证码倒计时
+        // ================================================================
+        let regEmailCaptchaTimer = null;
+        let regEmailCaptchaCountdown = 60;
+
+        function sendRegEmailCaptcha() {
+            const email = document.getElementById('regEmail').value.trim();
+            const btn = document.getElementById('regEmailCaptchaBtn');
+            const errorEl = document.getElementById('regEmailError');
+
+            if (!email) {
+                errorEl.textContent = '请输入邮箱';
+                errorEl.classList.add('show');
+                document.querySelector('#regEmail').closest('.input-wrap').classList.add('error');
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errorEl.textContent = '请输入有效的邮箱地址';
+                errorEl.classList.add('show');
+                document.querySelector('#regEmail').closest('.input-wrap').classList.add('error');
+                return;
+            }
+
+            errorEl.classList.remove('show');
+            document.querySelector('#regEmail').closest('.input-wrap').classList.remove('error');
+
+            btn.disabled = true;
+            regEmailCaptchaCountdown = 60;
+            btn.textContent = regEmailCaptchaCountdown + 's';
+
+            regEmailCaptchaTimer = setInterval(() => {
+                regEmailCaptchaCountdown--;
+                btn.textContent = regEmailCaptchaCountdown + 's';
+                if (regEmailCaptchaCountdown <= 0) {
+                    clearInterval(regEmailCaptchaTimer);
+                    btn.textContent = '获取验证码';
+                    btn.disabled = false;
+                }
+            }, 1000);
+
+            alert('✉️ 验证码已发送至 ' + email);
+        }
+
+        // ================================================================
+        // 登录 - 验证码倒计时
+        // ================================================================
+        let loginCaptchaTimer = null;
+        let loginCaptchaCountdown = 60;
+
+        function sendLoginCaptcha() {
+            const phone = document.getElementById('loginPhone').value.trim();
+            const btn = document.getElementById('loginCaptchaBtn');
+            const errorEl = document.getElementById('loginPhoneError');
+
+            if (!phone) {
+                errorEl.textContent = '请输入手机号';
+                errorEl.classList.add('show');
+                document.querySelector('#loginPhone').closest('.input-wrap').classList.add('error');
+                return;
+            }
+            if (!/^1\d{10}$/.test(phone)) {
+                errorEl.textContent = '请输入有效的手机号';
+                errorEl.classList.add('show');
+                document.querySelector('#loginPhone').closest('.input-wrap').classList.add('error');
+                return;
+            }
+
+            errorEl.classList.remove('show');
+            document.querySelector('#loginPhone').closest('.input-wrap').classList.remove('error');
+
+            btn.disabled = true;
+            loginCaptchaCountdown = 60;
+            btn.textContent = loginCaptchaCountdown + 's';
+
+            loginCaptchaTimer = setInterval(() => {
+                loginCaptchaCountdown--;
+                btn.textContent = loginCaptchaCountdown + 's';
+                if (loginCaptchaCountdown <= 0) {
+                    clearInterval(loginCaptchaTimer);
+                    btn.textContent = '获取验证码';
+                    btn.disabled = false;
+                }
+            }, 1000);
+
+            alert('📱 验证码已发送至 ' + phone);
+        }
+
+        // ================================================================
+        // 注册 - 协议勾选验证
+        // ================================================================
+        document.getElementById('regAgree').addEventListener('change', function() {
+            const btn = document.getElementById('regSubmitBtn');
+            btn.disabled = !this.checked;
+        });
+
+        document.getElementById('regAgree2').addEventListener('change', function() {
+            const btn = document.getElementById('regEmailSubmitBtn');
+            btn.disabled = !this.checked;
+        });
+
+        // ================================================================
+        // 手机号注册 - 实时验证
+        // ================================================================
+        document.getElementById('regPhone').addEventListener('blur', function() {
+            const val = this.value.trim();
+            const errorEl = document.getElementById('regPhoneError');
+            if (val && !/^1\d{10}$/.test(val)) {
+                errorEl.textContent = '请输入有效的手机号';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else {
+                errorEl.classList.remove('show');
+                this.closest('.input-wrap').classList.remove('error');
+            }
+        });
+
+        document.getElementById('regNickname').addEventListener('blur', function() {
+            const val = this.value.trim();
+            const errorEl = document.getElementById('regNicknameError');
+            if (val && (val.length < 2 || val.length > 12)) {
+                errorEl.textContent = '昵称长度为 2-12 个字符';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else if (val && !/^[\u4e00-\u9fa5a-zA-Z0-9_]+$/.test(val)) {
+                errorEl.textContent = '昵称仅支持中英文、数字、下划线';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else {
+                errorEl.classList.remove('show');
+                this.closest('.input-wrap').classList.remove('error');
+            }
+        });
+
+        document.getElementById('regPassword').addEventListener('blur', function() {
+            const val = this.value;
+            const errorEl = document.getElementById('regPasswordError');
+            if (val && (val.length < 8 || val.length > 20)) {
+                errorEl.textContent = '密码长度需为 8-20 位';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else if (val && !/[a-zA-Z]/.test(val)) {
+                errorEl.textContent = '密码需包含字母';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else if (val && !/\d/.test(val)) {
+                errorEl.textContent = '密码需包含数字';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else {
+                errorEl.classList.remove('show');
+                this.closest('.input-wrap').classList.remove('error');
+            }
+        });
+
+        // ================================================================
+        // 邮箱注册 - 实时验证
+        // ================================================================
+        document.getElementById('regEmail').addEventListener('blur', function() {
+            const val = this.value.trim();
+            const errorEl = document.getElementById('regEmailError');
+            if (val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                errorEl.textContent = '请输入有效的邮箱地址';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else {
+                errorEl.classList.remove('show');
+                this.closest('.input-wrap').classList.remove('error');
+            }
+        });
+
+        document.getElementById('regEmailNickname').addEventListener('blur', function() {
+            const val = this.value.trim();
+            const errorEl = document.getElementById('regEmailNicknameError');
+            if (val && (val.length < 2 || val.length > 12)) {
+                errorEl.textContent = '昵称长度为 2-12 个字符';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else if (val && !/^[\u4e00-\u9fa5a-zA-Z0-9_]+$/.test(val)) {
+                errorEl.textContent = '昵称仅支持中英文、数字、下划线';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else {
+                errorEl.classList.remove('show');
+                this.closest('.input-wrap').classList.remove('error');
+            }
+        });
+
+        document.getElementById('regEmailPassword').addEventListener('blur', function() {
+            const val = this.value;
+            const errorEl = document.getElementById('regEmailPasswordError');
+            if (val && (val.length < 8 || val.length > 20)) {
+                errorEl.textContent = '密码长度需为 8-20 位';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else if (val && !/[a-zA-Z]/.test(val)) {
+                errorEl.textContent = '密码需包含字母';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else if (val && !/\d/.test(val)) {
+                errorEl.textContent = '密码需包含数字';
+                errorEl.classList.add('show');
+                this.closest('.input-wrap').classList.add('error');
+            } else {
+                errorEl.classList.remove('show');
+                this.closest('.input-wrap').classList.remove('error');
+            }
+        });
+
+        // ================================================================
+        // 注册提交
+        // ================================================================
+        function handleRegister() {
+            const phoneForm = document.getElementById('phoneRegisterForm');
+            const emailForm = document.getElementById('emailRegisterForm');
+
+            if (phoneForm.style.display !== 'none') {
+                const phone = document.getElementById('regPhone').value.trim();
+                const captcha = document.getElementById('regCaptcha').value.trim();
+                const nickname = document.getElementById('regNickname').value.trim();
+                const password = document.getElementById('regPassword').value;
+
+                if (!phone || !captcha || !nickname || !password) {
+                    alert('请完整填写所有信息');
+                    return;
+                }
+                if (!document.getElementById('regAgree').checked) {
+                    alert('请先同意《用户协议》及《隐私政策》');
+                    return;
+                }
+
+                alert('✅ 手机号注册成功！\n\n手机号：' + phone + '\n昵称：' + nickname);
+            } else if (emailForm.style.display !== 'none') {
+                const email = document.getElementById('regEmail').value.trim();
+                const captcha = document.getElementById('regEmailCaptcha').value.trim();
+                const nickname = document.getElementById('regEmailNickname').value.trim();
+                const password = document.getElementById('regEmailPassword').value;
+
+                if (!email || !captcha || !nickname || !password) {
+                    alert('请完整填写所有信息');
+                    return;
+                }
+                if (!document.getElementById('regAgree2').checked) {
+                    alert('请先同意《用户协议》及《隐私政策》');
+                    return;
+                }
+
+                alert('✅ 邮箱注册成功！\n\n邮箱：' + email + '\n昵称：' + nickname);
+            } else {
+                alert('请选择注册方式');
+            }
+        }
+
+        // ================================================================
+        // 登录提交
+        // ================================================================
+        function handleLogin() {
+            const phoneForm = document.getElementById('phoneLoginForm');
+            const emailForm = document.getElementById('emailLoginForm');
+            const socialForm = document.getElementById('socialLoginForm');
+
+            if (phoneForm.style.display !== 'none') {
+                const phone = document.getElementById('loginPhone').value.trim();
+                const captcha = document.getElementById('loginCaptcha').value.trim();
+                if (!phone || !captcha) {
+                    alert('请完整填写信息');
+                    return;
+                }
+                alert('✅ 手机号登录成功！\n\n欢迎回来，' + phone);
+            } else if (emailForm.style.display !== 'none') {
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value;
+                if (!email || !password) {
+                    alert('请完整填写信息');
+                    return;
+                }
+                alert('✅ 邮箱登录成功！\n\n欢迎回来，' + email);
+            } else if (socialForm.style.display !== 'none') {
+                alert('请点击下方第三方图标进行登录');
+            } else {
+                alert('请选择登录方式');
+            }
+        }
+
+        // ================================================================
+        // 第三方登录
+        // ================================================================
+        function socialLogin(platform) {
+            alert('🔗 正在跳转至 ' + platform + ' 授权页面...\n\n授权成功后将自动登录');
+        }
+
+        // ================================================================
+        // 第三方注册
+        // ================================================================
+        function socialRegister(platform) {
+            alert('🔗 正在跳转至 ' + platform + ' 授权页面...\n\n首次授权将自动创建账号');
+        }
+
+        // ================================================================
+        // 初始化
+        // ================================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            switchLoginType('phone-login');
+            switchRegisterType('phone-register');
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>博客管理 · TechNest</title>
+    <style>
+        /* ===== 全局重置 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #f4f7f9;
+            color: #1a2a3a;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        /* ===== 图标 ===== */
+        .icon-sprite {
+            display: none;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        /* ================================================================
+           页面容器
+           ================================================================ */
+        .page-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== 页面头部 ===== */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .page-header .title-group h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .page-header .title-group .subtitle {
+            font-size: 14px;
+            color: #8a9aaa;
+            margin-top: 2px;
+        }
+
+        .page-header .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .page-header .header-actions .admin-badge {
+            background: #fef3c7;
+            color: #b45309;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 20px;
+        }
+
+        .btn-primary {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #4f6ef7;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary:hover {
+            background: #3b5de7;
+        }
+
+        .btn-secondary {
+            padding: 8px 16px;
+            border: 1px solid #d5dfdc;
+            border-radius: 8px;
+            background: #fff;
+            color: #4a5a6a;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            border-color: #b5ccc2;
+        }
+
+        /* ================================================================
+           统计卡片
+           ================================================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            border: 1px solid #e8edf4;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #8a9aaa;
+        }
+
+        .stat-card .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a2a3a;
+            margin-top: 4px;
+        }
+
+        .stat-card .stat-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+
+        .stat-card .stat-dot.pending {
+            background: #f59e0b;
+        }
+        .stat-card .stat-dot.passed {
+            background: #16a34a;
+        }
+        .stat-card .stat-dot.rejected {
+            background: #e74c3c;
+        }
+        .stat-card .stat-dot.draft {
+            background: #8a9aaa;
+        }
+        .stat-card .stat-dot.total {
+            background: #4f6ef7;
+        }
+
+        /* ================================================================
+           筛选栏
+           ================================================================ */
+        .filter-bar {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            border: 1px solid #e8edf4;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .filter-bar .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-bar .filter-row .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1 0 auto;
+            min-width: 140px;
+        }
+
+        .filter-bar .filter-row .filter-group label {
+            font-size: 13px;
+            color: #6b7a8a;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .filter-bar .filter-row input,
+        .filter-bar .filter-row select {
+            padding: 7px 12px;
+            border: 1.5px solid #d5dfdc;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            background: #fafcfb;
+            color: #1a2a3a;
+            width: 100%;
+            min-width: 0;
+            transition: 0.2s;
+        }
+
+        .filter-bar .filter-row input:focus,
+        .filter-bar .filter-row select:focus {
+            border-color: #4f6ef7;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.08);
+            background: #fff;
+        }
+
+        .filter-bar .filter-row .filter-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .filter-bar .filter-row .filter-actions .btn-search {
+            padding: 7px 20px;
+            background: #4f6ef7;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-bar .filter-row .filter-actions .btn-search:hover {
+            background: #3b5de7;
+        }
+
+        .filter-bar .filter-row .filter-actions .btn-reset {
+            padding: 7px 16px;
+            background: transparent;
+            color: #6b7a8a;
+            border: 1px solid #d5dfdc;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-bar .filter-row .filter-actions .btn-reset:hover {
+            background: #f0f2f5;
+        }
+
+        /* ================================================================
+           表格
+           ================================================================ */
+        .table-container {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e8edf4;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+            margin-bottom: 24px;
+        }
+
+        .table-container .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid #e8edf4;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .table-container .table-header .table-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+
+        .table-container .table-header .table-title .count {
+            font-weight: 400;
+            color: #8a9aaa;
+            font-size: 13px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            padding: 0 4px 4px 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        table thead {
+            background: #f8f9fa;
+        }
+
+        table thead th {
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5a6a;
+            border-bottom: 1px solid #e8edf4;
+            white-space: nowrap;
+        }
+
+        table tbody tr {
+            transition: 0.15s;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        table tbody td {
+            padding: 10px 14px;
+            vertical-align: middle;
+            color: #1a2a3a;
+        }
+
+        table tbody td .blog-title {
+            font-weight: 500;
+            color: #1a2a3a;
+            cursor: pointer;
+            transition: 0.15s;
+            max-width: 280px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        table tbody td .blog-title:hover {
+            color: #4f6ef7;
+        }
+
+        table tbody td .author-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        table tbody td .author-info .author-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #4f6ef7;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        table tbody td .author-info .author-name {
+            color: #1a2a3a;
+            font-weight: 500;
+        }
+
+        table tbody td .author-info .author-id {
+            font-size: 11px;
+            color: #8a9aaa;
+        }
+
+        /* ===== 状态标签 ===== */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+
+        .status-badge .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .status-badge.pending .status-dot {
+            background: #f59e0b;
+        }
+
+        .status-badge.passed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-badge.passed .status-dot {
+            background: #16a34a;
+        }
+
+        .status-badge.rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .status-badge.rejected .status-dot {
+            background: #e74c3c;
+        }
+
+        .status-badge.draft {
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+        .status-badge.draft .status-dot {
+            background: #8a9aaa;
+        }
+
+        /* ===== 操作按钮 ===== */
+        .action-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .action-group .btn-sm {
+            padding: 4px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .action-group .btn-sm.btn-view {
+            background: #e8edfe;
+            color: #4f6ef7;
+        }
+
+        .action-group .btn-sm.btn-view:hover {
+            background: #d5ddfa;
+        }
+
+        .action-group .btn-sm.btn-audit {
+            background: #4f6ef7;
+            color: #fff;
+        }
+
+        .action-group .btn-sm.btn-audit:hover {
+            background: #3b5de7;
+        }
+
+        .action-group .btn-sm.btn-edit {
+            background: #eaf5f1;
+            color: #247b63;
+        }
+
+        .action-group .btn-sm.btn-edit:hover {
+            background: #d5ede5;
+        }
+
+        .action-group .btn-sm.btn-delete {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-group .btn-sm.btn-delete:hover {
+            background: #fecaca;
+        }
+
+        /* ===== 分页 ===== */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-top: 1px solid #e8edf4;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pagination .pagination-info {
+            font-size: 13px;
+            color: #8a9aaa;
+        }
+
+        .pagination .pagination-btns {
+            display: flex;
+            gap: 4px;
+        }
+
+        .pagination .pagination-btns button {
+            padding: 6px 12px;
+            border: 1px solid #d5dfdc;
+            border-radius: 6px;
+            background: #fff;
+            color: #4a5a6a;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .pagination .pagination-btns button:hover {
+            background: #f0f2f5;
+        }
+
+        .pagination .pagination-btns button.active {
+            background: #4f6ef7;
+            color: #fff;
+            border-color: #4f6ef7;
+        }
+
+        .pagination .pagination-btns button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ================================================================
+           折线图区域
+           ================================================================ */
+        .chart-container {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e8edf4;
+            padding: 24px 24px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .chart-container .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .chart-container .chart-header .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+
+        .chart-container .chart-header .chart-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .chart-container .chart-header .chart-controls .time-btn {
+            padding: 4px 14px;
+            border: 1px solid #d5dfdc;
+            border-radius: 6px;
+            background: #fff;
+            color: #4a5a6a;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .chart-container .chart-header .chart-controls .time-btn:hover {
+            background: #f0f2f5;
+        }
+
+        .chart-container .chart-header .chart-controls .time-btn.active {
+            background: #4f6ef7;
+            color: #fff;
+            border-color: #4f6ef7;
+        }
+
+        /* ---- 图例 ---- */
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .chart-legend .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #4a5a6a;
+            cursor: pointer;
+            transition: 0.15s;
+            user-select: none;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .chart-legend .legend-item:hover {
+            background: #f0f2f5;
+        }
+
+        .chart-legend .legend-item .legend-line {
+            width: 28px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .chart-legend .legend-item .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .chart-legend .legend-item.hidden {
+            opacity: 0.35;
+        }
+
+        .chart-legend .legend-item.hidden .legend-line {
+            opacity: 0.3;
+        }
+
+        /* ---- SVG 图表 ---- */
+        .chart-svg-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .chart-svg-wrapper svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            min-width: 560px;
+        }
+
+        .chart-svg-wrapper .chart-grid line {
+            stroke: #e8edf4;
+            stroke-width: 1;
+        }
+
+        .chart-svg-wrapper .chart-grid .grid-label {
+            font-size: 11px;
+            fill: #8a9aaa;
+            text-anchor: middle;
+        }
+
+        .chart-svg-wrapper .chart-grid .grid-label-y {
+            font-size: 11px;
+            fill: #8a9aaa;
+            text-anchor: end;
+        }
+
+        .chart-svg-wrapper .chart-line {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-svg-wrapper .chart-line.hidden {
+            opacity: 0.15;
+        }
+
+        .chart-svg-wrapper .chart-area {
+            opacity: 0.08;
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-svg-wrapper .chart-area.hidden {
+            opacity: 0.02;
+        }
+
+        .chart-svg-wrapper .chart-dot {
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-svg-wrapper .chart-dot.hidden {
+            opacity: 0.15;
+        }
+
+        .chart-svg-wrapper .chart-dot circle {
+            stroke: #fff;
+            stroke-width: 1.5;
+        }
+
+        .chart-svg-wrapper .chart-tooltip-area {
+            fill: transparent;
+            cursor: crosshair;
+        }
+
+        .chart-svg-wrapper .chart-tooltip-line {
+            stroke: #8a9aaa;
+            stroke-width: 1;
+            stroke-dasharray: 4 4;
+            opacity: 0.6;
+        }
+
+        /* ================================================================
+           响应式
+           ================================================================ */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filter-bar .filter-row .filter-group {
+                min-width: 120px;
+                flex: 1 1 45%;
+            }
+
+            .chart-container .chart-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .chart-container .chart-header .chart-controls {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 12px 14px;
+            }
+
+            .stat-card .stat-number {
+                font-size: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-bar .filter-row .filter-group {
+                min-width: 100%;
+                flex: 1 1 100%;
+            }
+
+            .filter-bar .filter-row .filter-actions {
+                width: 100%;
+                justify-content: stretch;
+            }
+
+            .filter-bar .filter-row .filter-actions button {
+                flex: 1;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            table thead th,
+            table tbody td {
+                padding: 8px 10px;
+            }
+
+            table tbody td .blog-title {
+                max-width: 120px;
+            }
+
+            .pagination {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .pagination .pagination-btns {
+                justify-content: center;
+            }
+
+            .chart-legend {
+                gap: 10px;
+            }
+
+            .chart-legend .legend-item {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================ -->
+    <!-- 页面容器 -->
+    <!-- ================================================================ -->
+    <div class="page-container">
+
+        <!-- ===== 页面头部 ===== -->
+        <div class="page-header">
+            <div class="title-group">
+                <h1>📋 博客管理</h1>
+                <div class="subtitle">管理全站所有博客 · 审核 · 状态管控</div>
+            </div>
+            <div class="header-actions">
+                <span class="admin-badge">🔑 管理员</span>
+                <button class="btn-secondary" onclick="alert('刷新列表')">
+                    <svg class="icon"><use href="#icon-refresh" /></svg>
+                    刷新
+                </button>
+                <button class="btn-primary" onclick="alert('导出数据')">
+                    导出数据
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== 统计卡片 ===== -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label"><span class="stat-dot total"></span>全部博客</div>
+                <div class="stat-number">42</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label"><span class="stat-dot pending"></span>待审核</div>
+                <div class="stat-number">7</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label"><span class="stat-dot passed"></span>已通过</div>
+                <div class="stat-number">28</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label"><span class="stat-dot rejected"></span>已打回</div>
+                <div class="stat-number">4</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label"><span class="stat-dot draft"></span>草稿</div>
+                <div class="stat-number">3</div>
+            </div>
+        </div>
+
+        <!-- ===== 筛选栏 ===== -->
+        <div class="filter-bar">
+            <div class="filter-row">
+                <div class="filter-group" style="flex:2;">
+                    <label>🔍</label>
+                    <input type="text" placeholder="标题 / 作者昵称 / 作者ID" />
+                </div>
+                <div class="filter-group">
+                    <label>状态</label>
+                    <select>
+                        <option value="">全部状态</option>
+                        <option value="pending">待审核</option>
+                        <option value="passed">已通过</option>
+                        <option value="rejected">已打回</option>
+                        <option value="draft">草稿</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>时间</label>
+                    <input type="date" placeholder="开始" />
+                </div>
+                <div class="filter-group">
+                    <label>~</label>
+                    <input type="date" placeholder="结束" />
+                </div>
+                <div class="filter-actions">
+                    <button class="btn-search">检索</button>
+                    <button class="btn-reset">重置</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 表格 ===== -->
+        <div class="table-container">
+            <div class="table-header">
+                <div class="table-title">
+                    博客列表 <span class="count">共 42 篇</span>
+                </div>
+                <div class="table-actions">
+                    <button class="btn-secondary" style="padding:4px 12px;font-size:12px;">
+                        <svg class="icon" style="width:14px;height:14px;"><use href="#icon-chevron-down" /></svg>
+                        批量操作
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:30px;">
+                                <input type="checkbox" />
+                            </th>
+                            <th style="min-width:200px;">博客标题</th>
+                            <th>作者</th>
+                            <th>状态</th>
+                            <th>发布时间</th>
+                            <th>浏览</th>
+                            <th style="min-width:180px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><span class="blog-title" onclick="alert('跳转至前台详情页')">深入理解 React Hooks 原理与最佳实践</span></td>
+                            <td><div class="author-info"><div class="author-avatar">张</div><div><div class="author-name">张三</div><div class="author-id">ID: 1001</div></div></div></td>
+                            <td><span class="status-badge pending"><span class="status-dot"></span>待审核</span></td>
+                            <td>2026-08-12 14:32</td>
+                            <td>1,283</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-audit">审核</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><span class="blog-title" onclick="alert('跳转至前台详情页')">Vue 3 组合式 API 实战指南与源码分析</span></td>
+                            <td><div class="author-info"><div class="author-avatar" style="background:#e67e22;">李</div><div><div class="author-name">李四</div><div class="author-id">ID: 1002</div></div></div></td>
+                            <td><span class="status-badge passed"><span class="status-dot"></span>已通过</span></td>
+                            <td>2026-08-11 09:15</td>
+                            <td>2,341</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><span class="blog-title" onclick="alert('跳转至前台详情页')">Tailwind CSS 在大型项目中的最佳实践</span></td>
+                            <td><div class="author-info"><div class="author-avatar" style="background:#16a34a;">王</div><div><div class="author-name">王五</div><div class="author-id">ID: 1003</div></div></div></td>
+                            <td><span class="status-badge pending"><span class="status-dot"></span>待审核</span></td>
+                            <td>2026-08-10 21:40</td>
+                            <td>876</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-audit">审核</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><span class="blog-title" onclick="alert('跳转至前台详情页')">TypeScript 高级类型推导与泛型编程</span></td>
+                            <td><div class="author-info"><div class="author-avatar" style="background:#8b5cf6;">赵</div><div><div class="author-name">赵六</div><div class="author-id">ID: 1004</div></div></div></td>
+                            <td><span class="status-badge rejected"><span class="status-dot"></span>已打回</span></td>
+                            <td>2026-08-09 16:20</td>
+                            <td>647</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><span class="blog-title" onclick="alert('跳转至前台详情页')">Docker 容器化部署从入门到精通</span></td>
+                            <td><div class="author-info"><div class="author-avatar" style="background:#d63384;">孙</div><div><div class="author-name">孙七</div><div class="author-id">ID: 1005</div></div></div></td>
+                            <td><span class="status-badge passed"><span class="status-dot"></span>已通过</span></td>
+                            <td>2026-08-08 11:05</td>
+                            <td>1,987</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><span class="blog-title" onclick="alert('跳转至前台详情页')">Spring Boot 3.0 新特性全面解析</span></td>
+                            <td><div class="author-info"><div class="author-avatar" style="background:#0ea5e9;">周</div><div><div class="author-name">周八</div><div class="author-id">ID: 1006</div></div></div></td>
+                            <td><span class="status-badge draft"><span class="status-dot"></span>草稿</span></td>
+                            <td>2026-08-07 08:50</td>
+                            <td>0</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><span class="blog-title" onclick="alert('跳转至前台详情页')">Web 性能优化：从首屏加载到交互响应</span></td>
+                            <td><div class="author-info"><div class="author-avatar" style="background:#f59e0b;">吴</div><div><div class="author-name">吴九</div><div class="author-id">ID: 1007</div></div></div></td>
+                            <td><span class="status-badge pending"><span class="status-dot"></span>待审核</span></td>
+                            <td>2026-08-06 19:30</td>
+                            <td>432</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-audit">审核</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <div class="pagination-info">显示 1-7 条，共 42 条</div>
+                <div class="pagination-btns">
+                    <button disabled>上一页</button>
+                    <button class="active">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button>6</button>
+                    <button>下一页</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- 折线图区域 -->
+        <!-- ================================================================ -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <div class="chart-title">📈 博客趋势统计（近30天）</div>
+                <div class="chart-controls">
+                    <button class="time-btn" data-days="7">7天</button>
+                    <button class="time-btn" data-days="14">14天</button>
+                    <button class="time-btn active" data-days="30">30天</button>
+                </div>
+            </div>
+
+            <!-- 图例 -->
+            <div class="chart-legend" id="chartLegend">
+                <span class="legend-item" data-series="total">
+                    <span class="legend-line" style="background:#4f6ef7;"></span>
+                    全部博客
+                </span>
+                <span class="legend-item" data-series="pending">
+                    <span class="legend-line" style="background:#f59e0b;"></span>
+                    待审核
+                </span>
+                <span class="legend-item" data-series="passed">
+                    <span class="legend-line" style="background:#16a34a;"></span>
+                    已通过
+                </span>
+                <span class="legend-item" data-series="rejected">
+                    <span class="legend-line" style="background:#e74c3c;"></span>
+                    已打回
+                </span>
+                <span class="legend-item" data-series="draft">
+                    <span class="legend-line" style="background:#8a9aaa;"></span>
+                    草稿
+                </span>
+            </div>
+
+            <!-- SVG 图表 -->
+            <div class="chart-svg-wrapper">
+                <svg viewBox="0 0 1000 380" preserveAspectRatio="xMidYMid meet">
+                    <!-- 网格线 -->
+                    <g class="chart-grid">
+                        <line x1="60" y1="300" x2="960" y2="300" />
+                        <line x1="60" y1="240" x2="960" y2="240" />
+                        <line x1="60" y1="180" x2="960" y2="180" />
+                        <line x1="60" y1="120" x2="960" y2="120" />
+                        <line x1="60" y1="60" x2="960" y2="60" />
+                        <!-- Y轴标签 -->
+                        <text x="50" y="305" class="grid-label-y">0</text>
+                        <text x="50" y="245" class="grid-label-y">5</text>
+                        <text x="50" y="185" class="grid-label-y">10</text>
+                        <text x="50" y="125" class="grid-label-y">15</text>
+                        <text x="50" y="65" class="grid-label-y">20</text>
+                    </g>
+
+                    <!-- X轴标签（日期） -->
+                    <g class="chart-grid">
+                        <text x="80" y="330" class="grid-label">7/15</text>
+                        <text x="170" y="330" class="grid-label">7/20</text>
+                        <text x="260" y="330" class="grid-label">7/25</text>
+                        <text x="350" y="330" class="grid-label">7/30</text>
+                        <text x="440" y="330" class="grid-label">8/4</text>
+                        <text x="530" y="330" class="grid-label">8/9</text>
+                        <text x="620" y="330" class="grid-label">8/14</text>
+                        <text x="710" y="330" class="grid-label">8/19</text>
+                        <text x="800" y="330" class="grid-label">8/24</text>
+                        <text x="890" y="330" class="grid-label">8/29</text>
+                    </g>
+
+                    <!-- 数据线：全部博客 -->
+                    <polyline class="chart-line" data-series="total" points="80,100 170,95 260,110 350,85 440,70 530,60 620,75 710,55 800,40 890,45" style="stroke:#4f6ef7;" />
+                    <polygon class="chart-area" data-series="total" points="80,100 170,95 260,110 350,85 440,70 530,60 620,75 710,55 800,40 890,45 890,300 80,300" style="fill:#4f6ef7;" />
+
+                    <!-- 数据线：待审核 -->
+                    <polyline class="chart-line" data-series="pending" points="80,210 170,225 260,195 350,210 440,180 530,165 620,195 710,180 800,195 890,210" style="stroke:#f59e0b;" />
+                    <polygon class="chart-area" data-series="pending" points="80,210 170,225 260,195 350,210 440,180 530,165 620,195 710,180 800,195 890,210 890,300 80,300" style="fill:#f59e0b;" />
+
+                    <!-- 数据线：已通过 -->
+                    <polyline class="chart-line" data-series="passed" points="80,160 170,170 260,180 350,145 440,130 530,120 620,140 710,115 800,100 890,110" style="stroke:#16a34a;" />
+                    <polygon class="chart-area" data-series="passed" points="80,160 170,170 260,180 350,145 440,130 530,120 620,140 710,115 800,100 890,110 890,300 80,300" style="fill:#16a34a;" />
+
+                    <!-- 数据线：已打回 -->
+                    <polyline class="chart-line" data-series="rejected" points="80,270 170,280 260,285 350,260 440,270 530,250 620,265 710,255 800,260 890,270" style="stroke:#e74c3c;" />
+                    <polygon class="chart-area" data-series="rejected" points="80,270 170,280 260,285 350,260 440,270 530,250 620,265 710,255 800,260 890,270 890,300 80,300" style="fill:#e74c3c;" />
+
+                    <!-- 数据线：草稿 -->
+                    <polyline class="chart-line" data-series="draft" points="80,290 170,285 260,295 350,280 440,290 530,285 620,275 710,290 800,285 890,280" style="stroke:#8a9aaa;" />
+                    <polygon class="chart-area" data-series="draft" points="80,290 170,285 260,295 350,280 440,290 530,285 620,275 710,290 800,285 890,280 890,300 80,300" style="fill:#8a9aaa;" />
+
+                    <!-- 数据点 -->
+                    <g class="chart-dot" data-series="total">
+                        <circle cx="80" cy="100" r="4" fill="#4f6ef7" />
+                        <circle cx="170" cy="95" r="4" fill="#4f6ef7" />
+                        <circle cx="260" cy="110" r="4" fill="#4f6ef7" />
+                        <circle cx="350" cy="85" r="4" fill="#4f6ef7" />
+                        <circle cx="440" cy="70" r="4" fill="#4f6ef7" />
+                        <circle cx="530" cy="60" r="4" fill="#4f6ef7" />
+                        <circle cx="620" cy="75" r="4" fill="#4f6ef7" />
+                        <circle cx="710" cy="55" r="4" fill="#4f6ef7" />
+                        <circle cx="800" cy="40" r="4" fill="#4f6ef7" />
+                        <circle cx="890" cy="45" r="4" fill="#4f6ef7" />
+                    </g>
+                    <g class="chart-dot" data-series="pending">
+                        <circle cx="80" cy="210" r="4" fill="#f59e0b" />
+                        <circle cx="170" cy="225" r="4" fill="#f59e0b" />
+                        <circle cx="260" cy="195" r="4" fill="#f59e0b" />
+                        <circle cx="350" cy="210" r="4" fill="#f59e0b" />
+                        <circle cx="440" cy="180" r="4" fill="#f59e0b" />
+                        <circle cx="530" cy="165" r="4" fill="#f59e0b" />
+                        <circle cx="620" cy="195" r="4" fill="#f59e0b" />
+                        <circle cx="710" cy="180" r="4" fill="#f59e0b" />
+                        <circle cx="800" cy="195" r="4" fill="#f59e0b" />
+                        <circle cx="890" cy="210" r="4" fill="#f59e0b" />
+                    </g>
+                    <g class="chart-dot" data-series="passed">
+                        <circle cx="80" cy="160" r="4" fill="#16a34a" />
+                        <circle cx="170" cy="170" r="4" fill="#16a34a" />
+                        <circle cx="260" cy="180" r="4" fill="#16a34a" />
+                        <circle cx="350" cy="145" r="4" fill="#16a34a" />
+                        <circle cx="440" cy="130" r="4" fill="#16a34a" />
+                        <circle cx="530" cy="120" r="4" fill="#16a34a" />
+                        <circle cx="620" cy="140" r="4" fill="#16a34a" />
+                        <circle cx="710" cy="115" r="4" fill="#16a34a" />
+                        <circle cx="800" cy="100" r="4" fill="#16a34a" />
+                        <circle cx="890" cy="110" r="4" fill="#16a34a" />
+                    </g>
+                    <g class="chart-dot" data-series="rejected">
+                        <circle cx="80" cy="270" r="4" fill="#e74c3c" />
+                        <circle cx="170" cy="280" r="4" fill="#e74c3c" />
+                        <circle cx="260" cy="285" r="4" fill="#e74c3c" />
+                        <circle cx="350" cy="260" r="4" fill="#e74c3c" />
+                        <circle cx="440" cy="270" r="4" fill="#e74c3c" />
+                        <circle cx="530" cy="250" r="4" fill="#e74c3c" />
+                        <circle cx="620" cy="265" r="4" fill="#e74c3c" />
+                        <circle cx="710" cy="255" r="4" fill="#e74c3c" />
+                        <circle cx="800" cy="260" r="4" fill="#e74c3c" />
+                        <circle cx="890" cy="270" r="4" fill="#e74c3c" />
+                    </g>
+                    <g class="chart-dot" data-series="draft">
+                        <circle cx="80" cy="290" r="4" fill="#8a9aaa" />
+                        <circle cx="170" cy="285" r="4" fill="#8a9aaa" />
+                        <circle cx="260" cy="295" r="4" fill="#8a9aaa" />
+                        <circle cx="350" cy="280" r="4" fill="#8a9aaa" />
+                        <circle cx="440" cy="290" r="4" fill="#8a9aaa" />
+                        <circle cx="530" cy="285" r="4" fill="#8a9aaa" />
+                        <circle cx="620" cy="275" r="4" fill="#8a9aaa" />
+                        <circle cx="710" cy="290" r="4" fill="#8a9aaa" />
+                        <circle cx="800" cy="285" r="4" fill="#8a9aaa" />
+                        <circle cx="890" cy="280" r="4" fill="#8a9aaa" />
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // 分页按钮切换
+        // ================================================================
+        document.querySelectorAll('.pagination-btns button:not(:disabled)').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.textContent === '上一页' || this.textContent === '下一页') {
+                    const current = document.querySelector('.pagination-btns .active');
+                    if (this.textContent === '下一页' && current.nextElementSibling) {
+                        current.classList.remove('active');
+                        current.nextElementSibling.classList.add('active');
+                    } else if (this.textContent === '上一页' && current.previousElementSibling) {
+                        current.classList.remove('active');
+                        current.previousElementSibling.classList.add('active');
+                    }
+                } else {
+                    document.querySelectorAll('.pagination-btns button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // ================================================================
+        // 全选/取消全选
+        // ================================================================
+        document.querySelector('thead input[type="checkbox"]').addEventListener('change', function() {
+            document.querySelectorAll('tbody input[type="checkbox"]').forEach(cb => {
+                cb.checked = this.checked;
+            });
+        });
+
+        // ================================================================
+        // 行点击选中复选框
+        // ================================================================
+        document.querySelectorAll('tbody tr').forEach(tr => {
+            tr.addEventListener('click', function(e) {
+                if (e.target.closest('button') || e.target.closest('.blog-title')) return;
+                const cb = this.querySelector('input[type="checkbox"]');
+                if (cb) cb.checked = !cb.checked;
+            });
+        });
+
+        // ================================================================
+        // 筛选检索
+        // ================================================================
+        document.querySelector('.btn-search').addEventListener('click', function() {
+            const keyword = document.querySelector('.filter-group input[type="text"]').value.trim();
+            const status = document.querySelector('.filter-group select').value;
+            const startDate = document.querySelectorAll('.filter-group input[type="date"]')[0].value;
+            const endDate = document.querySelectorAll('.filter-group input[type="date"]')[1].value;
+            let msg = '🔍 检索条件：';
+            if (keyword) msg += '\n关键字：' + keyword;
+            if (status) msg += '\n状态：' + status;
+            if (startDate) msg += '\n开始时间：' + startDate;
+            if (endDate) msg += '\n结束时间：' + endDate;
+            if (!keyword && !status && !startDate && !endDate) msg = '请至少输入一个检索条件';
+            alert(msg);
+        });
+
+        document.querySelector('.btn-reset').addEventListener('click', function() {
+            document.querySelector('.filter-group input[type="text"]').value = '';
+            document.querySelector('.filter-group select').value = '';
+            document.querySelectorAll('.filter-group input[type="date"]').forEach(el => el.value = '');
+            alert('已重置所有筛选条件');
+        });
+
+        // ================================================================
+        // 图表图例切换（显示/隐藏数据线）
+        // ================================================================
+        document.querySelectorAll('.legend-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const series = this.dataset.series;
+                this.classList.toggle('hidden');
+
+                // 切换折线
+                document.querySelectorAll(`.chart-line[data-series="${series}"]`).forEach(el => {
+                    el.classList.toggle('hidden');
+                });
+                // 切换面积
+                document.querySelectorAll(`.chart-area[data-series="${series}"]`).forEach(el => {
+                    el.classList.toggle('hidden');
+                });
+                // 切换数据点
+                document.querySelectorAll(`.chart-dot[data-series="${series}"]`).forEach(el => {
+                    el.classList.toggle('hidden');
+                });
+            });
+        });
+
+        // ================================================================
+        // 时间范围切换（模拟数据更新）
+        // ================================================================
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const days = this.dataset.days;
+                const title = document.querySelector('.chart-title');
+                title.textContent = `📈 博客趋势统计（近${days}天）`;
+
+                // 模拟数据更新（实际项目中调用API）
+                const chartLines = document.querySelectorAll('.chart-line');
+                const chartAreas = document.querySelectorAll('.chart-area');
+                const chartDots = document.querySelectorAll('.chart-dot');
+
+                // 简单动画：随机微调数据点位置
+                chartLines.forEach(line => {
+                    const points = line.getAttribute('points');
+                    const newPoints = points.split(' ').map(p => {
+                        const [x, y] = p.split(',').map(Number);
+                        const offset = Math.floor(Math.random() * 20) - 10;
+                        return `${x},${Math.max(30, Math.min(290, y + offset))}`;
+                    }).join(' ');
+                    line.setAttribute('points', newPoints);
+                });
+
+                chartAreas.forEach(area => {
+                    const points = area.getAttribute('points');
+                    const parts = points.split(' ');
+                    const newParts = parts.map((p, i) => {
+                        if (i === parts.length - 1 || i === parts.length - 2) return p;
+                        const [x, y] = p.split(',').map(Number);
+                        const offset = Math.floor(Math.random() * 20) - 10;
+                        return `${x},${Math.max(30, Math.min(290, y + offset))}`;
+                    });
+                    area.setAttribute('points', newParts.join(' '));
+                });
+
+                chartDots.forEach(dotGroup => {
+                    const circles = dotGroup.querySelectorAll('circle');
+                    circles.forEach((circle, index) => {
+                        const cx = parseFloat(circle.getAttribute('cx'));
+                        const cy = parseFloat(circle.getAttribute('cy'));
+                        const offset = Math.floor(Math.random() * 20) - 10;
+                        circle.setAttribute('cy', Math.max(30, Math.min(290, cy + offset)));
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

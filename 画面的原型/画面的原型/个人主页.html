@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人主页 · TechNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #f0f2f5;
+            color: #1a2a3a;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        /* ================================================================
+           主容器
+           ================================================================ */
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* ================================================================
+           左侧：个人信息卡片
+           ================================================================ */
+        .profile-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e8edf4;
+            padding: 24px 20px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            position: sticky;
+            top: 24px;
+        }
+
+        /* ---- 头像 & 基本信息 ---- */
+        .profile-card .avatar-section {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .profile-card .avatar-section .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #4f6ef7;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 auto 10px;
+        }
+
+        .profile-card .avatar-section .display-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .profile-card .avatar-section .display-name .level-tag {
+            font-size: 12px;
+            font-weight: 400;
+            color: #8a9aaa;
+            margin-left: 6px;
+        }
+
+        .profile-card .avatar-section .user-status {
+            font-size: 13px;
+            color: #6b7a8a;
+            margin-top: 2px;
+        }
+
+        .profile-card .avatar-section .user-status .badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #b45309;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 0 10px;
+            border-radius: 12px;
+            margin-left: 4px;
+        }
+
+        .profile-card .avatar-section .edit-btn {
+            margin-top: 10px;
+            padding: 4px 20px;
+            border: 1px solid #d5dfdc;
+            border-radius: 16px;
+            background: #fff;
+            font-size: 13px;
+            color: #4a5a6a;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .profile-card .avatar-section .edit-btn:hover {
+            background: #f0f2f5;
+        }
+
+        /* ---- 统计数据 ---- */
+        .profile-card .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .profile-card .stats-row .stat-item {
+            text-align: center;
+        }
+
+        .profile-card .stats-row .stat-item .num {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .profile-card .stats-row .stat-item .label {
+            font-size: 12px;
+            color: #8a9aaa;
+        }
+
+        /* ---- 个人信息 ---- */
+        .profile-card .info-list {
+            padding: 12px 0;
+            font-size: 13px;
+            color: #4a5a6a;
+            line-height: 2;
+        }
+
+        .profile-card .info-list .info-item {
+            display: flex;
+        }
+
+        .profile-card .info-list .info-item .label {
+            color: #8a9aaa;
+            width: 72px;
+            flex-shrink: 0;
+        }
+
+        .profile-card .info-list .info-item .value {
+            color: #1a2a3a;
+        }
+
+        .profile-card .info-list .detail-link {
+            color: #4f6ef7;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .profile-card .info-list .detail-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ---- 个人成就 ---- */
+        .profile-card .achievement-section {
+            padding-top: 12px;
+            border-top: 1px solid #f0f2f5;
+        }
+
+        .profile-card .achievement-section .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a2a3a;
+            margin-bottom: 10px;
+        }
+
+        .profile-card .achievement-section .achieve-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #4a5a6a;
+            padding: 4px 0;
+        }
+
+        .profile-card .achievement-section .achieve-item .achieve-icon {
+            font-size: 16px;
+        }
+
+        /* ---- 原力等级 ---- */
+        .profile-card .force-section {
+            padding-top: 12px;
+            border-top: 1px solid #f0f2f5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .profile-card .force-section .force-item {
+            font-size: 13px;
+            color: #4a5a6a;
+        }
+
+        .profile-card .force-section .force-item .force-num {
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .profile-card .force-section .force-item .force-label {
+            color: #8a9aaa;
+        }
+
+        .profile-card .force-section .force-tag {
+            font-size: 12px;
+            color: #8a9aaa;
+            background: #f0f2f5;
+            padding: 2px 12px;
+            border-radius: 12px;
+        }
+
+        /* ================================================================
+           右侧：内容区域
+           ================================================================ */
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* ---- 顶部导航标签 ---- */
+        .content-tabs {
+            display: flex;
+            gap: 2px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e8edf4;
+            padding: 4px 6px;
+            overflow-x: auto;
+        }
+
+        .content-tabs .tab-btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4a5a6a;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .content-tabs .tab-btn:hover {
+            background: #f0f2f5;
+        }
+
+        .content-tabs .tab-btn.active {
+            background: #4f6ef7;
+            color: #fff;
+        }
+
+        /* ---- Tab 内容面板 ---- */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0.6;
+                transform: translateY(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---- 统计卡片行 ---- */
+        .stats-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stats-mini-grid .mini-stat {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 14px 16px;
+            border: 1px solid #e8edf4;
+            text-align: center;
+        }
+
+        .stats-mini-grid .mini-stat .num {
+            display: block;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .stats-mini-grid .mini-stat .label {
+            font-size: 12px;
+            color: #8a9aaa;
+        }
+
+        /* ---- 内容卡片 ---- */
+        .content-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e8edf4;
+            padding: 18px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .content-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .content-card .card-header .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+
+        .content-card .card-header .card-more {
+            font-size: 13px;
+            color: #8a9aaa;
+            cursor: pointer;
+        }
+
+        .content-card .card-header .card-more:hover {
+            color: #4f6ef7;
+        }
+
+        /* ---- 文章条目 ---- */
+        .article-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f2f5;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .article-item:last-child {
+            border-bottom: none;
+        }
+
+        .article-item:hover .article-title {
+            color: #4f6ef7;
+        }
+
+        .article-item .article-left {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .article-item .article-left .article-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a2a3a;
+            transition: 0.15s;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-item .article-left .article-meta {
+            font-size: 12px;
+            color: #8a9aaa;
+            margin-top: 4px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .article-item .article-left .article-meta .tag {
+            background: #eaf5f1;
+            color: #247b63;
+            padding: 0 10px;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+
+        .article-item .article-right {
+            flex-shrink: 0;
+            font-size: 12px;
+            color: #8a9aaa;
+            text-align: right;
+        }
+
+        /* ---- 问答条目 ---- */
+        .qa-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f2f5;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .qa-item:last-child {
+            border-bottom: none;
+        }
+
+        .qa-item:hover .qa-title {
+            color: #4f6ef7;
+        }
+
+        .qa-item .qa-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a2a3a;
+            transition: 0.15s;
+        }
+
+        .qa-item .qa-meta {
+            font-size: 12px;
+            color: #8a9aaa;
+            margin-top: 4px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .qa-item .qa-meta .qa-answer {
+            background: #e8edfe;
+            color: #4f6ef7;
+            padding: 0 10px;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+
+        /* ---- 专栏条目 ---- */
+        .column-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f2f5;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .column-item:last-child {
+            border-bottom: none;
+        }
+
+        .column-item:hover .column-name {
+            color: #4f6ef7;
+        }
+
+        .column-item .column-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background: #4f6ef7;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .column-item .column-icon.green {
+            background: #16a34a;
+        }
+        .column-item .column-icon.orange {
+            background: #f59e0b;
+        }
+        .column-item .column-icon.purple {
+            background: #8b5cf6;
+        }
+        .column-item .column-icon.pink {
+            background: #d63384;
+        }
+
+        .column-item .column-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .column-item .column-info .column-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a2a3a;
+            transition: 0.15s;
+        }
+
+        .column-item .column-info .column-meta {
+            font-size: 12px;
+            color: #8a9aaa;
+            margin-top: 2px;
+        }
+
+        .column-item .column-count {
+            font-size: 12px;
+            color: #8a9aaa;
+            flex-shrink: 0;
+        }
+
+        /* ================================================================
+           响应式
+           ================================================================ */
+        @media (max-width: 992px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                position: static;
+            }
+
+            .stats-mini-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+            }
+
+            .profile-card {
+                padding: 16px;
+            }
+
+            .profile-card .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .stats-mini-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .stats-mini-grid .mini-stat {
+                padding: 10px 12px;
+            }
+
+            .stats-mini-grid .mini-stat .num {
+                font-size: 16px;
+            }
+
+            .content-tabs .tab-btn {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+
+            .article-item {
+                flex-direction: column;
+            }
+
+            .article-item .article-right {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================ -->
+    <!-- 个人主页容器 -->
+    <!-- ================================================================ -->
+    <div class="profile-container">
+
+        <!-- ===== 左侧：个人信息卡片 ===== -->
+        <aside class="profile-card">
+
+            <!-- 头像 & 基本信息 -->
+            <div class="avatar-section">
+                <div class="avatar">张</div>
+                <div class="display-name">
+                    张同学
+                    <span class="level-tag">码龄7年</span>
+                </div>
+                <div class="user-status">
+                    患了无法学习的病 <span class="badge">VIP</span>
+                </div>
+                <button class="edit-btn">✎ 编辑资料</button>
+            </div>
+
+            <!-- 统计数据 -->
+            <div class="stats-row">
+                <div class="stat-item">
+                    <span class="num">21,898</span>
+                    <span class="label">总访问量</span>
+                </div>
+                <div class="stat-item">
+                    <span class="num">15</span>
+                    <span class="label">原创</span>
+                </div>
+                <div class="stat-item">
+                    <span class="num">8</span>
+                    <span class="label">粉丝</span>
+                </div>
+            </div>
+
+            <!-- 个人信息 -->
+            <div class="info-list">
+                <div class="info-item">
+                    <span class="label">IP属地</span>
+                    <span class="value">山东省</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">加入时间</span>
+                    <span class="value">2019-03-03</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">个人简介</span>
+                    <span class="value">学习，这辈子是不可能学的</span>
+                </div>
+                <div class="info-item">
+                    <span class="label"></span>
+                    <span class="detail-link">查看详细资料 ›</span>
+                </div>
+            </div>
+
+            <!-- 个人成就 -->
+            <div class="achievement-section">
+                <div class="section-title">🏆 个人成就</div>
+                <div class="achieve-item">
+                    <span class="achieve-icon">❤️</span>
+                    获得 15 次点赞
+                </div>
+                <div class="achieve-item">
+                    <span class="achieve-icon">💬</span>
+                    内容获得 6 次评论
+                </div>
+                <div class="achieve-item">
+                    <span class="achieve-icon">⭐</span>
+                    获得 12 次收藏
+                </div>
+                <div class="achieve-item">
+                    <span class="achieve-icon">🏅</span>
+                    博客总排名 537,447 名
+                </div>
+            </div>
+
+            <!-- 原力等级 -->
+            <div class="force-section">
+                <div class="force-item">
+                    <span class="force-label">原力等级</span>
+                    <span class="force-num">已失效</span>
+                </div>
+                <div class="force-item">
+                    <span class="force-label">原力分</span>
+                    <span class="force-num">本月获得</span>
+                </div>
+                <div>
+                    <span class="force-tag">2</span>
+                    <span class="force-tag" style="background:#e8edfe;color:#4f6ef7;">153</span>
+                    <span class="force-tag" style="background:#fee2e2;color:#991b1b;">0</span>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- ===== 右侧：内容区域 ===== -->
+        <main class="profile-content">
+
+            <!-- 顶部导航标签 -->
+            <div class="content-tabs">
+                <button class="tab-btn active" data-tab="recent">最近</button>
+                <button class="tab-btn" data-tab="articles">文章 15</button>
+                <button class="tab-btn" data-tab="columns">专栏 5</button>
+                <button class="tab-btn" data-tab="repos">代码仓</button>
+                <button class="tab-btn" data-tab="resources">资源</button>
+                <button class="tab-btn" data-tab="favorites">收藏</button>
+                <button class="tab-btn" data-tab="follow">关注/订阅/互动</button>
+                <button class="tab-btn" data-tab="more">更多 ›</button>
+            </div>
+
+            <!-- ===== Tab 面板：最近 ===== -->
+            <div class="tab-panel active" id="panel-recent">
+
+                <!-- 统计小卡片 -->
+                <div class="stats-mini-grid">
+                    <div class="mini-stat">
+                        <span class="num">15</span>
+                        <span class="label">文章</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="num">5</span>
+                        <span class="label">专栏</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="num">12</span>
+                        <span class="label">收藏</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="num">22</span>
+                        <span class="label">关注</span>
+                    </div>
+                </div>
+
+                <!-- 文章列表 -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-title">📄 最近文章</span>
+                        <span class="card-more">更多 ›</span>
+                    </div>
+
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">eclipse报错500，按着步骤来的，结果连不上数据库</div>
+                            <div class="article-meta">
+                                原创 · 2024.06.27
+                                <span class="tag">笔记</span>
+                            </div>
+                        </div>
+                        <div class="article-right">849阅读</div>
+                    </div>
+
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">idea的maven工程导入eclipse问题</div>
+                            <div class="article-meta">
+                                原创 · 2024.06.20
+                                <span class="tag">笔记</span>
+                            </div>
+                        </div>
+                        <div class="article-right">357阅读</div>
+                    </div>
+
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">xiamarin整合Braze实现送信和端末通知</div>
+                            <div class="article-meta">
+                                原创 · 2022.07.11
+                                <span class="tag">工作项目</span>
+                            </div>
+                        </div>
+                        <div class="article-right">831阅读</div>
+                    </div>
+
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">RabbitMQ简介</div>
+                            <div class="article-meta">
+                                原创 · 2022.06.22
+                                <span class="tag">中间件</span>
+                            </div>
+                        </div>
+                        <div class="article-right">357阅读</div>
+                    </div>
+                </div>
+
+                <!-- 问答/回答 -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-title">💬 最近回答</span>
+                        <span class="card-more">更多 ›</span>
+                    </div>
+
+                    <div class="qa-item" onclick="alert('跳转至问答详情')">
+                        <div class="qa-title">我觉得你可以通过打断点确认是否是数据库连接失败，是不是代码的其他地方有问题</div>
+                        <div class="qa-meta">
+                            回答问题 2024.06.27
+                            <span class="qa-answer">6 次评论</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 专栏列表 -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-title">📚 TA的专栏</span>
+                        <span class="card-more">更多 ›</span>
+                    </div>
+
+                    <div class="column-item" onclick="alert('跳转至专栏详情')">
+                        <div class="column-icon green">📘</div>
+                        <div class="column-info">
+                            <div class="column-name">xamrin整合Braze</div>
+                            <div class="column-meta">原创博文更新于 2022.07.11 · 831阅读</div>
+                        </div>
+                        <div class="column-count">1篇</div>
+                    </div>
+
+                    <div class="column-item" onclick="alert('跳转至专栏详情')">
+                        <div class="column-icon orange">📗</div>
+                        <div class="column-info">
+                            <div class="column-name">笔记</div>
+                            <div class="column-meta">11篇 · MYSQL使用技巧 · RabbitMQ简介</div>
+                        </div>
+                        <div class="column-count">11篇</div>
+                    </div>
+
+                    <div class="column-item" onclick="alert('跳转至专栏详情')">
+                        <div class="column-icon purple">📙</div>
+                        <div class="column-info">
+                            <div class="column-name">工作项目</div>
+                            <div class="column-meta">1篇 · 原创博文更新于 2022.06.22</div>
+                        </div>
+                        <div class="column-count">1篇</div>
+                    </div>
+
+                    <div class="column-item" onclick="alert('跳转至专栏详情')">
+                        <div class="column-icon pink">📕</div>
+                        <div class="column-info">
+                            <div class="column-name">中间件</div>
+                            <div class="column-meta">1篇 · RabbitMQ简介 · 357阅读</div>
+                        </div>
+                        <div class="column-count">1篇</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Tab 面板：文章 ===== -->
+            <div class="tab-panel" id="panel-articles">
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-title">📄 全部文章（15篇）</span>
+                        <span class="card-more">排序 ›</span>
+                    </div>
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">eclipse报错500，按着步骤来的，结果连不上数据库</div>
+                            <div class="article-meta">原创 · 2024.06.27 · 849阅读 · 0点赞 · 2评论 · 1收藏</div>
+                        </div>
+                        <div class="article-right">笔记</div>
+                    </div>
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">idea的maven工程导入eclipse问题</div>
+                            <div class="article-meta">原创 · 2024.06.20 · 357阅读 · 0点赞 · 0评论 · 0收藏</div>
+                        </div>
+                        <div class="article-right">笔记</div>
+                    </div>
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">xiamarin整合Braze实现送信和端末通知</div>
+                            <div class="article-meta">原创 · 2022.07.11 · 831阅读 · 0点赞 · 0评论 · 0收藏</div>
+                        </div>
+                        <div class="article-right">工作项目</div>
+                    </div>
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">RabbitMQ简介</div>
+                            <div class="article-meta">原创 · 2022.06.22 · 357阅读 · 0点赞 · 0评论 · 0收藏</div>
+                        </div>
+                        <div class="article-right">中间件</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Tab 面板：专栏 ===== -->
+            <div class="tab-panel" id="panel-columns">
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-title">📚 全部专栏（5个）</span>
+                        <span class="card-more">排序 ›</span>
+                    </div>
+                    <div class="column-item" onclick="alert('跳转至专栏详情')">
+                        <div class="column-icon green">📘</div>
+                        <div class="column-info">
+                            <div class="column-name">xamrin整合Braze</div>
+                            <div class="column-meta">原创博文更新于 2022.07.11 · 831阅读 · 0点赞 · 0评论 · 0收藏</div>
+                        </div>
+                        <div class="column-count">1篇</div>
+                    </div>
+                    <div class="column-item" onclick="alert('跳转至专栏详情')">
+                        <div class="column-icon orange">📗</div>
+                        <div class="column-info">
+                            <div class="column-name">笔记</div>
+                            <div class="column-meta">11篇 · MYSQL使用技巧 · RabbitMQ简介</div>
+                        </div>
+                        <div class="column-count">11篇</div>
+                    </div>
+                    <div class="column-item" onclick="alert('跳转至专栏详情')">
+                        <div class="column-icon purple">📙</div>
+                        <div class="column-info">
+                            <div class="column-name">工作项目</div>
+                            <div class="column-meta">1篇 · 原创博文更新于 2022.06.22</div>
+                        </div>
+                        <div class="column-count">1篇</div>
+                    </div>
+                    <div class="column-item" onclick="alert('跳转至专栏详情')">
+                        <div class="column-icon pink">📕</div>
+                        <div class="column-info">
+                            <div class="column-name">中间件</div>
+                            <div class="column-meta">1篇 · RabbitMQ简介 · 357阅读</div>
+                        </div>
+                        <div class="column-count">1篇</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Tab 面板：收藏 ===== -->
+            <div class="tab-panel" id="panel-favorites">
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-title">⭐ 我的收藏（12篇）</span>
+                        <span class="card-more">排序 ›</span>
+                    </div>
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">深入理解 React Hooks 原理</div>
+                            <div class="article-meta">作者：bug菌 · 2026-08-02 · 8.1k阅读</div>
+                        </div>
+                        <div class="article-right">❤️ 128</div>
+                    </div>
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">TypeScript 5.5 新特性全解析</div>
+                            <div class="article-meta">作者：张三 · 2026-07-30 · 5.6k阅读</div>
+                        </div>
+                        <div class="article-right">❤️ 203</div>
+                    </div>
+                    <div class="article-item" onclick="alert('跳转至文章详情')">
+                        <div class="article-left">
+                            <div class="article-title">Spring Boot 3.0 从入门到实战</div>
+                            <div class="article-meta">作者：李四 · 2026-07-28 · 3.2k阅读</div>
+                        </div>
+                        <div class="article-right">❤️ 89</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Tab 面板：关注/订阅/互动 ===== -->
+            <div class="tab-panel" id="panel-follow">
+                <div class="content-card">
+                    <div class="card-header">
+                        <span class="card-title">👥 我关注的人（22人）</span>
+                        <span class="card-more">管理 ›</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+                        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #eef2f7;">
+                            <div style="width:32px;height:32px;border-radius:50%;background:#4f6ef7;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">bug</div>
+                            <div><div style="font-size:13px;font-weight:500;">bug菌</div><div style="font-size:11px;color:#8a9aaa;">16万粉丝</div></div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #eef2f7;">
+                            <div style="width:32px;height:32px;border-radius:50%;background:#e67e22;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">张</div>
+                            <div><div style="font-size:13px;font-weight:500;">张三</div><div style="font-size:11px;color:#8a9aaa;">2.3万粉丝</div></div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #eef2f7;">
+                            <div style="width:32px;height:32px;border-radius:50%;background:#16a34a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">李</div>
+                            <div><div style="font-size:13px;font-weight:500;">李四</div><div style="font-size:11px;color:#8a9aaa;">1.8万粉丝</div></div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #eef2f7;">
+                            <div style="width:32px;height:32px;border-radius:50%;background:#8b5cf6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">王</div>
+                            <div><div style="font-size:13px;font-weight:500;">王五</div><div style="font-size:11px;color:#8a9aaa;">9.8k粉丝</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // ================================================================
+        // Tab 切换
+        // ================================================================
+        const tabBtns = document.querySelectorAll('.content-tabs .tab-btn');
+        const panels = {
+            recent: document.getElementById('panel-recent'),
+            articles: document.getElementById('panel-articles'),
+            columns: document.getElementById('panel-columns'),
+            repos: document.getElementById('panel-recent'), // 复用最近面板
+            resources: document.getElementById('panel-recent'),
+            favorites: document.getElementById('panel-favorites'),
+            follow: document.getElementById('panel-follow'),
+            more: document.getElementById('panel-recent'),
+        };
+
+        // 修正：为没有对应面板的tab复用最近面板
+        const tabMap = {
+            recent: 'recent',
+            articles: 'articles',
+            columns: 'columns',
+            repos: 'recent',
+            resources: 'recent',
+            favorites: 'favorites',
+            follow: 'follow',
+            more: 'recent'
+        };
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const tabKey = this.dataset.tab;
+                const panelId = tabMap[tabKey] || 'recent';
+
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                const targetPanel = document.getElementById('panel-' + panelId);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+            });
+        });
+
+        // ================================================================
+        // 编辑资料按钮
+        // ================================================================
+        document.querySelector('.edit-btn').addEventListener('click', function() {
+            alert('跳转至编辑资料页面');
+        });
+
+        // ================================================================
+        // "查看详细资料"链接
+        // ================================================================
+        document.querySelector('.detail-link').addEventListener('click', function() {
+            alert('跳转至详细资料页面');
+        });
+    </script>
+
+</body>
+</html>

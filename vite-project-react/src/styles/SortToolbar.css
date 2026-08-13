@@ -1,0 +1,62 @@
+/* ================================================================
+   SortToolbar 组件样式
+   ================================================================ */
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.toolbar .sort-options {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.toolbar .sort-options .sort-btn {
+    padding: 4px 12px;
+    border: none;
+    border-radius: 16px;
+    background: transparent;
+    font-size: 13px;
+    color: #6b7a8a;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: inherit;
+}
+
+.toolbar .sort-options .sort-btn:hover {
+    background: #f0f2f5;
+    color: #1a2a3a;
+}
+
+.toolbar .sort-options .sort-btn.active {
+    background: #e8edfe;
+    color: #4f6ef7;
+    font-weight: 500;
+}
+
+.toolbar .result-count {
+    font-size: 13px;
+    color: #8a9aaa;
+}
+
+@media (max-width: 768px) {
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .toolbar .sort-options {
+        justify-content: center;
+    }
+
+    .toolbar .result-count {
+        text-align: center;
+    }
+}

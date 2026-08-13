@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>个人足迹 · TechNest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #f0f4f8;
+            color: #1a2a3a;
+            min-height: 100vh;
+            padding: 32px 20px;
+        }
+
+        /* ================================================================
+           页面容器
+           ================================================================ */
+        .footprint-page {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ===== 页面头部 ===== */
+        .page-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .page-header h1 span {
+            background: linear-gradient(135deg, #4f6ef7, #7b61ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            color: #8a9aaa;
+            font-size: 15px;
+            margin-top: 4px;
+        }
+
+        /* ================================================================
+           统计卡片
+           ================================================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e8edf4;
+            padding: 18px 20px;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+            transition: 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card .stat-icon {
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+
+        .stat-card .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #8a9aaa;
+            margin-top: 2px;
+        }
+
+        .stat-card .stat-change {
+            font-size: 12px;
+            color: #16a34a;
+            margin-top: 4px;
+        }
+
+        .stat-card .stat-change.negative {
+            color: #e74c3c;
+        }
+
+        /* ================================================================
+           贡献热力图
+           ================================================================ */
+        .heatmap-section {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e8edf4;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .heatmap-section .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .heatmap-section .section-header .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2a3a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .heatmap-section .section-header .heatmap-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .heatmap-section .section-header .heatmap-controls .year-btn {
+            padding: 4px 14px;
+            border: 1px solid #d5dfdc;
+            border-radius: 6px;
+            background: #fff;
+            color: #4a5a6a;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .heatmap-section .section-header .heatmap-controls .year-btn:hover {
+            background: #f0f2f5;
+        }
+
+        .heatmap-section .section-header .heatmap-controls .year-btn.active {
+            background: #4f6ef7;
+            color: #fff;
+            border-color: #4f6ef7;
+        }
+
+        /* ---- 热力图网格 ---- */
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(53, 1fr);
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .heatmap-grid .day-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            background: #e8edf4;
+            transition: 0.15s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .heatmap-grid .day-cell:hover {
+            transform: scale(1.2);
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .heatmap-grid .day-cell.level-0 {
+            background: #e8edf4;
+        }
+        .heatmap-grid .day-cell.level-1 {
+            background: #c5d5f0;
+        }
+        .heatmap-grid .day-cell.level-2 {
+            background: #9bb5e8;
+        }
+        .heatmap-grid .day-cell.level-3 {
+            background: #6b92e0;
+        }
+        .heatmap-grid .day-cell.level-4 {
+            background: #4f6ef7;
+        }
+        .heatmap-grid .day-cell.level-5 {
+            background: #3b5de7;
+        }
+
+        /* ---- 热力图图例 ---- */
+        .heatmap-legend {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+            justify-content: flex-end;
+            font-size: 12px;
+            color: #8a9aaa;
+        }
+
+        .heatmap-legend .legend-colors {
+            display: flex;
+            gap: 3px;
+        }
+
+        .heatmap-legend .legend-colors .color-block {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .heatmap-legend .legend-colors .color-block.l0 {
+            background: #e8edf4;
+        }
+        .heatmap-legend .legend-colors .color-block.l1 {
+            background: #c5d5f0;
+        }
+        .heatmap-legend .legend-colors .color-block.l2 {
+            background: #9bb5e8;
+        }
+        .heatmap-legend .legend-colors .color-block.l3 {
+            background: #6b92e0;
+        }
+        .heatmap-legend .legend-colors .color-block.l4 {
+            background: #4f6ef7;
+        }
+
+        /* ================================================================
+           足迹时间线
+           ================================================================ */
+        .timeline-section {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e8edf4;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .timeline-section .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .timeline-section .section-header .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2a3a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timeline-section .section-header .timeline-filter {
+            display: flex;
+            gap: 6px;
+        }
+
+        .timeline-section .section-header .timeline-filter .filter-btn {
+            padding: 4px 14px;
+            border: 1px solid #d5dfdc;
+            border-radius: 6px;
+            background: #fff;
+            color: #4a5a6a;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .timeline-section .section-header .timeline-filter .filter-btn:hover {
+            background: #f0f2f5;
+        }
+
+        .timeline-section .section-header .timeline-filter .filter-btn.active {
+            background: #4f6ef7;
+            color: #fff;
+            border-color: #4f6ef7;
+        }
+
+        /* ---- 时间线条目 ---- */
+        .timeline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .timeline-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .timeline-list::-webkit-scrollbar-track {
+            background: #f0f2f5;
+            border-radius: 4px;
+        }
+
+        .timeline-list::-webkit-scrollbar-thumb {
+            background: #d5dfdc;
+            border-radius: 4px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f2f5;
+            transition: 0.15s;
+            cursor: pointer;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-item:hover {
+            background: #f8f9fa;
+            margin: 0 -12px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-radius: 8px;
+        }
+
+        .timeline-item .timeline-dot {
+            flex-shrink: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-top: 4px;
+            position: relative;
+        }
+
+        .timeline-item .timeline-dot::after {
+            content: '';
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: calc(100% + 16px);
+            background: #e8edf4;
+        }
+
+        .timeline-item:last-child .timeline-dot::after {
+            display: none;
+        }
+
+        .timeline-item .timeline-dot.blue {
+            background: #4f6ef7;
+        }
+        .timeline-item .timeline-dot.green {
+            background: #16a34a;
+        }
+        .timeline-item .timeline-dot.orange {
+            background: #f59e0b;
+        }
+        .timeline-item .timeline-dot.purple {
+            background: #8b5cf6;
+        }
+        .timeline-item .timeline-dot.pink {
+            background: #d63384;
+        }
+        .timeline-item .timeline-dot.red {
+            background: #e74c3c;
+        }
+
+        .timeline-item .timeline-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .timeline-item .timeline-content .timeline-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a2a3a;
+        }
+
+        .timeline-item .timeline-content .timeline-title .highlight {
+            color: #4f6ef7;
+        }
+
+        .timeline-item .timeline-content .timeline-desc {
+            font-size: 13px;
+            color: #6b7a8a;
+            margin-top: 2px;
+            line-height: 1.5;
+        }
+
+        .timeline-item .timeline-content .timeline-meta {
+            display: flex;
+            gap: 14px;
+            font-size: 12px;
+            color: #8a9aaa;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .timeline-item .timeline-content .timeline-meta .tag {
+            background: #eaf5f1;
+            color: #247b63;
+            padding: 0 10px;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+
+        .timeline-item .timeline-content .timeline-meta .tag.blue {
+            background: #e8edfe;
+            color: #4f6ef7;
+        }
+
+        .timeline-item .timeline-content .timeline-meta .tag.orange {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .timeline-item .timeline-time {
+            flex-shrink: 0;
+            font-size: 12px;
+            color: #8a9aaa;
+            white-space: nowrap;
+            padding-top: 2px;
+        }
+
+        /* ================================================================
+           标签云 & 活动统计
+           ================================================================ */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e8edf4;
+            padding: 22px 24px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .card .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a2a3a;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ---- 标签云 ---- */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        .tag-cloud .tag-item {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            background: #f0f2f5;
+            color: #4a5a6a;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .tag-cloud .tag-item:hover {
+            background: #e8edfe;
+            color: #4f6ef7;
+            transform: scale(1.05);
+        }
+
+        .tag-cloud .tag-item.size-sm {
+            font-size: 12px;
+        }
+        .tag-cloud .tag-item.size-md {
+            font-size: 14px;
+        }
+        .tag-cloud .tag-item.size-lg {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .tag-cloud .tag-item.size-xl {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* ---- 活动分布 ---- */
+        .activity-distribution {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .activity-distribution .dist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .activity-distribution .dist-item .dist-label {
+            font-size: 13px;
+            color: #4a5a6a;
+            width: 56px;
+            flex-shrink: 0;
+        }
+
+        .activity-distribution .dist-item .dist-bar {
+            flex: 1;
+            height: 8px;
+            border-radius: 6px;
+            background: #e8edf4;
+            overflow: hidden;
+        }
+
+        .activity-distribution .dist-item .dist-bar .dist-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+
+        .activity-distribution .dist-item .dist-bar .dist-fill.blue {
+            background: linear-gradient(90deg, #4f6ef7, #7b61ff);
+        }
+        .activity-distribution .dist-item .dist-bar .dist-fill.green {
+            background: linear-gradient(90deg, #16a34a, #4ade80);
+        }
+        .activity-distribution .dist-item .dist-bar .dist-fill.orange {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+        .activity-distribution .dist-item .dist-bar .dist-fill.purple {
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+        }
+        .activity-distribution .dist-item .dist-bar .dist-fill.pink {
+            background: linear-gradient(90deg, #d63384, #ec4899);
+        }
+
+        .activity-distribution .dist-item .dist-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a2a3a;
+            width: 40px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* ================================================================
+           响应式
+           ================================================================ */
+        @media (max-width: 992px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .heatmap-grid {
+                grid-template-columns: repeat(27, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .page-header h1 {
+                font-size: 22px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .stat-card .stat-number {
+                font-size: 22px;
+            }
+
+            .heatmap-section {
+                padding: 16px;
+                overflow-x: auto;
+            }
+
+            .heatmap-grid {
+                grid-template-columns: repeat(14, 1fr);
+                min-width: 480px;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-section {
+                padding: 16px;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .timeline-item .timeline-time {
+                align-self: flex-start;
+            }
+
+            .timeline-item .timeline-dot::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .stat-card {
+                padding: 12px 10px;
+            }
+
+            .stat-card .stat-number {
+                font-size: 18px;
+            }
+
+            .stat-card .stat-icon {
+                font-size: 20px;
+            }
+
+            .heatmap-section .section-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .heatmap-section .section-header .heatmap-controls {
+                justify-content: flex-start;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .tag-cloud .tag-item.size-xl {
+                font-size: 16px;
+            }
+            .tag-cloud .tag-item.size-lg {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================ -->
+    <!-- 个人足迹页面 -->
+    <!-- ================================================================ -->
+    <div class="footprint-page">
+
+        <!-- ===== 页面头部 ===== -->
+        <header class="page-header">
+            <h1>👣 我的 <span>足迹</span></h1>
+            <p>记录你在 TechNest 的每一步成长</p>
+        </header>
+
+        <!-- ===== 统计卡片 ===== -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-number">42</div>
+                <div class="stat-label">总文章</div>
+                <div class="stat-change">较上月 +6 篇</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">❤️</div>
+                <div class="stat-number">1,284</div>
+                <div class="stat-label">获赞总数</div>
+                <div class="stat-change">较上月 +156</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number">368</div>
+                <div class="stat-label">收藏总数</div>
+                <div class="stat-change">较上月 +42</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💬</div>
+                <div class="stat-number">89</div>
+                <div class="stat-label">评论总数</div>
+                <div class="stat-change negative">较上月 -3</div>
+            </div>
+        </div>
+
+        <!-- ===== 贡献热力图 ===== -->
+        <div class="heatmap-section">
+            <div class="section-header">
+                <div class="section-title">📊 贡献日历</div>
+                <div class="heatmap-controls">
+                    <button class="year-btn active">2026</button>
+                    <button class="year-btn">2025</button>
+                    <button class="year-btn">2024</button>
+                </div>
+            </div>
+
+            <!-- 热力图网格（模拟 53 周 × 7 天） -->
+            <div class="heatmap-grid" id="heatmapGrid">
+                <!-- 由 JavaScript 生成 -->
+            </div>
+
+            <!-- 图例 -->
+            <div class="heatmap-legend">
+                <span>少</span>
+                <div class="legend-colors">
+                    <span class="color-block l0"></span>
+                    <span class="color-block l1"></span>
+                    <span class="color-block l2"></span>
+                    <span class="color-block l3"></span>
+                    <span class="color-block l4"></span>
+                </div>
+                <span>多</span>
+            </div>
+        </div>
+
+        <!-- ===== 足迹时间线 ===== -->
+        <div class="timeline-section">
+            <div class="section-header">
+                <div class="section-title">⏳ 近期足迹</div>
+                <div class="timeline-filter">
+                    <button class="filter-btn active">全部</button>
+                    <button class="filter-btn">文章</button>
+                    <button class="filter-btn">评论</button>
+                    <button class="filter-btn">点赞</button>
+                </div>
+            </div>
+
+            <div class="timeline-list">
+                <!-- 足迹 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot blue"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">发布文章 <span class="highlight">《深入理解 React Hooks 原理》</span></div>
+                        <div class="timeline-desc">文章已通过审核，获得 23 次阅读</div>
+                        <div class="timeline-meta">
+                            <span>📅 2026-08-12 14:32</span>
+                            <span class="tag">文章</span>
+                            <span>👁️ 23 阅读</span>
+                        </div>
+                    </div>
+                    <div class="timeline-time">2 小时前</div>
+                </div>
+
+                <!-- 足迹 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot green"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">获得点赞 <span class="highlight">《Vue 3 组合式 API 实战》</span></div>
+                        <div class="timeline-desc">张三 点赞了你的文章</div>
+                        <div class="timeline-meta">
+                            <span>📅 2026-08-12 13:20</span>
+                            <span class="tag blue">点赞</span>
+                            <span>❤️ +1</span>
+                        </div>
+                    </div>
+                    <div class="timeline-time">3 小时前</div>
+                </div>
+
+                <!-- 足迹 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot orange"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">发表评论</div>
+                        <div class="timeline-desc">在《CSS 网格布局完全指南》下回复：写得很详细，感谢分享！</div>
+                        <div class="timeline-meta">
+                            <span>📅 2026-08-12 11:45</span>
+                            <span class="tag orange">评论</span>
+                            <span>💬 回复</span>
+                        </div>
+                    </div>
+                    <div class="timeline-time">5 小时前</div>
+                </div>
+
+                <!-- 足迹 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot purple"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">收藏文章 <span class="highlight">《TypeScript 高级类型推导》</span></div>
+                        <div class="timeline-desc">已添加到「技术进阶」收藏夹</div>
+                        <div class="timeline-meta">
+                            <span>📅 2026-08-12 10:30</span>
+                            <span class="tag">收藏</span>
+                            <span>⭐ 已收藏</span>
+                        </div>
+                    </div>
+                    <div class="timeline-time">6 小时前</div>
+                </div>
+
+                <!-- 足迹 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot pink"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">关注了 <span class="highlight">bug菌</span></div>
+                        <div class="timeline-desc">你关注了 bug菌，TA 有 16 万粉丝</div>
+                        <div class="timeline-meta">
+                            <span>📅 2026-08-12 09:15</span>
+                            <span class="tag blue">关注</span>
+                            <span>👥 互相关注</span>
+                        </div>
+                    </div>
+                    <div class="timeline-time">8 小时前</div>
+                </div>
+
+                <!-- 足迹 6 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot red"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">文章被收藏 <span class="highlight">《Spring Boot 3.0 入门》</span></div>
+                        <div class="timeline-desc">李四 收藏了你的文章</div>
+                        <div class="timeline-meta">
+                            <span>📅 2026-08-12 08:40</span>
+                            <span class="tag">收藏</span>
+                            <span>⭐ +1</span>
+                        </div>
+                    </div>
+                    <div class="timeline-time">9 小时前</div>
+                </div>
+
+                <!-- 足迹 7 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot blue"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">发布文章 <span class="highlight">《Docker 容器化部署实战》</span></div>
+                        <div class="timeline-desc">文章已发布，正在审核中</div>
+                        <div class="timeline-meta">
+                            <span>📅 2026-08-11 21:00</span>
+                            <span class="tag">文章</span>
+                            <span>⏳ 审核中</span>
+                        </div>
+                    </div>
+                    <div class="timeline-time">昨天</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 底部：标签云 + 活动分布 ===== -->
+        <div class="bottom-grid">
+
+            <!-- 标签云 -->
+            <div class="card">
+                <div class="card-title">🏷️ 我的标签云</div>
+                <div class="tag-cloud">
+                    <span class="tag-item size-xl">React</span>
+                    <span class="tag-item size-lg">TypeScript</span>
+                    <span class="tag-item size-lg">Spring Boot</span>
+                    <span class="tag-item size-md">Vue.js</span>
+                    <span class="tag-item size-xl">Java</span>
+                    <span class="tag-item size-sm">MySQL</span>
+                    <span class="tag-item size-lg">Docker</span>
+                    <span class="tag-item size-sm">Python</span>
+                    <span class="tag-item size-md">AI</span>
+                    <span class="tag-item size-md">机器学习</span>
+                    <span class="tag-item size-lg">前端</span>
+                    <span class="tag-item size-xl">后端</span>
+                    <span class="tag-item size-sm">DevOps</span>
+                    <span class="tag-item size-md">微服务</span>
+                    <span class="tag-item size-sm">Kubernetes</span>
+                    <span class="tag-item size-md">GraphQL</span>
+                    <span class="tag-item size-sm">Redis</span>
+                    <span class="tag-item size-md">RabbitMQ</span>
+                </div>
+                <div class="help-text" style="margin-top:10px;font-size:12px;color:#8a9aaa;">
+                    标签大小反映使用频率，点击标签可查看相关文章
+                </div>
+            </div>
+
+            <!-- 活动分布 -->
+            <div class="card">
+                <div class="card-title">📈 活动分布</div>
+                <div class="activity-distribution">
+                    <div class="dist-item">
+                        <span class="dist-label">📝 文章</span>
+                        <div class="dist-bar">
+                            <div class="dist-fill blue" style="width:45%;"></div>
+                        </div>
+                        <span class="dist-value">45%</span>
+                    </div>
+                    <div class="dist-item">
+                        <span class="dist-label">❤️ 点赞</span>
+                        <div class="dist-bar">
+                            <div class="dist-fill green" style="width:28%;"></div>
+                        </div>
+                        <span class="dist-value">28%</span>
+                    </div>
+                    <div class="dist-item">
+                        <span class="dist-label">⭐ 收藏</span>
+                        <div class="dist-bar">
+                            <div class="dist-fill orange" style="width:15%;"></div>
+                        </div>
+                        <span class="dist-value">15%</span>
+                    </div>
+                    <div class="dist-item">
+                        <span class="dist-label">💬 评论</span>
+                        <div class="dist-bar">
+                            <div class="dist-fill purple" style="width:12%;"></div>
+                        </div>
+                        <span class="dist-value">12%</span>
+                    </div>
+                </div>
+                <div class="help-text" style="margin-top:12px;font-size:12px;color:#8a9aaa;">
+                    基于近 90 天的活动数据统计
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // 生成热力图数据
+        // ================================================================
+        function generateHeatmap() {
+            const grid = document.getElementById('heatmapGrid');
+            grid.innerHTML = '';
+
+            // 模拟 53 周 × 7 天 = 371 个格子
+            const totalDays = 371;
+            const levels = [0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 1, 3, 0, 0, 2, 0, 1, 0, 0, 4, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 1, 0,
+                0, 2, 0, 0, 4, 0, 0, 1, 0, 0, 3, 0, 0, 2, 0, 0, 1, 0, 0, 0
+            ];
+
+            for (let i = 0; i < totalDays; i++) {
+                const cell = document.createElement('div');
+                const level = levels[i % levels.length] || Math.floor(Math.random() * 5);
+                cell.className = 'day-cell level-' + level;
+                cell.title = '2026-01-01 + ' + i + '天 · ' + level + ' 次贡献';
+                grid.appendChild(cell);
+            }
+        }
+
+        generateHeatmap();
+
+        // ================================================================
+        // 年份切换
+        // ================================================================
+        document.querySelectorAll('.year-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // 重新生成热力图（模拟数据变化）
+                const grid = document.getElementById('heatmapGrid');
+                const cells = grid.querySelectorAll('.day-cell');
+                cells.forEach(cell => {
+                    const newLevel = Math.floor(Math.random() * 5);
+                    cell.className = 'day-cell level-' + newLevel;
+                });
+            });
+        });
+
+        // ================================================================
+        // 时间线筛选
+        // ================================================================
+        document.querySelectorAll('.timeline-filter .filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.timeline-filter .filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.textContent.trim();
+                const items = document.querySelectorAll('.timeline-item');
+
+                items.forEach(item => {
+                    const tags = item.querySelectorAll('.tag');
+                    let match = false;
+                    if (filter === '全部') {
+                        match = true;
+                    } else {
+                        tags.forEach(tag => {
+                            if (tag.textContent === filter) match = true;
+                        });
+                    }
+                    item.style.display = match ? 'flex' : 'none';
+                });
+            });
+        });
+
+        // ================================================================
+        // 标签点击
+        // ================================================================
+        document.querySelectorAll('.tag-item').forEach(tag => {
+            tag.addEventListener('click', function(e) {
+                e.stopPropagation();
+                alert('🔍 搜索标签：' + this.textContent);
+            });
+        });
+    </script>
+
+</body>
+</html>

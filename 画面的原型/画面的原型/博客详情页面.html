@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>博客详情 · TechNest</title>
+    <style>
+        /* ===== 全局重置 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #f4f7f9;
+            color: #1a2a3a;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        /* ===== 图标精灵 ===== */
+        .icon-sprite {
+            display: none;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .icon-sm {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ===== 布局 ===== */
+        .blog-detail {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== 左侧主体 ===== */
+        .blog-detail__main {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 28px 32px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .blog-detail__title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a2a3a;
+            line-height: 1.4;
+            margin: 0 0 8px 0;
+        }
+
+        .blog-detail__meta {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            color: #8a9aaa;
+            margin: 8px 0 12px;
+            flex-wrap: wrap;
+        }
+
+        .blog-detail__category {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .blog-detail__category .category-tag {
+            font-size: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 500;
+            background: #eaf5f1;
+            color: #247b63;
+        }
+
+        .blog-detail__category .category-tag.blue {
+            background: #e8edfe;
+            color: #4f6ef7;
+        }
+        .blog-detail__category .category-tag.orange {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .blog-detail__category .category-tag.purple {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .blog-detail__category .category-tag.pink {
+            background: #fce4ec;
+            color: #c62828;
+        }
+
+        .blog-detail__content {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #1f2a3a;
+            padding: 8px 0;
+        }
+
+        .blog-detail__content p {
+            margin-bottom: 16px;
+        }
+        .blog-detail__content h2,
+        .blog-detail__content h3 {
+            margin: 24px 0 12px;
+        }
+        .blog-detail__content code {
+            background: #f0f2f5;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #d63384;
+        }
+        .blog-detail__content pre {
+            background: #1e2a3a;
+            color: #e8edf4;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .blog-detail__actions {
+            display: flex;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid #e8edf4;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid #d5dfdc;
+            border-radius: 20px;
+            background: #fff;
+            color: #6b7a8a;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .action-btn:hover {
+            background: #f8f9fa;
+            border-color: #b5ccc2;
+        }
+        .action-btn.active {
+            color: #e74c3c;
+            border-color: #e74c3c;
+            background: #fde8e8;
+        }
+        .action-btn.active .icon {
+            fill: #e74c3c;
+            stroke: #e74c3c;
+        }
+        .action-btn.favorited {
+            color: #f59e0b;
+            border-color: #f59e0b;
+            background: #fef3c7;
+        }
+        .action-btn.favorited .icon {
+            fill: #f59e0b;
+            stroke: #f59e0b;
+        }
+
+        /* ================================================================
+           评论区域
+           ================================================================ */
+        .blog-detail__comments {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #e8edf4;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .comments-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+        .comments-header .comment-count {
+            font-size: 13px;
+            color: #8a9aaa;
+            font-weight: 400;
+        }
+
+        .comment-sort {
+            font-size: 13px;
+            color: #6b7a8a;
+            background: none;
+            border: 1px solid #d5dfdc;
+            border-radius: 6px;
+            padding: 4px 12px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .comment-sort:hover {
+            background: #f8f9fa;
+        }
+
+        /* ---- 评论输入框 ---- */
+        .comment-input-wrap {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .comment-input-wrap .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #4f6ef7;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .comment-input-wrap .comment-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .comment-input-wrap textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #d5dfdc;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 56px;
+            max-height: 160px;
+            transition: border-color 0.2s;
+            background: #fafcfb;
+            color: #1a2a3a;
+        }
+
+        .comment-input-wrap textarea:focus {
+            border-color: #4f6ef7;
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.10);
+        }
+
+        .comment-input-wrap textarea::placeholder {
+            color: #b0b8c0;
+        }
+
+        .comment-input-wrap .comment-submit {
+            padding: 8px 24px;
+            background: #4f6ef7;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+            height: 56px;
+            align-self: flex-start;
+            flex-shrink: 0;
+        }
+
+        .comment-input-wrap .comment-submit:hover {
+            background: #3b5de7;
+        }
+
+        /* ---- 评论列表 ---- */
+        .comment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-item .comment-avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #dcefe7;
+            color: #1b5b48;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .comment-item .comment-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .comment-item .comment-body .comment-author {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+
+        .comment-item .comment-body .comment-author .author-badge {
+            font-size: 10px;
+            font-weight: 500;
+            background: #e8edfe;
+            color: #4f6ef7;
+            padding: 0 8px;
+            border-radius: 12px;
+            margin-left: 6px;
+        }
+
+        .comment-item .comment-body .comment-author .author-badge.owner {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .comment-item .comment-body .comment-text {
+            font-size: 14px;
+            color: #1f2a3a;
+            line-height: 1.7;
+            margin: 4px 0 6px;
+            word-break: break-word;
+        }
+
+        /* ---- 引用样式 ---- */
+        .comment-item .comment-body .quote-text {
+            font-size: 13px;
+            color: #6b7a8a;
+            background: #f0f2f5;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border-left: 3px solid #4f6ef7;
+            margin: 4px 0 8px;
+            word-break: break-word;
+        }
+
+        .comment-item .comment-body .quote-text .quote-author {
+            font-weight: 500;
+            color: #4a5a6a;
+        }
+
+        .comment-item .comment-body .comment-meta {
+            display: flex;
+            gap: 14px;
+            font-size: 12px;
+            color: #8a9aaa;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .comment-item .comment-body .comment-meta .reply-btn {
+            background: none;
+            border: none;
+            color: #6b7a8a;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 0;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .comment-item .comment-body .comment-meta .reply-btn:hover {
+            color: #4f6ef7;
+        }
+
+        .comment-item .comment-body .comment-meta .like-comment-btn {
+            background: none;
+            border: none;
+            color: #8a9aaa;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 0;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: 0.2s;
+        }
+
+        .comment-item .comment-body .comment-meta .like-comment-btn:hover {
+            color: #e74c3c;
+        }
+        .comment-item .comment-body .comment-meta .like-comment-btn.liked {
+            color: #e74c3c;
+        }
+        .comment-item .comment-body .comment-meta .like-comment-btn.liked .icon {
+            fill: #e74c3c;
+            stroke: #e74c3c;
+        }
+
+        /* ---- 回复输入框（内嵌） ---- */
+        .reply-input-wrap {
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e8edf4;
+        }
+
+        .reply-input-wrap .reply-quote {
+            font-size: 13px;
+            color: #6b7a8a;
+            background: #ffffff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border-left: 3px solid #4f6ef7;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .reply-input-wrap .reply-quote .quote-author {
+            font-weight: 500;
+            color: #4a5a6a;
+        }
+
+        .reply-input-wrap textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d5dfdc;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            resize: vertical;
+            background: #ffffff;
+            min-height: 40px;
+        }
+
+        .reply-input-wrap textarea:focus {
+            border-color: #4f6ef7;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.08);
+        }
+
+        .reply-input-wrap .reply-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .reply-input-wrap .reply-actions .btn-submit-reply {
+            padding: 4px 16px;
+            height: 32px;
+            background: #4f6ef7;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .reply-input-wrap .reply-actions .btn-submit-reply:hover {
+            background: #3b5de7;
+        }
+
+        .reply-input-wrap .reply-actions .btn-cancel-reply {
+            padding: 4px 12px;
+            height: 32px;
+            background: none;
+            border: none;
+            color: #8a9aaa;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .reply-input-wrap .reply-actions .btn-cancel-reply:hover {
+            color: #4a5a6a;
+        }
+
+        /* ---- 二楼容器（可折叠） ---- */
+        .replies-container {
+            margin-top: 8px;
+            padding-left: 16px;
+            border-left: 2px solid #e8edf4;
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.3s ease;
+            max-height: 9999px;
+            opacity: 1;
+        }
+
+        .replies-container.collapsed {
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .replies-container .comment-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .replies-container .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ---- 折叠/展开按钮 ---- */
+        .replies-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: #6b7a8a;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 2px 6px;
+            font-family: inherit;
+            transition: 0.2s;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+
+        .replies-toggle:hover {
+            background: #f0f2f5;
+            color: #1a2a3a;
+        }
+
+        .replies-toggle .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            font-size: 10px;
+        }
+
+        .replies-toggle .arrow.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        /* ---- 加载更多 ---- */
+        .load-more-comments {
+            text-align: center;
+            padding: 12px 0 4px;
+        }
+
+        .load-more-comments button {
+            background: none;
+            border: none;
+            color: #6b7a8a;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 6px 20px;
+            font-family: inherit;
+            transition: 0.2s;
+            border-radius: 6px;
+        }
+
+        .load-more-comments button:hover {
+            background: #f0f2f5;
+            color: #1a2a3a;
+        }
+
+        /* ===== 右侧边栏 ===== */
+        .blog-detail__sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .blog-detail__author-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .blog-detail__author-card-header {
+            text-align: center;
+        }
+
+        .blog-detail__avatar-large {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: #4f6ef7;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0 auto 10px;
+            overflow: hidden;
+        }
+
+        .blog-detail__author-card-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+        .blog-detail__author-card-level {
+            font-size: 13px;
+            color: #4f6ef7;
+            margin: 2px 0;
+        }
+        .blog-detail__author-card-domain {
+            font-size: 13px;
+            color: #6b7a8a;
+        }
+
+        .blog-detail__author-card-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+            padding: 12px 0;
+            border-top: 1px solid #e8edf4;
+            border-bottom: 1px solid #e8edf4;
+        }
+
+        .blog-detail__author-card-stats .stat-item {
+            text-align: center;
+        }
+        .blog-detail__author-card-stats .stat-num {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+        .blog-detail__author-card-stats .stat-label {
+            font-size: 12px;
+            color: #8a9aaa;
+        }
+
+        .blog-detail__author-card-actions {
+            display: flex;
+            gap: 10px;
+            margin: 12px 0 16px;
+        }
+
+        .blog-detail__author-card-actions .btn-follow.large,
+        .blog-detail__author-card-actions .btn-private.large {
+            flex: 1;
+            padding: 10px 0;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .blog-detail__author-card-actions .btn-private.large {
+            background: #f0f2f5;
+            border: none;
+        }
+
+        .blog-detail__author-card-bio {
+            font-size: 13px;
+            color: #6b7a8a;
+        }
+        .blog-detail__author-card-bio .bio-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+        .blog-detail__author-card-bio .bio-label {
+            color: #8a9aaa;
+        }
+        .blog-detail__author-card-bio .bio-value {
+            color: #1a2a3a;
+        }
+
+        .blog-detail__recommend {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .blog-detail__recommend-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2a3a;
+            margin-bottom: 12px;
+        }
+
+        .blog-detail__recommend-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .recommend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #1a2a3a;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+        .recommend-item:hover {
+            color: #4f6ef7;
+        }
+
+        .recommend-tag {
+            font-size: 11px;
+            padding: 1px 10px;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+        .recommend-tag.top {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .recommend-tag.hot {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .recommend-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* ================================================================ */
+        /* 底部固定作者栏 */
+        /* ================================================================ */
+        .blog-detail__footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: #ffffff;
+            border-top: 1px solid #e8edf4;
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .blog-detail__footer .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .blog-detail__footer .footer-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #4f6ef7;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .blog-detail__footer .footer-author-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+        .blog-detail__footer .footer-author-tags {
+            font-size: 12px;
+            color: #6b7a8a;
+        }
+
+        .blog-detail__footer .footer-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .blog-detail__footer .footer-actions .btn-follow {
+            padding: 6px 20px;
+            font-size: 13px;
+        }
+        .blog-detail__footer .footer-actions .btn-private {
+            padding: 6px 20px;
+            font-size: 13px;
+        }
+        .blog-detail__footer .footer-actions .action-btn {
+            padding: 6px 14px;
+            font-size: 13px;
+        }
+        .blog-detail__footer .footer-actions .action-btn .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 900px) {
+            .blog-detail {
+                grid-template-columns: 1fr;
+                padding: 0;
+            }
+            .blog-detail__main {
+                padding: 20px 16px;
+            }
+            .blog-detail__title {
+                font-size: 20px;
+            }
+            .blog-detail__sidebar {
+                order: -1;
+            }
+            .blog-detail__author-card-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .blog-detail__footer {
+                padding: 10px 16px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .blog-detail__footer .footer-left {
+                justify-content: center;
+            }
+            .blog-detail__footer .footer-actions {
+                justify-content: center;
+            }
+            .comment-input-wrap {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .comment-input-wrap .comment-submit {
+                align-self: stretch;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                padding-bottom: 160px;
+            }
+            .blog-detail__meta {
+                gap: 10px;
+                font-size: 12px;
+            }
+            .blog-detail__actions {
+                gap: 8px;
+            }
+            .action-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            .blog-detail__author-card-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .blog-detail__footer .footer-actions .action-btn {
+                padding: 4px 10px;
+                font-size: 12px;
+            }
+            .comments-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== SVG 图标精灵 ===== -->
+    <svg class="icon-sprite" aria-hidden="true">
+        <symbol id="icon-eye" viewBox="0 0 24 24">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+            <circle cx="12" cy="12" r="3" />
+        </symbol>
+        <symbol id="icon-heart" viewBox="0 0 24 24">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </symbol>
+        <symbol id="icon-star" viewBox="0 0 24 24">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </symbol>
+        <symbol id="icon-share" viewBox="0 0 24 24">
+            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+            <polyline points="16 6 12 2 8 6" />
+            <line x1="12" y1="2" x2="12" y2="15" />
+        </symbol>
+        <symbol id="icon-more" viewBox="0 0 24 24">
+            <circle cx="12" cy="5" r="1" />
+            <circle cx="12" cy="12" r="1" />
+            <circle cx="12" cy="19" r="1" />
+        </symbol>
+    </svg>
+
+    <!-- ============================================================ -->
+    <!-- 博客详情页 -->
+    <!-- ============================================================ -->
+    <div class="blog-detail">
+
+        <!-- ===== 左侧主体 ===== -->
+        <main class="blog-detail__main">
+
+            <h1 class="blog-detail__title">
+                YOLOv9【第一章：零基础入门篇·第1节】YOLOv9核心思想与发展背景：从YOLOv7到PGI/GELAN！
+            </h1>
+
+            <div class="blog-detail__meta">
+                <span>原创于 2026-08-02 10:00:00</span>
+                <span>阅读 8.1k</span>
+                <span>9.8k 赞</span>
+                <span>16万 收藏</span>
+            </div>
+
+            <div class="blog-detail__category">
+                <span class="category-tag">人工智能</span>
+                <span class="category-tag blue">计算机视觉</span>
+                <span class="category-tag orange">目标检测</span>
+                <span class="category-tag purple">YOLOv9</span>
+                <span class="category-tag pink">深度学习</span>
+            </div>
+
+            <div class="blog-detail__content">
+                <h2>学 YOLO，还得跟「bug菌」学</h2>
+                <p>本文收录于《YOLOv9实战：从入门到深度优化》专栏。</p>
+                <p>该专栏系统复现并深度梳理全网主流 YOLOv9 改进方法与工程实战案例...</p>
+                <pre><code>import torch
+        from yolov9 import YOLOv9
+        model = YOLOv9('yolov9-c.pt')
+        results = model.predict('image.jpg')
+        results.show()</code></pre>
+            </div>
+
+            <div class="blog-detail__actions">
+                <button class="action-btn" id="likeBtn">
+                    <svg class="icon"><use href="#icon-heart" /></svg>
+                    <span>点赞 <span id="likeCount">9.8k</span></span>
+                </button>
+                <button class="action-btn" id="favoriteBtn">
+                    <svg class="icon"><use href="#icon-star" /></svg>
+                    <span>收藏 <span id="favoriteCount">16万</span></span>
+                </button>
+                <button class="action-btn">
+                    <svg class="icon"><use href="#icon-share" /></svg>
+                    <span>分享</span>
+                </button>
+                <button class="action-btn">
+                    <svg class="icon"><use href="#icon-more" /></svg>
+                    <span>更多</span>
+                </button>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 评论区域 -->
+            <!-- ============================================================ -->
+            <div class="blog-detail__comments">
+                <div class="comments-header">
+                    <div>
+                        <h3>💬 评论 <span class="comment-count" id="totalCommentCount">共 2 条</span></h3>
+                    </div>
+                    <select class="comment-sort" id="commentSort">
+                        <option value="latest">最新</option>
+                        <option value="hot">最热</option>
+                        <option value="oldest">最早</option>
+                    </select>
+                </div>
+
+                <!-- 评论输入框 -->
+                <div class="comment-input-wrap">
+                    <div class="comment-avatar">我</div>
+                    <div class="comment-input-wrapper">
+                        <textarea id="commentInput" placeholder="写下你的想法..." rows="2"></textarea>
+                    </div>
+                    <button class="comment-submit" id="submitCommentBtn">发布</button>
+                </div>
+
+                <!-- 评论列表 -->
+                <div class="comment-list" id="commentList">
+
+                    <!-- ===== 一级评论 1 ===== -->
+                    <div class="comment-item" data-comment-id="1" data-level="1">
+                        <div class="comment-avatar-sm">陈</div>
+                        <div class="comment-body">
+                            <div class="comment-author">
+                                陈同学
+                                <span class="author-badge">作者</span>
+                            </div>
+                            <div class="comment-text">写得很详细，对 YOLOv9 的理解又加深了一层。特别是关于 PGI 和 GELAN 的对比分析非常清晰！</div>
+                            <div class="comment-meta">
+                                <span>2026-08-12 14:32</span>
+                                <button class="like-comment-btn" onclick="toggleCommentLike(this)">
+                                    <svg class="icon icon-sm"><use href="#icon-heart" /></svg>
+                                    <span class="like-count">12</span>
+                                </button>
+                                <button class="reply-btn" onclick="openReply(this, '陈同学', '写得很详细...', false)">回复</button>
+                            </div>
+                            <!-- 回复输入框（一楼回复不需要引用） -->
+                            <div class="reply-input-wrap" style="display:none;">
+                                <textarea rows="2" placeholder="回复 @陈同学..."></textarea>
+                                <div class="reply-actions">
+                                    <button class="btn-submit-reply" onclick="submitReply(this, false)">回复</button>
+                                    <button class="btn-cancel-reply" onclick="cancelReply(this)">取消</button>
+                                </div>
+                            </div>
+                            <!-- 二楼容器 -->
+                            <div class="replies-container" id="replies-1">
+                                <!-- 二楼回复 1 -->
+                                <div class="comment-item" data-level="2">
+                                    <div class="comment-avatar-sm">张</div>
+                                    <div class="comment-body">
+                                        <div class="comment-author">张三</div>
+                                        <div class="comment-text">确实，PGI 的设计思路很值得借鉴。</div>
+                                        <div class="comment-meta">
+                                            <span>2026-08-12 15:10</span>
+                                            <button class="like-comment-btn" onclick="toggleCommentLike(this)">
+                                                <svg class="icon icon-sm"><use href="#icon-heart" /></svg>
+                                                <span class="like-count">3</span>
+                                            </button>
+                                            <button class="reply-btn" onclick="openReply(this, '张三', '确实，PGI 的设计思路很值得借鉴。', true)">回复</button>
+                                        </div>
+                                        <!-- 二楼回复的回复输入框（需要引用） -->
+                                        <div class="reply-input-wrap" style="display:none;">
+                                            <div class="reply-quote">
+                                                <span class="quote-author">@张三</span>：确实，PGI 的设计思路很值得借鉴。
+                                            </div>
+                                            <textarea rows="2" placeholder="回复 @张三..."></textarea>
+                                            <div class="reply-actions">
+                                                <button class="btn-submit-reply" onclick="submitReply(this, true)">回复</button>
+                                                <button class="btn-cancel-reply" onclick="cancelReply(this)">取消</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 二楼回复 2（回复二楼1生成的，带引用） -->
+                                <div class="comment-item" data-level="2">
+                                    <div class="comment-avatar-sm">李</div>
+                                    <div class="comment-body">
+                                        <div class="comment-author">李四</div>
+                                        <div class="quote-text">
+                                            <span class="quote-author">@张三</span>：确实，PGI 的设计思路很值得借鉴。
+                                        </div>
+                                        <div class="comment-text">同意，PGI 的梯度信息设计确实很有启发性。</div>
+                                        <div class="comment-meta">
+                                            <span>2026-08-12 15:35</span>
+                                            <button class="like-comment-btn" onclick="toggleCommentLike(this)">
+                                                <svg class="icon icon-sm"><use href="#icon-heart" /></svg>
+                                                <span class="like-count">5</span>
+                                            </button>
+                                            <button class="reply-btn" onclick="openReply(this, '李四', '同意，PGI 的梯度信息设计确实很有启发性。', true)">回复</button>
+                                        </div>
+                                        <div class="reply-input-wrap" style="display:none;">
+                                            <div class="reply-quote">
+                                                <span class="quote-author">@李四</span>：同意，PGI 的梯度信息设计确实很有启发性。
+                                            </div>
+                                            <textarea rows="2" placeholder="回复 @李四..."></textarea>
+                                            <div class="reply-actions">
+                                                <button class="btn-submit-reply" onclick="submitReply(this, true)">回复</button>
+                                                <button class="btn-cancel-reply" onclick="cancelReply(this)">取消</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 折叠/展开按钮 -->
+                            <button class="replies-toggle" onclick="toggleReplies(this)" data-target="replies-1">
+                                <span class="arrow">▼</span>
+                                <span class="toggle-text">收起 2 条回复</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ===== 一级评论 2 ===== -->
+                    <div class="comment-item" data-comment-id="2" data-level="1">
+                        <div class="comment-avatar-sm">王</div>
+                        <div class="comment-body">
+                            <div class="comment-author">王五</div>
+                            <div class="comment-text">已收藏，准备二刷。感谢分享！</div>
+                            <div class="comment-meta">
+                                <span>2026-08-12 11:45</span>
+                                <button class="like-comment-btn" onclick="toggleCommentLike(this)">
+                                    <svg class="icon icon-sm"><use href="#icon-heart" /></svg>
+                                    <span class="like-count">8</span>
+                                </button>
+                                <button class="reply-btn" onclick="openReply(this, '王五', '已收藏，准备二刷。感谢分享！', false)">回复</button>
+                            </div>
+                            <div class="reply-input-wrap" style="display:none;">
+                                <textarea rows="2" placeholder="回复 @王五..."></textarea>
+                                <div class="reply-actions">
+                                    <button class="btn-submit-reply" onclick="submitReply(this, false)">回复</button>
+                                    <button class="btn-cancel-reply" onclick="cancelReply(this)">取消</button>
+                                </div>
+                            </div>
+                            <div class="replies-container" id="replies-2"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="load-more-comments">
+                    <button onclick="loadMoreComments()">加载更多评论</button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- ===== 右侧边栏 ===== -->
+        <aside class="blog-detail__sidebar">
+            <!-- 作者卡片 -->
+            <div class="blog-detail__author-card">
+                <div class="blog-detail__author-card-header">
+                    <div class="blog-detail__avatar-large">bug</div>
+                    <div class="blog-detail__author-card-name">bug菌</div>
+                    <div class="blog-detail__author-card-level">博客等级 码龄8年</div>
+                    <div class="blog-detail__author-card-domain">Java、算法与数据结构技术领域</div>
+                </div>
+                <div class="blog-detail__author-card-stats">
+                    <div class="stat-item"><span class="stat-num">16万</span><span class="stat-label">原创</span></div>
+                    <div class="stat-item"><span class="stat-num">9.8k</span><span class="stat-label">点赞</span></div>
+                    <div class="stat-item"><span class="stat-num">16万</span><span class="stat-label">收藏</span></div>
+                    <div class="stat-item"><span class="stat-num">16万</span><span class="stat-label">粉丝</span></div>
+                </div>
+                <div class="blog-detail__author-card-actions">
+                    <button class="btn-follow large" id="followBtnLarge">+ 关注</button>
+                    <button class="btn-private large">私信</button>
+                </div>
+                <div class="blog-detail__author-card-bio">
+                    <div class="bio-item"><span class="bio-label">博客等级</span><span class="bio-value">博客等级 码龄8年</span></div>
+                    <div class="bio-item"><span class="bio-label">技术领域</span><span class="bio-value">Java、算法与数据结构技术领域</span></div>
+                </div>
+            </div>
+
+            <div class="blog-detail__recommend">
+                <h3 class="blog-detail__recommend-title">🔥 热门文章</h3>
+                <div class="blog-detail__recommend-list">
+                    <div class="recommend-item"><span class="recommend-tag top">置顶</span><span class="recommend-title">《YOLOv8实战：从入门到深度优化》总目录</span></div>
+                    <div class="recommend-item"><span class="recommend-tag top">置顶</span><span class="recommend-title">《滚雪球学SpringBoot》教程导航帖</span></div>
+                    <div class="recommend-item"><span class="recommend-tag hot">热</span><span class="recommend-title">手把手教你DeepSeek-R1本地部署</span></div>
+                    <div class="recommend-item"><span class="recommend-tag hot">热</span><span class="recommend-title">SpringBoot入门：轻松搭建开发环境</span></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 底部固定作者栏 -->
+    <!-- ============================================================ -->
+    <div class="blog-detail__footer">
+        <div class="footer-left">
+            <div class="footer-avatar">bug</div>
+            <div>
+                <div class="footer-author-name">bug菌</div>
+                <div class="footer-author-tags">博客等级 码龄8年 · Java、算法与数据结构技术领域</div>
+            </div>
+        </div>
+        <div class="footer-actions">
+            <button class="btn-follow" id="followBtnFooter">+ 关注</button>
+            <button class="btn-private">私信</button>
+            <button class="action-btn" id="likeBtnFooter">
+                <svg class="icon"><use href="#icon-heart" /></svg>
+                <span><span id="likeCountFooter">9.8k</span></span>
+            </button>
+            <button class="action-btn" id="favoriteBtnFooter">
+                <svg class="icon"><use href="#icon-star" /></svg>
+                <span><span id="favoriteCountFooter">16万</span></span>
+            </button>
+            <button class="action-btn">
+                <svg class="icon"><use href="#icon-share" /></svg>
+            </button>
+            <button class="action-btn">
+                <svg class="icon"><use href="#icon-more" /></svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        // 工具函数
+        // ================================================================
+        function formatNumber(num) {
+            if (num >= 10000) return (num / 10000).toFixed(1) + '万';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+            return String(num);
+        }
+
+        // ================================================================
+        // 关注按钮
+        // ================================================================
+        const followBtns = document.querySelectorAll('.btn-follow');
+        followBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isFollowing = this.classList.toggle('following');
+                const text = isFollowing ? '已关注' : '+ 关注';
+                this.textContent = text;
+                followBtns.forEach(other => {
+                    if (other !== this) {
+                        other.classList.toggle('following', isFollowing);
+                        other.textContent = text;
+                    }
+                });
+            });
+        });
+
+        // ================================================================
+        // 点赞
+        // ================================================================
+        let likeCount = 9808;
+        let liked = false;
+
+        function toggleLike() {
+            liked = !liked;
+            const activeClass = 'active';
+            document.querySelectorAll('#likeBtn, #likeBtnFooter').forEach(btn => {
+                btn.classList.toggle(activeClass, liked);
+            });
+            likeCount = liked ? likeCount + 1 : likeCount - 1;
+            const formatted = formatNumber(likeCount);
+            document.querySelectorAll('#likeCount, #likeCountFooter').forEach(el => {
+                el.textContent = formatted;
+            });
+        }
+        document.getElementById('likeBtn').addEventListener('click', toggleLike);
+        document.getElementById('likeBtnFooter').addEventListener('click', toggleLike);
+
+        // ================================================================
+        // 收藏
+        // ================================================================
+        let favoriteCount = 160000;
+        let favorited = false;
+
+        function toggleFavorite() {
+            favorited = !favorited;
+            const activeClass = 'favorited';
+            document.querySelectorAll('#favoriteBtn, #favoriteBtnFooter').forEach(btn => {
+                btn.classList.toggle(activeClass, favorited);
+            });
+            favoriteCount = favorited ? favoriteCount + 1 : favoriteCount - 1;
+            const formatted = formatNumber(favoriteCount);
+            document.querySelectorAll('#favoriteCount, #favoriteCountFooter').forEach(el => {
+                el.textContent = formatted;
+            });
+        }
+        document.getElementById('favoriteBtn').addEventListener('click', toggleFavorite);
+        document.getElementById('favoriteBtnFooter').addEventListener('click', toggleFavorite);
+
+        // ================================================================
+        // 评论功能
+        // ================================================================
+
+        // ---- 评论点赞 ----
+        function toggleCommentLike(btn) {
+            btn.classList.toggle('liked');
+            const countEl = btn.querySelector('.like-count');
+            let count = parseInt(countEl.textContent, 10) || 0;
+            count = btn.classList.contains('liked') ? count + 1 : count - 1;
+            countEl.textContent = count;
+        }
+
+        // ---- 打开回复 ----
+        // isReplyToSecondFloor: true=回复二楼(需要引用), false=回复一楼(不需要引用)
+        function openReply(btn, author, content, isReplyToSecondFloor) {
+            const commentBody = btn.closest('.comment-body');
+            const replyWrap = commentBody.querySelector('.reply-input-wrap');
+
+            // 关闭其他所有回复框
+            document.querySelectorAll('.reply-input-wrap').forEach(wrap => {
+                if (wrap !== replyWrap) {
+                    wrap.style.display = 'none';
+                }
+            });
+
+            if (replyWrap) {
+                const isVisible = replyWrap.style.display === 'block';
+                replyWrap.style.display = isVisible ? 'none' : 'block';
+
+                if (!isVisible) {
+                    const quoteEl = replyWrap.querySelector('.reply-quote');
+                    if (quoteEl) {
+                        if (isReplyToSecondFloor) {
+                            quoteEl.innerHTML = '<span class="quote-author">@' + author + '</span>：' + content;
+                            quoteEl.style.display = 'block';
+                        } else {
+                            quoteEl.style.display = 'none';
+                        }
+                    }
+                    const textarea = replyWrap.querySelector('textarea');
+                    if (textarea) {
+                        textarea.placeholder = '回复 @' + author + '：';
+                        textarea.focus();
+                    }
+                }
+            }
+        }
+
+        // ---- 提交回复 ----
+        function submitReply(btn, isReplyToSecondFloor) {
+            const wrap = btn.closest('.reply-input-wrap');
+            const textarea = wrap.querySelector('textarea');
+            const text = textarea.value.trim();
+
+            if (!text) {
+                alert('请输入回复内容');
+                return;
+            }
+
+            // 提取被回复人
+            let replyTo = '用户';
+            let quotedContent = '';
+            if (isReplyToSecondFloor) {
+                const quoteEl = wrap.querySelector('.reply-quote');
+                if (quoteEl) {
+                    const match = quoteEl.innerHTML.match(/@([^：]+)：/);
+                    if (match) replyTo = match[1];
+                    quotedContent = quoteEl.textContent.replace(/^@[^：]+：/, '').trim();
+                }
+            } else {
+                const placeholder = textarea.placeholder || '';
+                const match = placeholder.match(/回复 @([^：]+)：/);
+                if (match) replyTo = match[1];
+            }
+
+            // 找到父级评论（一级评论）
+            const parentComment = wrap.closest('.comment-item');
+            // 找到一级评论（通过 data-level=1 或者 .replies-container 的父级）
+            let rootComment = parentComment;
+            while (rootComment && rootComment.dataset && rootComment.dataset.level === '1' !== true) {
+                rootComment = rootComment.parentElement?.closest('.comment-item');
+                if (!rootComment) break;
+            }
+            if (!rootComment || rootComment.dataset.level !== '1') {
+                // 如果找不到一级评论，就用当前父级
+                rootComment = parentComment;
+            }
+
+            // 获取或创建 replies-container
+            let repliesContainer = rootComment.querySelector('.replies-container');
+            if (!repliesContainer) {
+                repliesContainer = document.createElement('div');
+                repliesContainer.className = 'replies-container';
+                repliesContainer.id = 'replies-' + (rootComment.dataset.commentId || Date.now());
+                rootComment.querySelector('.comment-body').appendChild(repliesContainer);
+            }
+
+            // 构建回复HTML
+            let replyHtml = '';
+            if (isReplyToSecondFloor) {
+                // 回复二楼：带引用
+                replyHtml = `
+                    <div class="comment-item" data-level="2">
+                        <div class="comment-avatar-sm">我</div>
+                        <div class="comment-body">
+                            <div class="comment-author">我 <span class="author-badge owner">作者</span></div>
+                            <div class="quote-text">
+                                <span class="quote-author">@${replyTo}</span>：${quotedContent || ''}
+                            </div>
+                            <div class="comment-text">${text}</div>
+                            <div class="comment-meta">
+                                <span>刚刚</span>
+                                <button class="like-comment-btn" onclick="toggleCommentLike(this)">
+                                    <svg class="icon icon-sm"><use href="#icon-heart" /></svg>
+                                    <span class="like-count">0</span>
+                                </button>
+                                <button class="reply-btn" onclick="openReply(this, '我', '${text.replace(/'/g, "\\'")}', true)">回复</button>
+                            </div>
+                            <div class="reply-input-wrap" style="display:none;">
+                                <div class="reply-quote">
+                                    <span class="quote-author">@我</span>：${text}
+                                </div>
+                                <textarea rows="2" placeholder="回复 @我："></textarea>
+                                <div class="reply-actions">
+                                    <button class="btn-submit-reply" onclick="submitReply(this, true)">回复</button>
+                                    <button class="btn-cancel-reply" onclick="cancelReply(this)">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // 回复一楼：不带引用
+                replyHtml = `
+                    <div class="comment-item" data-level="2">
+                        <div class="comment-avatar-sm">我</div>
+                        <div class="comment-body">
+                            <div class="comment-author">我 <span class="author-badge owner">作者</span></div>
+                            <div class="comment-text">${text}</div>
+                            <div class="comment-meta">
+                                <span>刚刚</span>
+                                <button class="like-comment-btn" onclick="toggleCommentLike(this)">
+                                    <svg class="icon icon-sm"><use href="#icon-heart" /></svg>
+                                    <span class="like-count">0</span>
+                                </button>
+                                <button class="reply-btn" onclick="openReply(this, '我', '${text.replace(/'/g, "\\'")}', true)">回复</button>
+                            </div>
+                            <div class="reply-input-wrap" style="display:none;">
+                                <div class="reply-quote">
+                                    <span class="quote-author">@我</span>：${text}
+                                </div>
+                                <textarea rows="2" placeholder="回复 @我："></textarea>
+                                <div class="reply-actions">
+                                    <button class="btn-submit-reply" onclick="submitReply(this, true)">回复</button>
+                                    <button class="btn-cancel-reply" onclick="cancelReply(this)">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = replyHtml;
+            const replyItem = tempDiv.firstElementChild;
+            repliesContainer.appendChild(replyItem);
+
+            // 更新折叠按钮
+            updateToggleButton(rootComment);
+
+            // 清空并隐藏回复输入框
+            textarea.value = '';
+            wrap.style.display = 'none';
+
+            updateCommentCount();
+        }
+
+        // ---- 取消回复 ----
+        function cancelReply(btn) {
+            const wrap = btn.closest('.reply-input-wrap');
+            wrap.style.display = 'none';
+            const textarea = wrap.querySelector('textarea');
+            if (textarea) textarea.value = '';
+        }
+
+        // ---- 折叠/展开 ----
+        function toggleReplies(btn) {
+            const targetId = btn.dataset.target;
+            const container = document.getElementById(targetId);
+            if (!container) return;
+
+            const isCollapsed = container.classList.toggle('collapsed');
+            const arrow = btn.querySelector('.arrow');
+            const text = btn.querySelector('.toggle-text');
+
+            if (isCollapsed) {
+                arrow.classList.add('collapsed');
+                const count = container.querySelectorAll('.comment-item').length;
+                text.textContent = '展开 ' + count + ' 条回复';
+            } else {
+                arrow.classList.remove('collapsed');
+                const count = container.querySelectorAll('.comment-item').length;
+                text.textContent = '收起 ' + count + ' 条回复';
+            }
+        }
+
+        // ---- 更新折叠按钮 ----
+        function updateToggleButton(rootComment) {
+            const container = rootComment.querySelector('.replies-container');
+            if (!container) return;
+
+            const count = container.querySelectorAll('.comment-item').length;
+            if (count === 0) {
+                const toggleBtn = rootComment.querySelector('.replies-toggle');
+                if (toggleBtn) toggleBtn.remove();
+                return;
+            }
+
+            let toggleBtn = rootComment.querySelector('.replies-toggle');
+            if (!toggleBtn) {
+                toggleBtn = document.createElement('button');
+                toggleBtn.className = 'replies-toggle';
+                toggleBtn.dataset.target = container.id;
+                toggleBtn.innerHTML = `
+                    <span class="arrow">▼</span>
+                    <span class="toggle-text">收起 ${count} 条回复</span>
+                `;
+                toggleBtn.onclick = function() { toggleReplies(this); };
+                const commentBody = rootComment.querySelector('.comment-body');
+                commentBody.appendChild(toggleBtn);
+            } else {
+                const text = toggleBtn.querySelector('.toggle-text');
+                if (text) {
+                    const isCollapsed = container.classList.contains('collapsed');
+                    text.textContent = (isCollapsed ? '展开 ' : '收起 ') + count + ' 条回复';
+                }
+            }
+        }
+
+        // ---- 发布一级评论 ----
+        document.getElementById('submitCommentBtn').addEventListener('click', function() {
+            const input = document.getElementById('commentInput');
+            const text = input.value.trim();
+            if (!text) {
+                alert('请输入评论内容');
+                return;
+            }
+
+            const commentList = document.getElementById('commentList');
+            const commentId = Date.now();
+            const newComment = document.createElement('div');
+            newComment.className = 'comment-item';
+            newComment.dataset.commentId = commentId;
+            newComment.dataset.level = '1';
+            newComment.innerHTML = `
+                <div class="comment-avatar-sm">我</div>
+                <div class="comment-body">
+                    <div class="comment-author">
+                        我
+                        <span class="author-badge owner">作者</span>
+                    </div>
+                    <div class="comment-text">${text}</div>
+                    <div class="comment-meta">
+                        <span>刚刚</span>
+                        <button class="like-comment-btn" onclick="toggleCommentLike(this)">
+                            <svg class="icon icon-sm"><use href="#icon-heart" /></svg>
+                            <span class="like-count">0</span>
+                        </button>
+                        <button class="reply-btn" onclick="openReply(this, '我', '${text.replace(/'/g, "\\'")}', false)">回复</button>
+                    </div>
+                    <div class="reply-input-wrap" style="display:none;">
+                        <textarea rows="2" placeholder="回复 @我："></textarea>
+                        <div class="reply-actions">
+                            <button class="btn-submit-reply" onclick="submitReply(this, false)">回复</button>
+                            <button class="btn-cancel-reply" onclick="cancelReply(this)">取消</button>
+                        </div>
+                    </div>
+                    <div class="replies-container" id="replies-${commentId}"></div>
+                </div>
+            `;
+            commentList.prepend(newComment);
+
+            updateCommentCount();
+
+            input.value = '';
+            input.style.height = 'auto';
+        });
+
+        // ---- Ctrl+Enter 快捷发布 ----
+        document.getElementById('commentInput').addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                document.getElementById('submitCommentBtn').click();
+            }
+        });
+
+        // ---- 更新评论数量 ----
+        function updateCommentCount() {
+            const commentItems = document.querySelectorAll('.comment-list > .comment-item');
+            const totalCountEl = document.getElementById('totalCommentCount');
+            if (totalCountEl) {
+                totalCountEl.textContent = '共 ' + commentItems.length + ' 条';
+            }
+        }
+
+        // ---- 加载更多 ----
+        function loadMoreComments() {
+            const btn = document.querySelector('.load-more-comments button');
+            btn.textContent = '加载中...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const commentList = document.getElementById('commentList');
+                const cid = Date.now() + Math.random();
+                const item = document.createElement('div');
+                item.className = 'comment-item';
+                item.dataset.commentId = cid;
+                item.dataset.level = '1';
+                item.innerHTML = `
+                    <div class="comment-avatar-sm">孙</div>
+                    <div class="comment-body">
+                        <div class="comment-author">孙七</div>
+                        <div class="comment-text">已收藏，期待后续更新！</div>
+                        <div class="comment-meta">
+                            <span>2026-08-11 20:35</span>
+                            <button class="like-comment-btn" onclick="toggleCommentLike(this)">
+                                <svg class="icon icon-sm"><use href="#icon-heart" /></svg>
+                                <span class="like-count">2</span>
+                            </button>
+                            <button class="reply-btn" onclick="openReply(this, '孙七', '已收藏，期待后续更新！', false)">回复</button>
+                        </div>
+                        <div class="reply-input-wrap" style="display:none;">
+                            <textarea rows="2" placeholder="回复 @孙七："></textarea>
+                            <div class="reply-actions">
+                                <button class="btn-submit-reply" onclick="submitReply(this, false)">回复</button>
+                                <button class="btn-cancel-reply" onclick="cancelReply(this)">取消</button>
+                            </div>
+                        </div>
+                        <div class="replies-container" id="replies-${cid}"></div>
+                    </div>
+                `;
+                commentList.appendChild(item);
+
+                updateCommentCount();
+                btn.textContent = '已加载全部评论';
+                btn.disabled = true;
+                btn.style.color = '#b0b8c0';
+                btn.style.cursor = 'default';
+            }, 500);
+        }
+
+        // ---- 评论排序 ----
+        document.getElementById('commentSort').addEventListener('change', function() {
+            const commentList = document.getElementById('commentList');
+            const items = Array.from(commentList.querySelectorAll(':scope > .comment-item'));
+            const sortBy = this.value;
+
+            if (sortBy === 'latest') {
+                // 保持原样
+            } else if (sortBy === 'hot') {
+                items.sort((a, b) => {
+                    const likesA = parseInt(a.querySelector('.like-count')?.textContent || 0);
+                    const likesB = parseInt(b.querySelector('.like-count')?.textContent || 0);
+                    return likesB - likesA;
+                });
+            } else if (sortBy === 'oldest') {
+                items.reverse();
+            }
+            items.forEach(item => commentList.appendChild(item));
+        });
+
+        // ---- 初始化 ----
+        updateCommentCount();
+
+        // 初始化折叠按钮
+        document.querySelectorAll('.replies-container').forEach(container => {
+            const parent = container.closest('.comment-item');
+            if (parent) {
+                const count = container.querySelectorAll('.comment-item').length;
+                if (count > 0) {
+                    updateToggleButton(parent);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

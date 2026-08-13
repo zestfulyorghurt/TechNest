@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>用户管理 · TechNest</title>
+    <style>
+        /* ===== 全局重置 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #f4f7f9;
+            color: #1a2a3a;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        /* ===== 图标 ===== */
+        .icon-sprite {
+            display: none;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        /* ================================================================
+           页面容器
+           ================================================================ */
+        .page-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== 页面头部 ===== */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .page-header .title-group h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a2a3a;
+        }
+
+        .page-header .title-group .subtitle {
+            font-size: 14px;
+            color: #8a9aaa;
+            margin-top: 2px;
+        }
+
+        .page-header .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .page-header .header-actions .admin-badge {
+            background: #fef3c7;
+            color: #b45309;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 20px;
+        }
+
+        .btn-primary {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #4f6ef7;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary:hover {
+            background: #3b5de7;
+        }
+
+        .btn-secondary {
+            padding: 8px 16px;
+            border: 1px solid #d5dfdc;
+            border-radius: 8px;
+            background: #fff;
+            color: #4a5a6a;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            border-color: #b5ccc2;
+        }
+
+        .btn-success {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 6px;
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-success:hover {
+            background: #a7f3d0;
+        }
+
+        /* ================================================================
+           统计卡片
+           ================================================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            border: 1px solid #e8edf4;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #8a9aaa;
+        }
+
+        .stat-card .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a2a3a;
+            margin-top: 4px;
+        }
+
+        .stat-card .stat-change {
+            font-size: 12px;
+            color: #16a34a;
+            margin-top: 2px;
+        }
+
+        .stat-card .stat-change.negative {
+            color: #e74c3c;
+        }
+
+        .stat-card .stat-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+
+        .stat-card .stat-dot.active {
+            background: #16a34a;
+        }
+        .stat-card .stat-dot.inactive {
+            background: #8a9aaa;
+        }
+        .stat-card .stat-dot.vip {
+            background: #f59e0b;
+        }
+        .stat-card .stat-dot.admin {
+            background: #4f6ef7;
+        }
+
+        /* ================================================================
+           筛选栏
+           ================================================================ */
+        .filter-bar {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            border: 1px solid #e8edf4;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .filter-bar .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-bar .filter-row .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1 0 auto;
+            min-width: 140px;
+        }
+
+        .filter-bar .filter-row .filter-group label {
+            font-size: 13px;
+            color: #6b7a8a;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .filter-bar .filter-row input,
+        .filter-bar .filter-row select {
+            padding: 7px 12px;
+            border: 1.5px solid #d5dfdc;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            background: #fafcfb;
+            color: #1a2a3a;
+            width: 100%;
+            min-width: 0;
+            transition: 0.2s;
+        }
+
+        .filter-bar .filter-row input:focus,
+        .filter-bar .filter-row select:focus {
+            border-color: #4f6ef7;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.08);
+            background: #fff;
+        }
+
+        .filter-bar .filter-row .filter-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .filter-bar .filter-row .filter-actions .btn-search {
+            padding: 7px 20px;
+            background: #4f6ef7;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-bar .filter-row .filter-actions .btn-search:hover {
+            background: #3b5de7;
+        }
+
+        .filter-bar .filter-row .filter-actions .btn-reset {
+            padding: 7px 16px;
+            background: transparent;
+            color: #6b7a8a;
+            border: 1px solid #d5dfdc;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-bar .filter-row .filter-actions .btn-reset:hover {
+            background: #f0f2f5;
+        }
+
+        /* ================================================================
+           表格
+           ================================================================ */
+        .table-container {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e8edf4;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+            margin-bottom: 24px;
+        }
+
+        .table-container .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid #e8edf4;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .table-container .table-header .table-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+
+        .table-container .table-header .table-title .count {
+            font-weight: 400;
+            color: #8a9aaa;
+            font-size: 13px;
+        }
+
+        .table-container .table-header .table-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            padding: 0 4px 4px 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        table thead {
+            background: #f8f9fa;
+        }
+
+        table thead th {
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5a6a;
+            border-bottom: 1px solid #e8edf4;
+            white-space: nowrap;
+        }
+
+        table tbody tr {
+            transition: 0.15s;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        table tbody td {
+            padding: 10px 14px;
+            vertical-align: middle;
+            color: #1a2a3a;
+        }
+
+        /* ===== 用户信息 ===== */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #4f6ef7;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .user-info .user-name {
+            font-weight: 500;
+            color: #1a2a3a;
+        }
+
+        .user-info .user-id {
+            font-size: 11px;
+            color: #8a9aaa;
+        }
+
+        /* ===== 角色标签 ===== */
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+
+        .role-badge .role-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .role-badge.admin {
+            background: #e8edfe;
+            color: #4f6ef7;
+        }
+        .role-badge.admin .role-dot {
+            background: #4f6ef7;
+        }
+
+        .role-badge.vip {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .role-badge.vip .role-dot {
+            background: #f59e0b;
+        }
+
+        .role-badge.user {
+            background: #eaf5f1;
+            color: #247b63;
+        }
+        .role-badge.user .role-dot {
+            background: #16a34a;
+        }
+
+        /* ===== 状态标签 ===== */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 12px;
+            border-radius: 20px;
+        }
+
+        .status-badge .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-badge.active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-badge.active .status-dot {
+            background: #16a34a;
+        }
+
+        .status-badge.inactive {
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+        .status-badge.inactive .status-dot {
+            background: #8a9aaa;
+        }
+
+        /* ===== 操作按钮 ===== */
+        .action-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .action-group .btn-sm {
+            padding: 4px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .action-group .btn-sm.btn-view {
+            background: #e8edfe;
+            color: #4f6ef7;
+        }
+
+        .action-group .btn-sm.btn-view:hover {
+            background: #d5ddfa;
+        }
+
+        .action-group .btn-sm.btn-edit {
+            background: #eaf5f1;
+            color: #247b63;
+        }
+
+        .action-group .btn-sm.btn-edit:hover {
+            background: #d5ede5;
+        }
+
+        .action-group .btn-sm.btn-ban {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .action-group .btn-sm.btn-ban:hover {
+            background: #fde68a;
+        }
+
+        .action-group .btn-sm.btn-delete {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-group .btn-sm.btn-delete:hover {
+            background: #fecaca;
+        }
+
+        /* ===== 分页 ===== */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-top: 1px solid #e8edf4;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pagination .pagination-info {
+            font-size: 13px;
+            color: #8a9aaa;
+        }
+
+        .pagination .pagination-btns {
+            display: flex;
+            gap: 4px;
+        }
+
+        .pagination .pagination-btns button {
+            padding: 6px 12px;
+            border: 1px solid #d5dfdc;
+            border-radius: 6px;
+            background: #fff;
+            color: #4a5a6a;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .pagination .pagination-btns button:hover {
+            background: #f0f2f5;
+        }
+
+        .pagination .pagination-btns button.active {
+            background: #4f6ef7;
+            color: #fff;
+            border-color: #4f6ef7;
+        }
+
+        .pagination .pagination-btns button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ================================================================
+           折线图区域
+           ================================================================ */
+        .chart-container {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e8edf4;
+            padding: 24px 24px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .chart-container .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .chart-container .chart-header .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2a3a;
+        }
+
+        .chart-container .chart-header .chart-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .chart-container .chart-header .chart-controls .time-btn {
+            padding: 4px 14px;
+            border: 1px solid #d5dfdc;
+            border-radius: 6px;
+            background: #fff;
+            color: #4a5a6a;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .chart-container .chart-header .chart-controls .time-btn:hover {
+            background: #f0f2f5;
+        }
+
+        .chart-container .chart-header .chart-controls .time-btn.active {
+            background: #4f6ef7;
+            color: #fff;
+            border-color: #4f6ef7;
+        }
+
+        /* ---- 图例 ---- */
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .chart-legend .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #4a5a6a;
+            cursor: pointer;
+            transition: 0.15s;
+            user-select: none;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .chart-legend .legend-item:hover {
+            background: #f0f2f5;
+        }
+
+        .chart-legend .legend-item .legend-line {
+            width: 28px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .chart-legend .legend-item.hidden {
+            opacity: 0.35;
+        }
+
+        .chart-legend .legend-item.hidden .legend-line {
+            opacity: 0.3;
+        }
+
+        /* ---- SVG 图表 ---- */
+        .chart-svg-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .chart-svg-wrapper svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            min-width: 560px;
+        }
+
+        .chart-svg-wrapper .chart-grid line {
+            stroke: #e8edf4;
+            stroke-width: 1;
+        }
+
+        .chart-svg-wrapper .chart-grid .grid-label {
+            font-size: 11px;
+            fill: #8a9aaa;
+            text-anchor: middle;
+        }
+
+        .chart-svg-wrapper .chart-grid .grid-label-y {
+            font-size: 11px;
+            fill: #8a9aaa;
+            text-anchor: end;
+        }
+
+        .chart-svg-wrapper .chart-line {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-svg-wrapper .chart-line.hidden {
+            opacity: 0.15;
+        }
+
+        .chart-svg-wrapper .chart-area {
+            opacity: 0.08;
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-svg-wrapper .chart-area.hidden {
+            opacity: 0.02;
+        }
+
+        .chart-svg-wrapper .chart-dot {
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-svg-wrapper .chart-dot.hidden {
+            opacity: 0.15;
+        }
+
+        .chart-svg-wrapper .chart-dot circle {
+            stroke: #fff;
+            stroke-width: 1.5;
+        }
+
+        /* ================================================================
+           响应式
+           ================================================================ */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filter-bar .filter-row .filter-group {
+                min-width: 120px;
+                flex: 1 1 45%;
+            }
+
+            .chart-container .chart-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .chart-container .chart-header .chart-controls {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 12px 14px;
+            }
+
+            .stat-card .stat-number {
+                font-size: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-bar .filter-row .filter-group {
+                min-width: 100%;
+                flex: 1 1 100%;
+            }
+
+            .filter-bar .filter-row .filter-actions {
+                width: 100%;
+                justify-content: stretch;
+            }
+
+            .filter-bar .filter-row .filter-actions button {
+                flex: 1;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            table thead th,
+            table tbody td {
+                padding: 8px 10px;
+            }
+
+            .pagination {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .pagination .pagination-btns {
+                justify-content: center;
+            }
+
+            .user-info .user-avatar {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+            }
+
+            .chart-legend {
+                gap: 10px;
+            }
+
+            .chart-legend .legend-item {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================ -->
+    <!-- 页面容器 -->
+    <!-- ================================================================ -->
+    <div class="page-container">
+
+        <!-- ===== 页面头部 ===== -->
+        <div class="page-header">
+            <div class="title-group">
+                <h1>👤 用户管理</h1>
+                <div class="subtitle">管理全站所有用户 · 权限 · 状态管控</div>
+            </div>
+            <div class="header-actions">
+                <span class="admin-badge">🔑 管理员</span>
+                <button class="btn-secondary" onclick="alert('刷新列表')">
+                    <svg class="icon"><use href="#icon-refresh" /></svg>
+                    刷新
+                </button>
+                <button class="btn-primary" onclick="alert('添加用户')">
+                    ＋ 添加用户
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== 统计卡片 ===== -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">👤 总用户</div>
+                <div class="stat-number">1,284</div>
+                <div class="stat-change">较上月 +42 人</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label"><span class="stat-dot active"></span>活跃用户</div>
+                <div class="stat-number">892</div>
+                <div class="stat-change">占比 69.5%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label"><span class="stat-dot inactive"></span>已停用</div>
+                <div class="stat-number">36</div>
+                <div class="stat-change negative">较上月 +3 人</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label"><span class="stat-dot vip"></span>VIP 用户</div>
+                <div class="stat-number">128</div>
+                <div class="stat-change">较上月 +18 人</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label"><span class="stat-dot admin"></span>管理员</div>
+                <div class="stat-number">6</div>
+                <div class="stat-change">—</div>
+            </div>
+        </div>
+
+        <!-- ===== 筛选栏 ===== -->
+        <div class="filter-bar">
+            <div class="filter-row">
+                <div class="filter-group" style="flex:2;">
+                    <label>🔍</label>
+                    <input type="text" placeholder="昵称 / 手机号 / 邮箱 / 用户ID" />
+                </div>
+                <div class="filter-group">
+                    <label>角色</label>
+                    <select>
+                        <option value="">全部角色</option>
+                        <option value="admin">管理员</option>
+                        <option value="vip">VIP 用户</option>
+                        <option value="user">普通用户</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>状态</label>
+                    <select>
+                        <option value="">全部状态</option>
+                        <option value="active">活跃</option>
+                        <option value="inactive">已停用</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>注册时间</label>
+                    <input type="date" placeholder="开始" />
+                </div>
+                <div class="filter-group">
+                    <label>~</label>
+                    <input type="date" placeholder="结束" />
+                </div>
+                <div class="filter-actions">
+                    <button class="btn-search">检索</button>
+                    <button class="btn-reset">重置</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 表格 ===== -->
+        <div class="table-container">
+            <div class="table-header">
+                <div class="table-title">
+                    用户列表 <span class="count">共 1,284 人</span>
+                </div>
+                <div class="table-actions">
+                    <button class="btn-secondary" style="padding:4px 12px;font-size:12px;">
+                        <svg class="icon" style="width:14px;height:14px;"><use href="#icon-chevron-down" /></svg>
+                        批量操作
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:30px;">
+                                <input type="checkbox" />
+                            </th>
+                            <th style="min-width:180px;">用户</th>
+                            <th>手机号</th>
+                            <th>邮箱</th>
+                            <th>角色</th>
+                            <th>状态</th>
+                            <th>注册时间</th>
+                            <th style="min-width:200px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><div class="user-info"><div class="user-avatar">赵</div><div><div class="user-name">赵同学</div><div class="user-id">ID: 1001</div></div></div></td>
+                            <td>138****1234</td>
+                            <td>zhao@tech.com</td>
+                            <td><span class="role-badge admin"><span class="role-dot"></span>管理员</span></td>
+                            <td><span class="status-badge active"><span class="status-dot"></span>活跃</span></td>
+                            <td>2024-06-15</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-ban">停用</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><div class="user-info"><div class="user-avatar" style="background:#f59e0b;">bug</div><div><div class="user-name">bug菌</div><div class="user-id">ID: 1002</div></div></div></td>
+                            <td>139****5678</td>
+                            <td>bug@tech.com</td>
+                            <td><span class="role-badge vip"><span class="role-dot"></span>VIP 用户</span></td>
+                            <td><span class="status-badge active"><span class="status-dot"></span>活跃</span></td>
+                            <td>2024-08-03</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-ban">停用</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><div class="user-info"><div class="user-avatar" style="background:#16a34a;">张</div><div><div class="user-name">张三</div><div class="user-id">ID: 1003</div></div></div></td>
+                            <td>136****9012</td>
+                            <td>zhangsan@mail.com</td>
+                            <td><span class="role-badge user"><span class="role-dot"></span>普通用户</span></td>
+                            <td><span class="status-badge active"><span class="status-dot"></span>活跃</span></td>
+                            <td>2024-09-20</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-ban">停用</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><div class="user-info"><div class="user-avatar" style="background:#8b5cf6;">李</div><div><div class="user-name">李四</div><div class="user-id">ID: 1004</div></div></div></td>
+                            <td>137****3456</td>
+                            <td>lisi@tech.com</td>
+                            <td><span class="role-badge vip"><span class="role-dot"></span>VIP 用户</span></td>
+                            <td><span class="status-badge active"><span class="status-dot"></span>活跃</span></td>
+                            <td>2024-10-05</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-ban">停用</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><div class="user-info"><div class="user-avatar" style="background:#8a9aaa;">王</div><div><div class="user-name">王五</div><div class="user-id">ID: 1005</div></div></div></td>
+                            <td>135****7890</td>
+                            <td>wangwu@mail.com</td>
+                            <td><span class="role-badge user"><span class="role-dot"></span>普通用户</span></td>
+                            <td><span class="status-badge inactive"><span class="status-dot"></span>已停用</span></td>
+                            <td>2024-11-12</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-success">启用</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><div class="user-info"><div class="user-avatar" style="background:#0ea5e9;">孙</div><div><div class="user-name">孙七</div><div class="user-id">ID: 1006</div></div></div></td>
+                            <td>188****2345</td>
+                            <td>sunqi@mail.com</td>
+                            <td><span class="role-badge user"><span class="role-dot"></span>普通用户</span></td>
+                            <td><span class="status-badge active"><span class="status-dot"></span>活跃</span></td>
+                            <td>2024-12-01</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-ban">停用</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td><div class="user-info"><div class="user-avatar" style="background:#4f6ef7;">周</div><div><div class="user-name">周八</div><div class="user-id">ID: 1007</div></div></div></td>
+                            <td>159****6789</td>
+                            <td>zhouba@tech.com</td>
+                            <td><span class="role-badge admin"><span class="role-dot"></span>管理员</span></td>
+                            <td><span class="status-badge active"><span class="status-dot"></span>活跃</span></td>
+                            <td>2024-05-20</td>
+                            <td><div class="action-group"><button class="btn-sm btn-view">详情</button><button class="btn-sm btn-edit">编辑</button><button class="btn-sm btn-ban">停用</button><button class="btn-sm btn-delete">删除</button></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <div class="pagination-info">显示 1-7 条，共 1,284 条</div>
+                <div class="pagination-btns">
+                    <button disabled>上一页</button>
+                    <button class="active">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>5</button>
+                    <button>...</button>
+                    <button>184</button>
+                    <button>下一页</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================ -->
+        <!-- 折线图区域 -->
+        <!-- ================================================================ -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <div class="chart-title">📈 用户增长趋势（近30天）</div>
+                <div class="chart-controls">
+                    <button class="time-btn" data-days="7">7天</button>
+                    <button class="time-btn" data-days="14">14天</button>
+                    <button class="time-btn active" data-days="30">30天</button>
+                </div>
+            </div>
+
+            <!-- 图例 -->
+            <div class="chart-legend" id="chartLegend">
+                <span class="legend-item" data-series="total">
+                    <span class="legend-line" style="background:#4f6ef7;"></span>
+                    总用户
+                </span>
+                <span class="legend-item" data-series="active">
+                    <span class="legend-line" style="background:#16a34a;"></span>
+                    活跃
+                </span>
+                <span class="legend-item" data-series="vip">
+                    <span class="legend-line" style="background:#f59e0b;"></span>
+                    VIP
+                </span>
+                <span class="legend-item" data-series="inactive">
+                    <span class="legend-line" style="background:#8a9aaa;"></span>
+                    已停用
+                </span>
+            </div>
+
+            <!-- SVG 图表 -->
+            <div class="chart-svg-wrapper">
+                <svg viewBox="0 0 1000 380" preserveAspectRatio="xMidYMid meet">
+                    <!-- 网格线 -->
+                    <g class="chart-grid">
+                        <line x1="60" y1="300" x2="960" y2="300" />
+                        <line x1="60" y1="240" x2="960" y2="240" />
+                        <line x1="60" y1="180" x2="960" y2="180" />
+                        <line x1="60" y1="120" x2="960" y2="120" />
+                        <line x1="60" y1="60" x2="960" y2="60" />
+                        <text x="50" y="305" class="grid-label-y">0</text>
+                        <text x="50" y="245" class="grid-label-y">200</text>
+                        <text x="50" y="185" class="grid-label-y">400</text>
+                        <text x="50" y="125" class="grid-label-y">600</text>
+                        <text x="50" y="65" class="grid-label-y">800</text>
+                    </g>
+
+                    <!-- X轴标签 -->
+                    <g class="chart-grid">
+                        <text x="80" y="330" class="grid-label">7/15</text>
+                        <text x="170" y="330" class="grid-label">7/20</text>
+                        <text x="260" y="330" class="grid-label">7/25</text>
+                        <text x="350" y="330" class="grid-label">7/30</text>
+                        <text x="440" y="330" class="grid-label">8/4</text>
+                        <text x="530" y="330" class="grid-label">8/9</text>
+                        <text x="620" y="330" class="grid-label">8/14</text>
+                        <text x="710" y="330" class="grid-label">8/19</text>
+                        <text x="800" y="330" class="grid-label">8/24</text>
+                        <text x="890" y="330" class="grid-label">8/29</text>
+                    </g>
+
+                    <!-- 总用户 -->
+                    <polyline class="chart-line" data-series="total" points="80,180 170,175 260,190 350,165 440,150 530,140 620,155 710,135 800,120 890,125" style="stroke:#4f6ef7;" />
+                    <polygon class="chart-area" data-series="total" points="80,180 170,175 260,190 350,165 440,150 530,140 620,155 710,135 800,120 890,125 890,300 80,300" style="fill:#4f6ef7;" />
+
+                    <!-- 活跃 -->
+                    <polyline class="chart-line" data-series="active" points="80,210 170,215 260,200 350,195 440,185 530,175 620,190 710,170 800,160 890,165" style="stroke:#16a34a;" />
+                    <polygon class="chart-area" data-series="active" points="80,210 170,215 260,200 350,195 440,185 530,175 620,190 710,170 800,160 890,165 890,300 80,300" style="fill:#16a34a;" />
+
+                    <!-- VIP -->
+                    <polyline class="chart-line" data-series="vip" points="80,280 170,270 260,275 350,265 440,255 530,245 620,260 710,250 800,240 890,235" style="stroke:#f59e0b;" />
+                    <polygon class="chart-area" data-series="vip" points="80,280 170,270 260,275 350,265 440,255 530,245 620,260 710,250 800,240 890,235 890,300 80,300" style="fill:#f59e0b;" />
+
+                    <!-- 已停用 -->
+                    <polyline class="chart-line" data-series="inactive" points="80,295 170,292 260,298 350,290 440,295 530,288 620,292 710,295 800,290 890,288" style="stroke:#8a9aaa;" />
+                    <polygon class="chart-area" data-series="inactive" points="80,295 170,292 260,298 350,290 440,295 530,288 620,292 710,295 800,290 890,288 890,300 80,300" style="fill:#8a9aaa;" />
+
+                    <!-- 数据点 -->
+                    <g class="chart-dot" data-series="total">
+                        <circle cx="80" cy="180" r="4" fill="#4f6ef7" />
+                        <circle cx="170" cy="175" r="4" fill="#4f6ef7" />
+                        <circle cx="260" cy="190" r="4" fill="#4f6ef7" />
+                        <circle cx="350" cy="165" r="4" fill="#4f6ef7" />
+                        <circle cx="440" cy="150" r="4" fill="#4f6ef7" />
+                        <circle cx="530" cy="140" r="4" fill="#4f6ef7" />
+                        <circle cx="620" cy="155" r="4" fill="#4f6ef7" />
+                        <circle cx="710" cy="135" r="4" fill="#4f6ef7" />
+                        <circle cx="800" cy="120" r="4" fill="#4f6ef7" />
+                        <circle cx="890" cy="125" r="4" fill="#4f6ef7" />
+                    </g>
+                    <g class="chart-dot" data-series="active">
+                        <circle cx="80" cy="210" r="4" fill="#16a34a" />
+                        <circle cx="170" cy="215" r="4" fill="#16a34a" />
+                        <circle cx="260" cy="200" r="4" fill="#16a34a" />
+                        <circle cx="350" cy="195" r="4" fill="#16a34a" />
+                        <circle cx="440" cy="185" r="4" fill="#16a34a" />
+                        <circle cx="530" cy="175" r="4" fill="#16a34a" />
+                        <circle cx="620" cy="190" r="4" fill="#16a34a" />
+                        <circle cx="710" cy="170" r="4" fill="#16a34a" />
+                        <circle cx="800" cy="160" r="4" fill="#16a34a" />
+                        <circle cx="890" cy="165" r="4" fill="#16a34a" />
+                    </g>
+                    <g class="chart-dot" data-series="vip">
+                        <circle cx="80" cy="280" r="4" fill="#f59e0b" />
+                        <circle cx="170" cy="270" r="4" fill="#f59e0b" />
+                        <circle cx="260" cy="275" r="4" fill="#f59e0b" />
+                        <circle cx="350" cy="265" r="4" fill="#f59e0b" />
+                        <circle cx="440" cy="255" r="4" fill="#f59e0b" />
+                        <circle cx="530" cy="245" r="4" fill="#f59e0b" />
+                        <circle cx="620" cy="260" r="4" fill="#f59e0b" />
+                        <circle cx="710" cy="250" r="4" fill="#f59e0b" />
+                        <circle cx="800" cy="240" r="4" fill="#f59e0b" />
+                        <circle cx="890" cy="235" r="4" fill="#f59e0b" />
+                    </g>
+                    <g class="chart-dot" data-series="inactive">
+                        <circle cx="80" cy="295" r="4" fill="#8a9aaa" />
+                        <circle cx="170" cy="292" r="4" fill="#8a9aaa" />
+                        <circle cx="260" cy="298" r="4" fill="#8a9aaa" />
+                        <circle cx="350" cy="290" r="4" fill="#8a9aaa" />
+                        <circle cx="440" cy="295" r="4" fill="#8a9aaa" />
+                        <circle cx="530" cy="288" r="4" fill="#8a9aaa" />
+                        <circle cx="620" cy="292" r="4" fill="#8a9aaa" />
+                        <circle cx="710" cy="295" r="4" fill="#8a9aaa" />
+                        <circle cx="800" cy="290" r="4" fill="#8a9aaa" />
+                        <circle cx="890" cy="288" r="4" fill="#8a9aaa" />
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ================================================================
+        // 分页
+        // ================================================================
+        document.querySelectorAll('.pagination-btns button:not(:disabled)').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.textContent === '上一页' || this.textContent === '下一页') {
+                    const current = document.querySelector('.pagination-btns .active');
+                    if (this.textContent === '下一页' && current && current.nextElementSibling) {
+                        current.classList.remove('active');
+                        current.nextElementSibling.classList.add('active');
+                    } else if (this.textContent === '上一页' && current && current.previousElementSibling) {
+                        current.classList.remove('active');
+                        current.previousElementSibling.classList.add('active');
+                    }
+                } else if (this.textContent !== '...') {
+                    document.querySelectorAll('.pagination-btns button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // ================================================================
+        // 全选
+        // ================================================================
+        document.querySelector('thead input[type="checkbox"]').addEventListener('change', function() {
+            document.querySelectorAll('tbody input[type="checkbox"]').forEach(cb => cb.checked = this.checked);
+        });
+
+        document.querySelectorAll('tbody tr').forEach(tr => {
+            tr.addEventListener('click', function(e) {
+                if (e.target.closest('button')) return;
+                const cb = this.querySelector('input[type="checkbox"]');
+                if (cb) cb.checked = !cb.checked;
+            });
+        });
+
+        // ================================================================
+        // 筛选
+        // ================================================================
+        document.querySelector('.btn-search').addEventListener('click', function() {
+            const keyword = document.querySelector('.filter-group input[type="text"]').value.trim();
+            const role = document.querySelector('.filter-group select').value;
+            const status = document.querySelectorAll('.filter-group select')[1].value;
+            const startDate = document.querySelectorAll('.filter-group input[type="date"]')[0].value;
+            const endDate = document.querySelectorAll('.filter-group input[type="date"]')[1].value;
+            let msg = '🔍 检索条件：';
+            if (keyword) msg += '\n关键字：' + keyword;
+            if (role) msg += '\n角色：' + role;
+            if (status) msg += '\n状态：' + status;
+            if (startDate) msg += '\n开始时间：' + startDate;
+            if (endDate) msg += '\n结束时间：' + endDate;
+            if (!keyword && !role && !status && !startDate && !endDate) msg = '请至少输入一个检索条件';
+            alert(msg);
+        });
+
+        document.querySelector('.btn-reset').addEventListener('click', function() {
+            document.querySelector('.filter-group input[type="text"]').value = '';
+            document.querySelectorAll('.filter-group select').forEach(el => el.value = '');
+            document.querySelectorAll('.filter-group input[type="date"]').forEach(el => el.value = '');
+            alert('已重置所有筛选条件');
+        });
+
+        // ================================================================
+        // 停用/启用
+        // ================================================================
+        document.querySelectorAll('.btn-ban, .btn-success').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const tr = this.closest('tr');
+                const statusCell = tr.querySelector('.status-badge');
+                const isBan = this.classList.contains('btn-ban');
+                if (isBan) {
+                    if (confirm('确认停用该用户？')) {
+                        statusCell.className = 'status-badge inactive';
+                        statusCell.innerHTML = '<span class="status-dot"></span>已停用';
+                        this.className = 'btn-sm btn-success';
+                        this.textContent = '启用';
+                    }
+                } else {
+                    if (confirm('确认启用该用户？')) {
+                        statusCell.className = 'status-badge active';
+                        statusCell.innerHTML = '<span class="status-dot"></span>活跃';
+                        this.className = 'btn-sm btn-ban';
+                        this.textContent = '停用';
+                    }
+                }
+            });
+        });
+
+        // ================================================================
+        // 删除
+        // ================================================================
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (confirm('确认删除该用户？此操作不可恢复！')) {
+                    const tr = this.closest('tr');
+                    tr.style.transition = '0.3s';
+                    tr.style.opacity = '0';
+                    setTimeout(() => tr.remove(), 300);
+                }
+            });
+        });
+
+        // ================================================================
+        // 图表图例切换
+        // ================================================================
+        document.querySelectorAll('.legend-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const series = this.dataset.series;
+                this.classList.toggle('hidden');
+                document.querySelectorAll(`.chart-line[data-series="${series}"]`).forEach(el => el.classList.toggle('hidden'));
+                document.querySelectorAll(`.chart-area[data-series="${series}"]`).forEach(el => el.classList.toggle('hidden'));
+                document.querySelectorAll(`.chart-dot[data-series="${series}"]`).forEach(el => el.classList.toggle('hidden'));
+            });
+        });
+
+        // ================================================================
+        // 时间范围切换
+        // ================================================================
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const days = this.dataset.days;
+                document.querySelector('.chart-title').textContent = `📈 用户增长趋势（近${days}天）`;
+
+                // 模拟数据更新
+                const chartLines = document.querySelectorAll('.chart-line');
+                const chartAreas = document.querySelectorAll('.chart-area');
+                const chartDots = document.querySelectorAll('.chart-dot');
+
+                chartLines.forEach(line => {
+                    const points = line.getAttribute('points');
+                    const newPoints = points.split(' ').map(p => {
+                        const [x, y] = p.split(',').map(Number);
+                        const offset = Math.floor(Math.random() * 20) - 10;
+                        return `${x},${Math.max(30, Math.min(290, y + offset))}`;
+                    }).join(' ');
+                    line.setAttribute('points', newPoints);
+                });
+
+                chartAreas.forEach(area => {
+                    const points = area.getAttribute('points');
+                    const parts = points.split(' ');
+                    const newParts = parts.map((p, i) => {
+                        if (i === parts.length - 1 || i === parts.length - 2) return p;
+                        const [x, y] = p.split(',').map(Number);
+                        const offset = Math.floor(Math.random() * 20) - 10;
+                        return `${x},${Math.max(30, Math.min(290, y + offset))}`;
+                    });
+                    area.setAttribute('points', newParts.join(' '));
+                });
+
+                chartDots.forEach(dotGroup => {
+                    const circles = dotGroup.querySelectorAll('circle');
+                    circles.forEach((circle, index) => {
+                        const cx = parseFloat(circle.getAttribute('cx'));
+                        const cy = parseFloat(circle.getAttribute('cy'));
+                        const offset = Math.floor(Math.random() * 20) - 10;
+                        circle.setAttribute('cy', Math.max(30, Math.min(290, cy + offset)));
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
