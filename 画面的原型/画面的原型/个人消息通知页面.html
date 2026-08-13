@@ -1,0 +1,2573 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="ocean"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>消息中心 · CodeHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THEME VARIABLES — 5 color schemes (via data-theme on <html>)
+   ============================================================ */
+:root,
+html[data-theme="ocean"] {
+  --c-primary:        #3B82F6;
+  --c-primary-rgb:    59, 130, 246;
+  --c-primary-soft:   #DBEAFE;
+  --c-primary-deep:   #1D4ED8;
+  --c-accent:         #06B6D4;
+  --c-accent-rgb:     6, 182, 212;
+
+  --bg-page:          #F0F6FF;
+  --bg-page-2:        #E6EEFB;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(59, 130, 246, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(59, 130, 246, 0.22);
+
+  --text-1:           #0F172A;
+  --text-2:           #334155;
+  --text-3:           #64748B;
+  --text-4:           #94A3B8;
+  --text-on-primary:  #FFFFFF;
+
+  --shadow-glass:     0 8px 32px rgba(15, 30, 80, 0.08), 0 2px 6px rgba(15, 30, 80, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(15, 30, 80, 0.10), 0 4px 12px rgba(15, 30, 80, 0.05);
+  --shadow-primary:   0 6px 20px rgba(59, 130, 246, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(59,130,246,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(6,182,212,0.22) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(139,92,246,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, var(--c-primary) 0%, var(--c-accent) 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(6,182,212,0.15) 100%);
+}
+html[data-theme="mint"] {
+  --c-primary:        #10B981;
+  --c-primary-rgb:    16, 185, 129;
+  --c-primary-soft:   #D1FAE5;
+  --c-primary-deep:   #047857;
+  --c-accent:         #0EA5E9;
+  --c-accent-rgb:     14, 165, 233;
+
+  --bg-page:          #EEFBF5;
+  --bg-page-2:        #DFF5E8;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(16, 185, 129, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(16, 185, 129, 0.22);
+
+  --text-1:           #0B3D2E;
+  --text-2:           #1B5E46;
+  --text-3:           #4D806B;
+  --text-4:           #8BA89A;
+
+  --shadow-glass:     0 8px 32px rgba(10, 60, 40, 0.08), 0 2px 6px rgba(10, 60, 40, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(10, 60, 40, 0.10), 0 4px 12px rgba(10, 60, 40, 0.05);
+  --shadow-primary:   0 6px 20px rgba(16, 185, 129, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(16,185,129,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(14,165,233,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(34,197,94,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #10B981 0%, #0EA5E9 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(14,165,233,0.15) 100%);
+}
+html[data-theme="coral"] {
+  --c-primary:        #F97316;
+  --c-primary-rgb:    249, 115, 22;
+  --c-primary-soft:   #FFEDD5;
+  --c-primary-deep:   #C2410C;
+  --c-accent:         #F43F5E;
+  --c-accent-rgb:     244, 63, 94;
+
+  --bg-page:          #FFF7F0;
+  --bg-page-2:        #FFEBDB;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(249, 115, 22, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(249, 115, 22, 0.22);
+
+  --text-1:           #3F1E0A;
+  --text-2:           #6B3410;
+  --text-3:           #985A30;
+  --text-4:           #C48A64;
+
+  --shadow-glass:     0 8px 32px rgba(80, 30, 10, 0.08), 0 2px 6px rgba(80, 30, 10, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(80, 30, 10, 0.10), 0 4px 12px rgba(80, 30, 10, 0.05);
+  --shadow-primary:   0 6px 20px rgba(249, 115, 22, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(249,115,22,0.22) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(244,63,94,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(251,146,60,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #F97316 0%, #F43F5E 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(244,63,94,0.15) 100%);
+}
+html[data-theme="lilac"] {
+  --c-primary:        #8B5CF6;
+  --c-primary-rgb:    139, 92, 246;
+  --c-primary-soft:   #EDE9FE;
+  --c-primary-deep:   #6D28D9;
+  --c-accent:         #EC4899;
+  --c-accent-rgb:     236, 72, 153;
+
+  --bg-page:          #F7F2FF;
+  --bg-page-2:        #ECE3FB;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(139, 92, 246, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(139, 92, 246, 0.22);
+
+  --text-1:           #2A1458;
+  --text-2:           #472A82;
+  --text-3:           #7355A8;
+  --text-4:           #A38DCC;
+
+  --shadow-glass:     0 8px 32px rgba(60, 20, 120, 0.08), 0 2px 6px rgba(60, 20, 120, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(60, 20, 120, 0.10), 0 4px 12px rgba(60, 20, 120, 0.05);
+  --shadow-primary:   0 6px 20px rgba(139, 92, 246, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(139,92,246,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(236,72,153,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(167,139,250,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.15) 100%);
+}
+html[data-theme="amber"] {
+  --c-primary:        #D97706;
+  --c-primary-rgb:    217, 119, 6;
+  --c-primary-soft:   #FEF3C7;
+  --c-primary-deep:   #92400E;
+  --c-accent:         #DC2626;
+  --c-accent-rgb:     220, 38, 38;
+
+  --bg-page:          #FFFBF0;
+  --bg-page-2:        #FFF3DC;
+  --bg-blur:          rgba(255, 255, 255, 0.62);
+  --bg-blur-strong:   rgba(255, 255, 255, 0.78);
+  --bg-card:          rgba(255, 255, 255, 0.72);
+  --bg-card-solid:    #FFFFFF;
+  --bg-chip:          rgba(217, 119, 6, 0.10);
+  --bg-input:         rgba(255, 255, 255, 0.85);
+
+  --border-subtle:    rgba(255, 255, 255, 0.8);
+  --border-strong:    rgba(217, 119, 6, 0.22);
+
+  --text-1:           #3D2405;
+  --text-2:           #6B4308;
+  --text-3:           #986A1A;
+  --text-4:           #C4974A;
+
+  --shadow-glass:     0 8px 32px rgba(80, 50, 10, 0.08), 0 2px 6px rgba(80, 50, 10, 0.04);
+  --shadow-glass-lg:  0 16px 48px rgba(80, 50, 10, 0.10), 0 4px 12px rgba(80, 50, 10, 0.05);
+  --shadow-primary:   0 6px 20px rgba(217, 119, 6, 0.30);
+
+  --grad-hero:        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(217,119,6,0.22) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 50% at 90% 20%, rgba(220,38,38,0.18) 0%, transparent 55%),
+                      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(245,158,11,0.15) 0%, transparent 60%);
+  --grad-primary:     linear-gradient(135deg, #D97706 0%, #DC2626 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(217,119,6,0.15) 0%, rgba(220,38,38,0.15) 100%);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--text-1);
+  line-height: 1.6;
+  min-height: 100vh;
+  background:
+    var(--grad-hero),
+    linear-gradient(180deg, var(--bg-page) 0%, var(--bg-page-2) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: var(--grad-primary-soft);
+  filter: blur(100px);
+  border-radius: 50%;
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+  animation: float-b 20s ease-in-out infinite;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -25%;
+  left: -15%;
+  width: 500px;
+  height: 500px;
+  background: var(--grad-primary-soft);
+  filter: blur(90px);
+  border-radius: 50%;
+  opacity: 0.45;
+  z-index: 0;
+  pointer-events: none;
+  animation: float-a 18s ease-in-out infinite;
+}
+
+#app { position: relative; z-index: 2; }
+
+/* ============================================================
+   GLASS UTILITY
+   ============================================================ */
+.glass {
+  background: var(--bg-blur);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-glass);
+}
+.glass-strong {
+  background: var(--bg-blur-strong);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-glass-lg);
+}
+.card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px) saturate(1.25);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: var(--shadow-glass);
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s, border-color 0.35s;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--c-primary-rgb), 0.25);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--c-primary-rgb), 0.45);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.font-mono    { font-family: 'JetBrains Mono', monospace; }
+
+/* ============================================================
+   THEME SWITCHER
+   ============================================================ */
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  box-shadow: var(--shadow-glass);
+}
+.theme-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.theme-dot::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 6px;
+  background: inherit;
+  filter: brightness(1.05);
+}
+.theme-dot:hover {
+  transform: scale(1.12);
+}
+.theme-dot.active {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px rgba(var(--c-primary-rgb), 0.18);
+}
+.theme-dot.active::before {
+  content: '✓';
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.theme-ocean  { background: linear-gradient(135deg, #3B82F6, #06B6D4); }
+.theme-mint   { background: linear-gradient(135deg, #10B981, #0EA5E9); }
+.theme-coral  { background: linear-gradient(135deg, #F97316, #F43F5E); }
+.theme-lilac  { background: linear-gradient(135deg, #8B5CF6, #EC4899); }
+.theme-amber  { background: linear-gradient(135deg, #D97706, #DC2626); }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  margin: 16px auto 0;
+  max-width: 1400px;
+  padding: 0 24px;
+}
+.nav-inner {
+  height: 68px;
+  padding: 0 18px 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-1);
+}
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--grad-primary);
+  box-shadow: var(--shadow-primary);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, transparent 50%);
+  pointer-events: none;
+}
+.logo-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+}
+.logo-text em {
+  font-style: normal;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+}
+.nav-link {
+  position: relative;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+.nav-link:hover {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+.nav-link.active {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+  font-weight: 600;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  width: 280px;
+  transition: all 0.25s;
+}
+.search-box:focus-within {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.12);
+  background: #fff;
+}
+.search-box svg { width: 16px; height: 16px; color: var(--text-3); flex-shrink: 0; }
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 14px;
+}
+.search-box input::placeholder { color: var(--text-4); }
+.search-kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 3px 6px;
+  background: var(--bg-chip);
+  border-radius: 5px;
+  color: var(--c-primary);
+  font-weight: 600;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.btn svg { width: 16px; height: 16px; }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+}
+.btn-ghost:hover {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+.btn-primary {
+  background: var(--grad-primary);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-primary);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(var(--c-primary-rgb), 0.38);
+}
+.btn-outline {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  color: var(--text-2);
+}
+.btn-outline:hover {
+  color: var(--c-primary);
+  border-color: var(--c-primary);
+}
+
+/* ============================================================
+   AVATAR + DROPDOWN
+   ============================================================ */
+.avatar-wrap { position: relative; }
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-card-solid);
+  background: var(--grad-primary);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 12px rgba(var(--c-primary-rgb), 0.25);
+}
+.avatar:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 18px rgba(var(--c-primary-rgb), 0.35);
+}
+.avatar-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 220px;
+  padding: 8px;
+  background: var(--bg-blur-strong);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--shadow-glass-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.22s cubic-bezier(.2,.8,.2,1);
+  z-index: 200;
+}
+.avatar-wrap.open .avatar-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.avatar-menu-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 6px;
+}
+.avatar-menu-head .av-mini {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--grad-primary);
+  color: #fff;
+  font-weight: 700;
+  display: grid; place-items: center;
+}
+.avatar-menu-head .av-name { font-size: 14px; font-weight: 700; color: var(--text-1); }
+.avatar-menu-head .av-mail { font-size: 12px; color: var(--text-3); font-family: 'JetBrains Mono', monospace; }
+.avatar-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--text-2);
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.18s;
+}
+.avatar-menu a:hover {
+  background: var(--bg-chip);
+  color: var(--c-primary);
+}
+.avatar-menu a svg { width: 16px; height: 16px; }
+.avatar-menu .menu-sep {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 6px 4px;
+}
+
+/* ============================================================
+   PAGE HEAD
+   ============================================================ */
+.messages-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 24px 24px;
+}
+.page-head {
+  padding: 32px 36px;
+  margin-bottom: 28px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.page-head::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 360px;
+  height: 360px;
+  background: var(--grad-primary-soft);
+  filter: blur(60px);
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.page-head > * { position: relative; z-index: 1; }
+.head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.page-head h1 {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.page-head h1 .bar {
+  width: 6px;
+  height: 34px;
+  background: var(--grad-primary);
+  border-radius: 3px;
+  box-shadow: 0 0 16px rgba(var(--c-primary-rgb), 0.4);
+}
+.page-head p {
+  font-size: 15px;
+  color: var(--text-2);
+  margin-left: 20px;
+}
+.page-head p .num {
+  color: var(--c-primary-deep);
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* ============================================================
+   MESSAGES GRID (left nav + right panel)
+   ============================================================ */
+.messages-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ----- Left categories nav ----- */
+.msg-nav {
+  position: sticky;
+  top: 100px;
+  padding: 18px;
+  border-radius: 20px;
+}
+.msg-nav-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-4);
+  padding: 6px 12px 10px;
+}
+.cat-list { display: flex; flex-direction: column; gap: 4px; }
+.cat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+.cat-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.85; }
+.cat-item .cat-label { flex: 1; }
+.cat-item:hover {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+.cat-item:hover svg { opacity: 1; }
+.cat-item.active {
+  color: var(--c-primary-deep);
+  background: var(--bg-chip);
+  border-left-color: var(--c-primary);
+  font-weight: 600;
+}
+.cat-item.active svg { opacity: 1; color: var(--c-primary); }
+.cat-badge {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--grad-primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(var(--c-primary-rgb), 0.35);
+}
+.cat-badge.zero {
+  background: var(--bg-chip);
+  color: var(--text-3);
+  box-shadow: none;
+}
+.msg-nav-foot {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+.msg-nav-foot a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-3);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.msg-nav-foot a svg { width: 15px; height: 15px; }
+.msg-nav-foot a:hover {
+  color: var(--c-primary);
+  background: var(--bg-chip);
+}
+
+/* ----- Mobile horizontal tabs ----- */
+.mobile-tabs { display: none; }
+.mobile-tabs .cat-list {
+  flex-direction: row;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.mobile-tabs .cat-item {
+  flex-shrink: 0;
+  border-left: none;
+  border-bottom: 3px solid transparent;
+  padding: 9px 14px;
+}
+.mobile-tabs .cat-item.active {
+  border-left: none;
+  border-bottom-color: var(--c-primary);
+}
+.mobile-tabs .cat-badge { display: none; }
+
+/* ============================================================
+   MESSAGE PANEL
+   ============================================================ */
+.msg-main { min-width: 0; }
+.panel {
+  display: none;
+  border-radius: 20px;
+  overflow: hidden;
+  animation: fade-in-up 0.4s cubic-bezier(.2,.8,.2,1);
+}
+.panel.active { display: block; }
+
+/* ----- Top action bar ----- */
+.action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+.tab-group {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-chip);
+  border-radius: 12px;
+}
+.tab {
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tab:hover { color: var(--text-1); }
+.tab.active {
+  background: var(--bg-card-solid);
+  color: var(--c-primary);
+  box-shadow: var(--shadow-glass);
+}
+.tab .tab-count {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--bg-chip);
+  color: var(--c-primary);
+}
+.tab.active .tab-count { background: var(--bg-chip); }
+.action-right { display: flex; gap: 10px; align-items: center; }
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
+/* ----- Message list ----- */
+.msg-list { padding: 8px; }
+
+.msg-item {
+  display: flex;
+  gap: 16px;
+  padding: 18px 20px 18px 22px;
+  border-radius: 14px;
+  transition: all 0.22s cubic-bezier(.2,.8,.2,1);
+  position: relative;
+  cursor: pointer;
+  border: 1px solid transparent;
+  align-items: flex-start;
+}
+.msg-item + .msg-item { margin-top: 4px; }
+.msg-item.unread {
+  background: var(--bg-chip);
+}
+.msg-item.unread::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 18px;
+  bottom: 18px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--grad-primary);
+}
+.msg-item:hover {
+  background: rgba(var(--c-primary-rgb), 0.06);
+  transform: translateX(4px);
+}
+.msg-item.unread:hover { background: rgba(var(--c-primary-rgb), 0.12); }
+.msg-item.read { opacity: 0.78; }
+
+.msg-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: #fff;
+}
+.msg-icon svg { width: 20px; height: 20px; }
+.msg-icon.info    { background: linear-gradient(135deg, #3B82F6, #06B6D4); }
+.msg-icon.success { background: linear-gradient(135deg, #10B981, #0EA5E9); }
+.msg-icon.warn    { background: linear-gradient(135deg, #F59E0B, #F97316); }
+.msg-icon.danger  { background: linear-gradient(135deg, #EF4444, #F43F5E); }
+.msg-icon.celebrate { background: linear-gradient(135deg, #8B5CF6, #EC4899); }
+
+.msg-body { flex: 1; min-width: 0; }
+.msg-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin-bottom: 4px;
+  line-height: 1.45;
+}
+.msg-item.unread .msg-title { color: var(--c-primary-deep); }
+.msg-excerpt {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+.msg-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+.msg-meta .dot { color: var(--text-4); }
+.msg-meta a {
+  color: var(--c-primary);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.msg-meta a:hover { text-decoration: underline; }
+.msg-meta a svg { width: 13px; height: 13px; }
+
+.msg-dot {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-primary);
+  box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.18);
+}
+.msg-item.read .msg-dot { display: none; }
+
+/* ============================================================
+   REPLY ITEM (with avatar)
+   ============================================================ */
+.msg-item.reply { align-items: flex-start; }
+.msg-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.av-1 { background: linear-gradient(135deg, #3B82F6, #06B6D4); }
+.av-2 { background: linear-gradient(135deg, #F97316, #F43F5E); }
+.av-3 { background: linear-gradient(135deg, #10B981, #0EA5E9); }
+.av-4 { background: linear-gradient(135deg, #8B5CF6, #EC4899); }
+.av-5 { background: linear-gradient(135deg, #D97706, #DC2626); }
+.av-6 { background: linear-gradient(135deg, #06B6D4, #3B82F6); }
+
+.reply-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.reply-user {
+  font-weight: 700;
+  color: var(--text-1);
+  font-size: 14px;
+  text-decoration: none;
+}
+.reply-user:hover { color: var(--c-primary); }
+.reply-action { font-size: 13.5px; color: var(--text-3); }
+.reply-quote {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  padding: 10px 14px;
+  background: var(--bg-card-solid);
+  border-left: 3px solid var(--c-primary);
+  border-radius: 0 10px 10px 0;
+  margin: 8px 0;
+  position: relative;
+  font-style: italic;
+}
+.reply-quote::before {
+  content: '“';
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  color: var(--c-primary);
+  opacity: 0.5;
+  margin-right: 2px;
+  vertical-align: -4px;
+}
+.reply-source {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.reply-source a {
+  color: var(--c-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.reply-source a:hover { text-decoration: underline; }
+
+/* ============================================================
+   LIKE ITEM (compact)
+   ============================================================ */
+.msg-item.like { align-items: center; padding: 14px 20px 14px 22px; }
+.like-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.like-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.like-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+.like-text .lu {
+  font-weight: 700;
+  color: var(--text-1);
+  text-decoration: none;
+}
+.like-text .lu:hover { color: var(--c-primary); }
+.like-text .lt { color: var(--text-3); }
+.like-target {
+  font-size: 13px;
+  color: var(--c-primary);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 3px 10px;
+  background: var(--bg-chip);
+  border-radius: 8px;
+  white-space: nowrap;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.like-target:hover { text-decoration: underline; }
+.like-time {
+  font-size: 12px;
+  color: var(--text-4);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.like-heart {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: rgba(244, 63, 94, 0.12);
+  color: #F43F5E;
+  flex-shrink: 0;
+}
+.like-heart svg { width: 16px; height: 16px; }
+
+/* ============================================================
+   DM (PRIVATE MESSAGE) PANEL
+   ============================================================ */
+.dm-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+.dm-list { padding: 8px; }
+.dm-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  transition: all 0.2s;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid transparent;
+  align-items: center;
+}
+.dm-item + .dm-item { margin-top: 4px; }
+.dm-item.unread { background: var(--bg-chip); }
+.dm-item.unread::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 16px;
+  bottom: 16px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--grad-primary);
+}
+.dm-item:hover { background: rgba(var(--c-primary-rgb), 0.06); }
+.dm-item.active {
+  background: var(--bg-chip);
+  border-color: var(--border-strong);
+}
+.dm-avatar-wrap { position: relative; flex-shrink: 0; }
+.dm-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.dm-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-card-solid);
+  background: #94A3B8;
+}
+.dm-status.online { background: #10B981; box-shadow: 0 0 0 2px rgba(16,185,129,0.25); }
+.dm-body { flex: 1; min-width: 0; }
+.dm-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.dm-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-1);
+}
+.dm-item.unread .dm-name { color: var(--c-primary-deep); }
+.dm-time { font-size: 11.5px; color: var(--text-4); white-space: nowrap; }
+.dm-preview {
+  font-size: 13px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dm-badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--grad-primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(var(--c-primary-rgb), 0.35);
+}
+
+/* ----- Chat panel ----- */
+.chat-panel {
+  display: none;
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(12px);
+  animation: fade-in-up 0.3s ease;
+}
+.chat-panel.open { display: block; }
+.chat-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.chat-head .dm-avatar-wrap .dm-avatar { width: 36px; height: 36px; font-size: 13px; }
+.chat-head .dm-status { width: 10px; height: 10px; }
+.chat-head-name { font-weight: 700; color: var(--text-1); font-size: 15px; }
+.chat-head-status { font-size: 12px; color: var(--text-3); }
+.chat-head-status.online { color: #10B981; }
+.chat-close {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  border: none;
+  background: var(--bg-chip);
+  color: var(--text-3);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+}
+.chat-close:hover { color: var(--c-primary); background: var(--bg-chip); }
+.chat-close svg { width: 16px; height: 16px; }
+
+.chat-body {
+  padding: 20px 22px;
+  max-height: 360px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.chat-msg {
+  display: flex;
+  gap: 10px;
+  max-width: 78%;
+  animation: fade-in-up 0.25s ease;
+}
+.chat-msg.me { align-self: flex-end; flex-direction: row-reverse; }
+.chat-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  word-break: break-word;
+}
+.chat-msg.them .chat-bubble {
+  background: var(--bg-card-solid);
+  color: var(--text-1);
+  border-bottom-left-radius: 4px;
+  box-shadow: var(--shadow-glass);
+}
+.chat-msg.me .chat-bubble {
+  background: var(--grad-primary);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+  box-shadow: var(--shadow-primary);
+}
+.chat-time {
+  font-size: 11px;
+  color: var(--text-4);
+  align-self: flex-end;
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+.chat-input-wrap {
+  display: flex;
+  gap: 10px;
+  padding: 14px 22px 18px;
+  border-top: 1px solid var(--border-subtle);
+  align-items: center;
+}
+.chat-input {
+  flex: 1;
+  padding: 11px 16px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-1);
+  outline: none;
+  transition: all 0.25s;
+}
+.chat-input:focus {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.12);
+  background: #fff;
+}
+.chat-input::placeholder { color: var(--text-4); }
+.chat-send {
+  padding: 11px 18px;
+  background: var(--grad-primary);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-primary);
+}
+.chat-send:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(var(--c-primary-rgb), 0.38); }
+.chat-send svg { width: 16px; height: 16px; }
+
+/* ----- Empty state ----- */
+.empty-state {
+  padding: 60px 24px;
+  text-align: center;
+  color: var(--text-3);
+}
+.empty-state svg { width: 48px; height: 48px; color: var(--text-4); margin-bottom: 14px; }
+.empty-state p { font-size: 14px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot {
+  padding: 56px 24px 28px;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 40px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(16px);
+}
+.foot-inner { max-width: 1400px; margin: 0 auto; }
+.foot-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.foot-brand p {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.75;
+  margin: 16px 0 22px;
+  max-width: 380px;
+}
+.socials { display: flex; gap: 10px; }
+.soc {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-2);
+  transition: all 0.25s;
+}
+.soc svg { width: 17px; height: 17px; }
+.soc:hover {
+  color: #fff;
+  background: var(--grad-primary);
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: var(--shadow-primary);
+}
+
+.fcol h4 {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  margin-bottom: 18px;
+}
+.fcol ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.fcol a {
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 500;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.fcol a::before {
+  content: '›';
+  color: var(--text-4);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s;
+  font-weight: 700;
+}
+.fcol a:hover {
+  color: var(--c-primary);
+  padding-left: 0;
+}
+.fcol a:hover::before { opacity: 1; transform: translateX(0); color: var(--c-primary); }
+
+.foot-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.foot-copy {
+  font-size: 13px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.heart { color: var(--c-accent); display: inline-block; animation: beat 1.4s ease-in-out infinite; }
+.foot-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.foot-meta span::before {
+  content: '● ';
+  color: var(--c-primary);
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   BACK TO TOP
+   ============================================================ */
+.back-to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-blur-strong);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  color: var(--c-primary);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-glass-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: all 0.3s cubic-bezier(.2,.8,.2,1);
+  z-index: 90;
+}
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.back-to-top:hover {
+  transform: translateY(-3px);
+  background: var(--grad-primary);
+  color: #fff;
+  border-color: transparent;
+}
+.back-to-top svg { width: 20px; height: 20px; }
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes float-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(30px, -40px) scale(1.1); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-40px, 30px) scale(1.05); }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(var(--c-primary-rgb), 0.2); }
+  50%      { box-shadow: 0 0 0 8px rgba(var(--c-primary-rgb), 0.05); }
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  25%      { transform: scale(1.2); }
+  50%      { transform: scale(1); }
+  75%      { transform: scale(1.15); }
+}
+.reveal { opacity: 0; }
+.reveal.shown { animation: fade-in-up 0.65s cubic-bezier(.2,.8,.2,1) forwards; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1200px) {
+  .messages-grid { grid-template-columns: 1fr; gap: 20px; }
+  .msg-nav { position: static; padding: 14px; }
+  .msg-nav-label { display: none; }
+  .cat-list { display: none; }
+  .mobile-tabs { display: block; }
+  .msg-nav-foot { display: none; }
+  .foot-top { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .search-box { width: 180px; }
+  .search-kbd { display: none; }
+  .theme-switcher { display: none; }
+  .messages-page { padding: 28px 16px 20px; }
+  .page-head { padding: 24px 22px; }
+  .page-head h1 { font-size: 26px; }
+  .action-bar { padding: 14px 16px; }
+  .msg-item { padding: 16px 16px 16px 18px; gap: 12px; }
+  .msg-item.unread::before { left: 6px; }
+  .like-target { max-width: 160px; }
+  .foot { padding: 40px 20px 20px; }
+  .foot-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 520px) {
+  .nav-inner { padding: 0 12px; }
+  .btn-outline { display: none; }
+  .head-row { flex-direction: column; align-items: flex-start; }
+  .msg-icon { width: 38px; height: 38px; }
+  .msg-icon svg { width: 17px; height: 17px; }
+  .msg-avatar { width: 36px; height: 36px; font-size: 13px; }
+  .like-avatar { width: 28px; height: 28px; font-size: 11px; }
+  .dm-avatar { width: 40px; height: 40px; font-size: 14px; }
+  .like-body { gap: 6px; }
+  .like-target { max-width: 100%; }
+  .chat-body { padding: 16px; max-height: 300px; }
+  .chat-input-wrap { padding: 12px 16px 14px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner glass-strong">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">C</div>
+      <div class="logo-text">Code<em>Hub</em></div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">首页</a></li>
+      <li><a href="article.html" class="nav-link">文章</a></li>
+      <li><a href="#" class="nav-link">讨论</a></li>
+      <li><a href="#" class="nav-link">开源</a></li>
+      <li><a href="#" class="nav-link">活动</a></li>
+      <li><a href="#" class="nav-link">招聘</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <div class="theme-switcher" title="切换主题颜色">
+        <div class="theme-dot theme-ocean  active" data-theme="ocean"></div>
+        <div class="theme-dot theme-mint" data-theme="mint"></div>
+        <div class="theme-dot theme-coral" data-theme="coral"></div>
+        <div class="theme-dot theme-lilac" data-theme="lilac"></div>
+        <div class="theme-dot theme-amber" data-theme="amber"></div>
+      </div>
+
+      <div class="search-box">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input type="text" placeholder="搜索文章、用户、话题...">
+        <span class="search-kbd">⌘K</span>
+      </div>
+      <a href="#" class="btn btn-ghost">登录</a>
+      <a href="#" class="btn btn-primary">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+        注册
+      </a>
+      <div class="avatar-wrap" id="avatarWrap">
+        <div class="avatar" id="avatarBtn">林</div>
+        <div class="avatar-menu">
+          <div class="avatar-menu-head">
+            <div class="av-mini">林</div>
+            <div>
+              <div class="av-name">林深时见鹿</div>
+              <div class="av-mail">lin@codehub.dev</div>
+            </div>
+          </div>
+          <a href="profile.html">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            用户主页
+          </a>
+          <a href="messages.html">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+            消息中心
+          </a>
+          <a href="settings.html">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            设置
+          </a>
+          <a href="#">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            我的草稿
+          </a>
+          <div class="menu-sep"></div>
+          <a href="#">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            退出登录
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ MESSAGES PAGE ============ -->
+<section class="messages-page">
+
+  <!-- Page head -->
+  <div class="page-head card reveal">
+    <div class="head-row">
+      <div>
+        <h1><span class="bar"></span>消息中心</h1>
+        <p>共 <span class="num" id="totalUnread">22</span> 条未读消息，及时回复让交流不断线</p>
+      </div>
+      <button class="btn btn-outline" id="markAllReadTop">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        全部标为已读
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages grid -->
+  <div class="messages-grid">
+
+    <!-- Left categories nav -->
+    <aside class="msg-nav glass reveal">
+      <!-- Desktop categories -->
+      <div class="msg-nav-label">消息分类</div>
+      <div class="cat-list">
+        <div class="cat-item active" data-cat="system">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span class="cat-label">系统通知</span>
+          <span class="cat-badge" data-badge="system">3</span>
+        </div>
+        <div class="cat-item" data-cat="replies">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
+          <span class="cat-label">回复我的</span>
+          <span class="cat-badge" data-badge="replies">5</span>
+        </div>
+        <div class="cat-item" data-cat="likes">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+          <span class="cat-label">收到的赞</span>
+          <span class="cat-badge" data-badge="likes">12</span>
+        </div>
+        <div class="cat-item" data-cat="dm">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+          <span class="cat-label">私信</span>
+          <span class="cat-badge" data-badge="dm">2</span>
+        </div>
+      </div>
+
+      <!-- Mobile horizontal tabs -->
+      <div class="mobile-tabs">
+        <div class="cat-list">
+          <div class="cat-item active" data-cat="system"><span class="cat-label">系统通知</span></div>
+          <div class="cat-item" data-cat="replies"><span class="cat-label">回复我的</span></div>
+          <div class="cat-item" data-cat="likes"><span class="cat-label">收到的赞</span></div>
+          <div class="cat-item" data-cat="dm"><span class="cat-label">私信</span></div>
+        </div>
+      </div>
+
+      <div class="msg-nav-foot">
+        <a href="settings.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+          设置通知偏好
+        </a>
+      </div>
+    </aside>
+
+    <!-- Right message panels -->
+    <main class="msg-main">
+
+      <!-- ====== SYSTEM PANEL ====== -->
+      <section class="panel card active reveal" id="panel-system">
+        <div class="action-bar">
+          <div class="tab-group">
+            <button class="tab active" data-filter="all">全部 <span class="tab-count" id="cnt-system-all">5</span></button>
+            <button class="tab" data-filter="unread">未读 <span class="tab-count" id="cnt-system-unread">3</span></button>
+          </div>
+          <div class="action-right">
+            <button class="btn btn-outline btn-sm" data-mark-cat="system">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              全部已读
+            </button>
+          </div>
+        </div>
+
+        <div class="msg-list">
+          <div class="msg-item unread" data-cat="system">
+            <div class="msg-icon celebrate">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+            </div>
+            <div class="msg-body">
+              <div class="msg-title">你的文章《深入 Rust 异步运行时》已被精选为本周推荐</div>
+              <div class="msg-excerpt">恭喜！你的文章质量出众，被编辑团队选为本周精选内容，将在首页推荐位展示 7 天，预计可获得更多曝光与讨论。</div>
+              <div class="msg-meta">
+                <span>2 小时前</span>
+                <span class="dot">·</span>
+                <a href="article.html">查看文章 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></a>
+              </div>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item unread" data-cat="system">
+            <div class="msg-icon info">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="msg-body">
+              <div class="msg-title">CodeHub v2.6.0 已发布，新增 Markdown 实时预览功能</div>
+              <div class="msg-excerpt">本次更新带来 Markdown 实时预览、代码块语法高亮增强、文章目录自动生成等 12 项改进，立即体验更流畅的写作流程。</div>
+              <div class="msg-meta">
+                <span>5 小时前</span>
+                <span class="dot">·</span>
+                <a href="#">查看更新日志</a>
+              </div>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item unread" data-cat="system">
+            <div class="msg-icon danger">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="msg-body">
+              <div class="msg-title">你的账号安全提醒：检测到新的登录设备</div>
+              <div class="msg-excerpt">检测到你的账号于 14:32 在上海（Chrome / Windows）登录。如非本人操作，请立即修改密码并检查登录设备列表。</div>
+              <div class="msg-meta">
+                <span>今天 14:35</span>
+                <span class="dot">·</span>
+                <a href="settings.html">前往安全设置</a>
+              </div>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item read" data-cat="system">
+            <div class="msg-icon success">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="msg-body">
+              <div class="msg-title">欢迎加入 CodeHub！完善个人资料获得 100 积分</div>
+              <div class="msg-excerpt">完善头像、简介、技术栈等信息可获得 100 积分奖励，积分可用于解锁专栏内容与参与社区活动。</div>
+              <div class="msg-meta">
+                <span>昨天</span>
+                <span class="dot">·</span>
+                <a href="profile.html">完善资料</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="msg-item read" data-cat="system">
+            <div class="msg-icon warn">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </div>
+            <div class="msg-body">
+              <div class="msg-title">系统维护通知：本周日 02:00-04:00 进行例行维护</div>
+              <div class="msg-excerpt">为提升服务质量，我们将于本周日凌晨 02:00-04:00 进行例行系统维护，期间部分功能可能短暂不可用，敬请谅解。</div>
+              <div class="msg-meta">
+                <span>3 天前</span>
+                <span class="dot">·</span>
+                <a href="#">查看维护详情</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== REPLIES PANEL ====== -->
+      <section class="panel card reveal" id="panel-replies">
+        <div class="action-bar">
+          <div class="tab-group">
+            <button class="tab active" data-filter="all">全部 <span class="tab-count" id="cnt-replies-all">5</span></button>
+            <button class="tab" data-filter="unread">未读 <span class="tab-count" id="cnt-replies-unread">5</span></button>
+          </div>
+          <div class="action-right">
+            <button class="btn btn-outline btn-sm" data-mark-cat="replies">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              全部已读
+            </button>
+          </div>
+        </div>
+
+        <div class="msg-list">
+          <div class="msg-item reply unread" data-cat="replies">
+            <div class="msg-avatar av-1">A</div>
+            <div class="msg-body">
+              <div class="reply-head">
+                <a href="#" class="reply-user">ai_pioneer</a>
+                <span class="reply-action">回复了你的文章</span>
+              </div>
+              <div class="reply-quote">写得非常清晰！关于 Tokio 的任务调度部分，我之前在生产环境里遇到过类似的优先级反转问题，最后通过给关键任务单独划分 runtime 解决了。想请教一下，在混合 IO 密集与 CPU 密集任务的场景下，你倾向于用 blocking池 还是 spawn_blocking？</div>
+              <div class="reply-source">原文：<a href="article.html">深入 Rust 异步运行时</a></div>
+              <div class="msg-meta">
+                <span>32 分钟前</span>
+                <span class="dot">·</span>
+                <a href="#">查看回复 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></a>
+              </div>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item reply unread" data-cat="replies">
+            <div class="msg-avatar av-2">R</div>
+            <div class="msg-body">
+              <div class="reply-head">
+                <a href="#" class="reply-user">rust_sage</a>
+                <span class="reply-action">回复了你的评论</span>
+              </div>
+              <div class="reply-quote">补充一个细节：async-trait 在 1.75 之后已经不再是必需的了，原生 async fn in trait 已经稳定。不过如果需要 dyn dispatch，还是得借助它。你的文章里这部分可以再展开讲讲 object safety 的影响。</div>
+              <div class="reply-source">原文：<a href="article.html">深入 Rust 异步运行时</a></div>
+              <div class="msg-meta">
+                <span>1 小时前</span>
+                <span class="dot">·</span>
+                <a href="#">查看回复 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></a>
+              </div>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item reply unread" data-cat="replies">
+            <div class="msg-avatar av-3">G</div>
+            <div class="msg-body">
+              <div class="reply-head">
+                <a href="#" class="reply-user">gopher_dev</a>
+                <span class="reply-action">回复了你的文章</span>
+              </div>
+              <div class="reply-quote">从 Go 切到 Rust 最大的感受就是错误处理，? 操作符比起 if err != nil 优雅太多了。不过学习曲线确实陡峭，生命周期这一关劝退了不少同事。文章里的对比表格很直观，已收藏！</div>
+              <div class="reply-source">原文：<a href="article.html">Go 与 Rust 的工程实践对比</a></div>
+              <div class="msg-meta">
+                <span>3 小时前</span>
+                <span class="dot">·</span>
+                <a href="#">查看回复 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></a>
+              </div>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item reply unread" data-cat="replies">
+            <div class="msg-avatar av-4">I</div>
+            <div class="msg-body">
+              <div class="reply-head">
+                <a href="#" class="reply-user">infra_guru</a>
+                <span class="reply-action">回复了你的评论</span>
+              </div>
+              <div class="reply-quote">关于 eBPF 在可观测性里的应用，我们团队最近用 aya（Rust 的 eBPF 库）重写了网络探针，性能比之前用 C 写的版本提升了 15% 左右，主要得益于零拷贝和更好的编译期检查。可以交流一下。</div>
+              <div class="reply-source">原文：<a href="article.html">云原生可观测性实践</a></div>
+              <div class="msg-meta">
+                <span>今天 10:12</span>
+                <span class="dot">·</span>
+                <a href="#">查看回复 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></a>
+              </div>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item reply unread" data-cat="replies">
+            <div class="msg-avatar av-5">S</div>
+            <div class="msg-body">
+              <div class="reply-head">
+                <a href="#" class="reply-user">sys_caller</a>
+                <span class="reply-action">回复了你的文章</span>
+              </div>
+              <div class="reply-quote">syscall 调用的开销分析很到位，不过文章里漏掉了一个点：io_uring 相比 epoll 在高连接数场景下的优势主要来自批处理和内核态共享内存，建议补充一下 sqe/cqe 的批量提交示例。</div>
+              <div class="reply-source">原文：<a href="article.html">Linux I/O 模型深度解析</a></div>
+              <div class="msg-meta">
+                <span>昨天</span>
+                <span class="dot">·</span>
+                <a href="#">查看回复 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></a>
+              </div>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== LIKES PANEL ====== -->
+      <section class="panel card reveal" id="panel-likes">
+        <div class="action-bar">
+          <div class="tab-group">
+            <button class="tab active" data-filter="all">全部 <span class="tab-count" id="cnt-likes-all">6</span></button>
+            <button class="tab" data-filter="unread">未读 <span class="tab-count" id="cnt-likes-unread">12</span></button>
+          </div>
+          <div class="action-right">
+            <button class="btn btn-outline btn-sm" data-mark-cat="likes">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              全部已读
+            </button>
+          </div>
+        </div>
+
+        <div class="msg-list">
+          <div class="msg-item like unread" data-cat="likes">
+            <div class="like-avatar av-1">A</div>
+            <div class="like-body">
+              <span class="like-text"><a href="#" class="lu">ai_pioneer</a> <span class="lt">等 3 人赞了你的文章</span></span>
+              <a href="article.html" class="like-target">深入 Rust 异步运行时</a>
+              <span class="like-time">15 分钟前</span>
+            </div>
+            <div class="like-heart">
+              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item like unread" data-cat="likes">
+            <div class="like-avatar av-2">R</div>
+            <div class="like-body">
+              <span class="like-text"><a href="#" class="lu">rust_sage</a> <span class="lt">赞了你的评论</span></span>
+              <a href="article.html" class="like-target">关于 Tokio 任务调度的回复</a>
+              <span class="like-time">1 小时前</span>
+            </div>
+            <div class="like-heart">
+              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item like unread" data-cat="likes">
+            <div class="like-avatar av-3">G</div>
+            <div class="like-body">
+              <span class="like-text"><a href="#" class="lu">gopher_dev</a> <span class="lt">等 5 人赞了你的文章</span></span>
+              <a href="article.html" class="like-target">Go 与 Rust 的工程实践对比</a>
+              <span class="like-time">3 小时前</span>
+            </div>
+            <div class="like-heart">
+              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item like unread" data-cat="likes">
+            <div class="like-avatar av-4">I</div>
+            <div class="like-body">
+              <span class="like-text"><a href="#" class="lu">infra_guru</a> <span class="lt">赞了你的文章</span></span>
+              <a href="article.html" class="like-target">云原生可观测性实践</a>
+              <span class="like-time">今天 09:48</span>
+            </div>
+            <div class="like-heart">
+              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item like unread" data-cat="likes">
+            <div class="like-avatar av-5">S</div>
+            <div class="like-body">
+              <span class="like-text"><a href="#" class="lu">sys_caller</a> <span class="lt">等 2 人赞了你的评论</span></span>
+              <a href="article.html" class="like-target">io_uring 批量提交的补充</a>
+              <span class="like-time">昨天</span>
+            </div>
+            <div class="like-heart">
+              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+
+          <div class="msg-item like unread" data-cat="likes">
+            <div class="like-avatar av-6">D</div>
+            <div class="like-body">
+              <span class="like-text"><a href="#" class="lu">devops_dan</a> <span class="lt">赞了你的文章</span></span>
+              <a href="article.html" class="like-target">从单体到微服务的平滑迁移</a>
+              <span class="like-time">2 天前</span>
+            </div>
+            <div class="like-heart">
+              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+            </div>
+            <span class="msg-dot"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== DM PANEL ====== -->
+      <section class="panel card reveal" id="panel-dm">
+        <div class="action-bar">
+          <div class="tab-group">
+            <button class="tab active" data-filter="all">全部 <span class="tab-count" id="cnt-dm-all">3</span></button>
+            <button class="tab" data-filter="unread">未读 <span class="tab-count" id="cnt-dm-unread">2</span></button>
+          </div>
+          <div class="action-right">
+            <button class="btn btn-outline btn-sm" data-mark-cat="dm">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              全部已读
+            </button>
+          </div>
+        </div>
+
+        <div class="dm-layout">
+          <div class="dm-list" id="dmList">
+            <div class="dm-item unread active" data-dm="rust_sage" data-online="1">
+              <div class="dm-avatar-wrap">
+                <div class="dm-avatar av-2">R</div>
+                <span class="dm-status online"></span>
+              </div>
+              <div class="dm-body">
+                <div class="dm-top">
+                  <span class="dm-name">rust_sage</span>
+                  <span class="dm-time">8 分钟前</span>
+                </div>
+                <div class="dm-preview">关于 async-trait 那段我补充了点想法，你看下要不要加进文章里？</div>
+              </div>
+              <span class="dm-badge">1</span>
+            </div>
+
+            <div class="dm-item unread" data-dm="ai_pioneer" data-online="1">
+              <div class="dm-avatar-wrap">
+                <div class="dm-avatar av-1">A</div>
+                <span class="dm-status online"></span>
+              </div>
+              <div class="dm-body">
+                <div class="dm-top">
+                  <span class="dm-name">ai_pioneer</span>
+                  <span class="dm-time">1 小时前</span>
+                </div>
+                <div class="dm-preview">下周三的技术分享会你来吗？主题是 LLM 推理优化，我觉得你会感兴趣</div>
+              </div>
+              <span class="dm-badge">1</span>
+            </div>
+
+            <div class="dm-item read" data-dm="infra_guru" data-online="0">
+              <div class="dm-avatar-wrap">
+                <div class="dm-avatar av-4">I</div>
+                <span class="dm-status"></span>
+              </div>
+              <div class="dm-body">
+                <div class="dm-top">
+                  <span class="dm-name">infra_guru</span>
+                  <span class="dm-time">昨天</span>
+                </div>
+                <div class="dm-preview">好的，那 aya 的示例代码我整理好发你，收到回复一下</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat panel -->
+          <div class="chat-panel open" id="chatPanel">
+            <div class="chat-head">
+              <div class="dm-avatar-wrap">
+                <div class="dm-avatar av-2" id="chatAvatar">R</div>
+                <span class="dm-status online" id="chatStatus"></span>
+              </div>
+              <div>
+                <div class="chat-head-name" id="chatName">rust_sage</div>
+                <div class="chat-head-status online" id="chatStatusText">在线</div>
+              </div>
+              <button class="chat-close" id="chatClose" title="收起聊天">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+            </div>
+            <div class="chat-body" id="chatBody">
+              <div class="chat-msg them">
+                <div class="chat-bubble">嘿，看了你新发的 Rust 异步运行时的文章，写得很扎实！</div>
+                <span class="chat-time">14:02</span>
+              </div>
+              <div class="chat-msg them">
+                <div class="chat-bubble">关于 async-trait 那段我补充了点想法，你看下要不要加进文章里？</div>
+                <span class="chat-time">14:03</span>
+              </div>
+              <div class="chat-msg me">
+                <div class="chat-bubble">谢谢！什么想法，说来听听</div>
+                <span class="chat-time">14:10</span>
+              </div>
+              <div class="chat-msg them">
+                <div class="chat-bubble">主要是 1.75 之后原生 async fn in trait 已经稳定了，但 dyn dispatch 还得靠 async-trait，可以展开讲讲 object safety 的影响</div>
+                <span class="chat-time">14:12</span>
+              </div>
+            </div>
+            <div class="chat-input-wrap">
+              <input type="text" class="chat-input" id="chatInput" placeholder="输入消息，回车发送...">
+              <button class="chat-send" id="chatSend">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                发送
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">C</div>
+          <div class="logo-text">Code<em>Hub</em></div>
+        </a>
+        <p>
+          为创作者而生的现代技术社区。分享、讨论、协作、成长 — 在 CodeHub，与全球 128,000+ 开发者一起构建更好的技术未来。
+        </p>
+        <div class="socials">
+          <a href="#" class="soc" title="GitHub">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.11.793-.26.793-.577v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0112 5.8c1.02.01 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.7.8.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"></path></svg>
+          </a>
+          <a href="#" class="soc" title="Twitter">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          </a>
+          <a href="#" class="soc" title="Discord">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.3 4.37A19.8 19.8 0 0015.43 2.86a.07.07 0 00-.08.04 13 13 0 00-.6 1.24 18.3 18.3 0 00-5.49 0 12.6 12.6 0 00-.62-1.25.08.08 0 00-.08-.04A19.7 19.7 0 003.68 4.37a.07.07 0 00-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 00.03.06 19.9 19.9 0 005.99 3.03.08.08 0 00.08-.03 14 14 0 001.23-2 14 14 0 01-1.87-.89.08.08 0 01-.01-.13c.12-.1.25-.2.37-.3a.07.07 0 01.08-.01 13.1 13.1 0 0012.06 0 .07.07 0 01.08.01c.12.1.25.19.37.29a.08.08 0 01-.01.128 12.3 12.3 0 01-1.87.89.08.08 0 00-.04.1c.36.7.77 1.37 1.22 2 .01.02.04.04.08.03a19.8 19.8 0 006-3.03.08.08 0 00.03-.05c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 00-.03-.03zM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.2 0 2.17 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.09-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.2 0 2.17 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42z"></path></svg>
+          </a>
+          <a href="#" class="soc" title="RSS">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.18 15.64a2.18 2.18 0 012.18 2.18M4 10.1a8.1 8.1 0 018.1 8.1M4 4.58a13.42 13.42 0 0113.42 13.42"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="fcol">
+        <h4>社区</h4>
+        <ul>
+          <li><a href="#">最新文章</a></li>
+          <li><a href="#">热门讨论</a></li>
+          <li><a href="#">开源项目</a></li>
+          <li><a href="#">技术活动</a></li>
+          <li><a href="#">招聘专区</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>内容</h4>
+        <ul>
+          <li><a href="#">专栏文章</a></li>
+          <li><a href="#">视频教程</a></li>
+          <li><a href="#">电子书</a></li>
+          <li><a href="#">每周精选</a></li>
+          <li><a href="#">技术周刊</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>开源</h4>
+        <ul>
+          <li><a href="#">推荐项目</a></li>
+          <li><a href="#">Good First Issue</a></li>
+          <li><a href="#">组织主页</a></li>
+          <li><a href="#">赞助商</a></li>
+          <li><a href="#">开源协议</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>关于</h4>
+        <ul>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">社区守则</a></li>
+          <li><a href="#">隐私政策</a></li>
+          <li><a href="#">服务条款</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div class="foot-copy">© 2026 CodeHub Community · 用 <span class="heart">♥</span> 为开发者构建</div>
+      <div class="foot-meta">
+        <span>v2.6.0</span>
+        <span>Build #20260418</span>
+        <span>Status: <b style="color:#10B981;">● 全部系统正常</b></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /#app -->
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" title="回到顶部">
+  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+</button>
+
+<script>
+/* =========================================================
+   THEME SWITCHER
+   ========================================================= */
+(function initTheme() {
+  const saved = localStorage.getItem('codehub-theme') || 'ocean';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.querySelectorAll('.theme-dot').forEach(dot => {
+    dot.classList.toggle('active', dot.dataset.theme === saved);
+  });
+})();
+
+document.querySelectorAll('.theme-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    const theme = dot.dataset.theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('codehub-theme', theme);
+    document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+  });
+});
+
+/* =========================================================
+   AVATAR DROPDOWN
+   ========================================================= */
+const avatarWrap = document.getElementById('avatarWrap');
+const avatarBtn  = document.getElementById('avatarBtn');
+if (avatarBtn) {
+  avatarBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    avatarWrap.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!avatarWrap.contains(e.target)) avatarWrap.classList.remove('open');
+  });
+}
+
+/* =========================================================
+   NAV LINK ACTIVE STATE
+   ========================================================= */
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+  });
+});
+
+/* =========================================================
+   SCROLL REVEAL ANIMATION
+   ========================================================= */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('shown');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => io.observe(el));
+
+/* =========================================================
+   KEYBOARD SHORTCUT: ⌘K / Ctrl+K focuses search
+   ========================================================= */
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    const input = document.querySelector('.search-box input');
+    if (input) input.focus();
+  }
+});
+
+/* =========================================================
+   BACK TO TOP
+   ========================================================= */
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  backToTop.classList.toggle('show', window.scrollY > 400);
+}, { passive: true });
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* =========================================================
+   CATEGORY SWITCHING
+   ========================================================= */
+const catItems = document.querySelectorAll('.cat-item[data-cat]');
+const panels   = document.querySelectorAll('.panel');
+
+catItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const target = item.dataset.cat;
+    // sync active state across desktop + mobile nav
+    document.querySelectorAll('.cat-item[data-cat]').forEach(c => {
+      c.classList.toggle('active', c.dataset.cat === target);
+    });
+    panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + target));
+    // re-trigger reveal for the newly shown panel
+    const shown = document.getElementById('panel-' + target);
+    if (shown) {
+      shown.classList.remove('shown');
+      void shown.offsetWidth;
+      shown.classList.add('shown');
+      // reset tab filter to "all" on panel switch
+      shown.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === 0));
+      shown.querySelectorAll('.msg-item, .dm-item').forEach(el => el.style.display = '');
+    }
+    // scroll the panel into view on mobile
+    if (window.innerWidth <= 1200) {
+      shown.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* =========================================================
+   TAB FILTER (all / unread)
+   ========================================================= */
+document.querySelectorAll('.tab-group').forEach(group => {
+  group.addEventListener('click', (e) => {
+    const tab = e.target.closest('.tab');
+    if (!tab) return;
+    group.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const filter = tab.dataset.filter;
+    const panel = group.closest('.panel');
+    // DM panel filters dm-item; others filter msg-item
+    const isDm = panel.id === 'panel-dm';
+    const items = panel.querySelectorAll(isDm ? '.dm-item' : '.msg-item');
+    items.forEach(item => {
+      if (filter === 'unread') {
+        item.style.display = item.classList.contains('unread') ? '' : 'none';
+      } else {
+        item.style.display = '';
+      }
+    });
+  });
+});
+
+/* =========================================================
+   MARK AS READ — single item click
+   ========================================================= */
+function recalcCounts(cat) {
+  const panel = document.getElementById('panel-' + cat);
+  if (!panel) return;
+  const isDm = cat === 'dm';
+  const items = panel.querySelectorAll(isDm ? '.dm-item' : '.msg-item');
+  const all = items.length;
+  const unread = panel.querySelectorAll(isDm ? '.dm-item.unread' : '.msg-item.unread').length;
+  const allEl = document.getElementById('cnt-' + cat + '-all');
+  const unreadEl = document.getElementById('cnt-' + cat + '-unread');
+  if (allEl) allEl.textContent = all;
+  if (unreadEl) unreadEl.textContent = unread;
+  // category badge
+  const badge = document.querySelector('.cat-badge[data-badge="' + cat + '"]');
+  if (badge) {
+    if (unread > 0) {
+      badge.textContent = unread;
+      badge.classList.remove('zero');
+    } else {
+      badge.textContent = '0';
+      badge.classList.add('zero');
+    }
+  }
+  recalcTotal();
+}
+
+function recalcTotal() {
+  let total = 0;
+  document.querySelectorAll('.cat-badge[data-badge]').forEach(b => {
+    const v = parseInt(b.textContent, 10);
+    if (!isNaN(v)) total += v;
+  });
+  const totalEl = document.getElementById('totalUnread');
+  if (totalEl) totalEl.textContent = total;
+}
+
+function markItemRead(item) {
+  if (!item.classList.contains('unread')) return;
+  const cat = item.dataset.cat || 'dm';
+  item.classList.remove('unread');
+  item.classList.add('read');
+  const dot = item.querySelector('.msg-dot');
+  if (dot) dot.remove();
+  const dmBadge = item.querySelector('.dm-badge');
+  if (dmBadge) dmBadge.remove();
+  recalcCounts(cat);
+}
+
+// click msg-item (system / replies / likes) to mark read
+document.querySelectorAll('.msg-item[data-cat]').forEach(item => {
+  item.addEventListener('click', (e) => {
+    // allow link clicks without marking
+    if (e.target.closest('a')) return;
+    markItemRead(item);
+  });
+});
+
+/* =========================================================
+   MARK ALL READ — per category & global
+   ========================================================= */
+function markCatRead(cat) {
+  const panel = document.getElementById('panel-' + cat);
+  if (!panel) return;
+  const isDm = cat === 'dm';
+  panel.querySelectorAll(isDm ? '.dm-item.unread' : '.msg-item.unread').forEach(item => {
+    item.classList.remove('unread');
+    item.classList.add('read');
+    const dot = item.querySelector('.msg-dot');
+    if (dot) dot.remove();
+    const dmBadge = item.querySelector('.dm-badge');
+    if (dmBadge) dmBadge.remove();
+  });
+  recalcCounts(cat);
+}
+
+document.querySelectorAll('[data-mark-cat]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    markCatRead(btn.dataset.markCat);
+  });
+});
+
+document.getElementById('markAllReadTop').addEventListener('click', () => {
+  ['system', 'replies', 'likes', 'dm'].forEach(markCatRead);
+});
+
+/* =========================================================
+   DM CHAT PANEL
+   ========================================================= */
+const dmItems = document.querySelectorAll('.dm-item[data-dm]');
+const chatPanel = document.getElementById('chatPanel');
+const chatName = document.getElementById('chatName');
+const chatAvatar = document.getElementById('chatAvatar');
+const chatStatus = document.getElementById('chatStatus');
+const chatStatusText = document.getElementById('chatStatusText');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+const chatSend = document.getElementById('chatSend');
+
+// preset conversations per user
+const dmConversations = {
+  rust_sage: {
+    initial: 'R', avClass: 'av-2', online: true, name: 'rust_sage',
+    messages: [
+      { who: 'them', text: '嘿，看了你新发的 Rust 异步运行时的文章，写得很扎实！', time: '14:02' },
+      { who: 'them', text: '关于 async-trait 那段我补充了点想法，你看下要不要加进文章里？', time: '14:03' },
+      { who: 'me',   text: '谢谢！什么想法，说来听听', time: '14:10' },
+      { who: 'them', text: '主要是 1.75 之后原生 async fn in trait 已经稳定了，但 dyn dispatch 还得靠 async-trait，可以展开讲讲 object safety 的影响', time: '14:12' }
+    ]
+  },
+  ai_pioneer: {
+    initial: 'A', avClass: 'av-1', online: true, name: 'ai_pioneer',
+    messages: [
+      { who: 'them', text: '下周三的技术分享会你来吗？', time: '13:20' },
+      { who: 'them', text: '主题是 LLM 推理优化，我觉得你会感兴趣', time: '13:21' }
+    ]
+  },
+  infra_guru: {
+    initial: 'I', avClass: 'av-4', online: false, name: 'infra_guru',
+    messages: [
+      { who: 'me',   text: 'aya 的示例代码方便发我参考下吗？', time: '昨天 18:40' },
+      { who: 'them', text: '好的，那 aya 的示例代码我整理好发你，收到回复一下', time: '昨天 19:05' }
+    ]
+  }
+};
+
+function renderConversation(key) {
+  const conv = dmConversations[key];
+  if (!conv) return;
+  chatName.textContent = conv.name;
+  chatAvatar.textContent = conv.initial;
+  chatAvatar.className = 'dm-avatar ' + conv.avClass;
+  chatStatus.classList.toggle('online', conv.online);
+  chatStatusText.textContent = conv.online ? '在线' : '离线';
+  chatStatusText.classList.toggle('online', conv.online);
+  chatBody.innerHTML = '';
+  conv.messages.forEach(m => {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-msg ' + m.who;
+    wrap.innerHTML = '<div class="chat-bubble"></div><span class="chat-time"></span>';
+    wrap.querySelector('.chat-bubble').textContent = m.text;
+    wrap.querySelector('.chat-time').textContent = m.time;
+    chatBody.appendChild(wrap);
+  });
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+dmItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const key = item.dataset.dm;
+    // active state
+    dmItems.forEach(d => d.classList.remove('active'));
+    item.classList.add('active');
+    // open chat panel
+    chatPanel.classList.add('open');
+    renderConversation(key);
+    // mark this dm as read
+    if (item.classList.contains('unread')) {
+      markItemRead(item);
+    }
+    chatInput.focus();
+  });
+});
+
+/* send message */
+function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  // determine current active dm
+  const active = document.querySelector('.dm-item.active');
+  const key = active ? active.dataset.dm : null;
+  const conv = key ? dmConversations[key] : null;
+  const now = new Date();
+  const timeStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+  // append to DOM
+  const wrap = document.createElement('div');
+  wrap.className = 'chat-msg me';
+  wrap.innerHTML = '<div class="chat-bubble"></div><span class="chat-time"></span>';
+  wrap.querySelector('.chat-bubble').textContent = text;
+  wrap.querySelector('.chat-time').textContent = timeStr;
+  chatBody.appendChild(wrap);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  // store in conversation
+  if (conv) conv.messages.push({ who: 'me', text: text, time: timeStr });
+  // update dm preview
+  if (active) {
+    const preview = active.querySelector('.dm-preview');
+    if (preview) preview.textContent = text;
+    const timeEl = active.querySelector('.dm-time');
+    if (timeEl) timeEl.textContent = '刚刚';
+  }
+  chatInput.value = '';
+
+  // simulated reply
+  setTimeout(() => {
+    const replies = [
+      '收到，我看看',
+      '好的，没问题',
+      '嗯嗯，这个思路可以',
+      '稍等，我整理一下发你',
+      '有意思，能展开说说吗？',
+      '同意你的看法 👍'
+    ];
+    const reply = replies[Math.floor(Math.random() * replies.length)];
+    const r = new Date();
+    const rt = String(r.getHours()).padStart(2,'0') + ':' + String(r.getMinutes()).padStart(2,'0');
+    const rwrap = document.createElement('div');
+    rwrap.className = 'chat-msg them';
+    rwrap.innerHTML = '<div class="chat-bubble"></div><span class="chat-time"></span>';
+    rwrap.querySelector('.chat-bubble').textContent = reply;
+    rwrap.querySelector('.chat-time').textContent = rt;
+    chatBody.appendChild(rwrap);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    if (conv) conv.messages.push({ who: 'them', text: reply, time: rt });
+    if (active) {
+      const preview = active.querySelector('.dm-preview');
+      if (preview) preview.textContent = reply;
+      const timeEl = active.querySelector('.dm-time');
+      if (timeEl) timeEl.textContent = '刚刚';
+    }
+  }, 1100 + Math.random() * 800);
+}
+
+chatSend.addEventListener('click', sendMessage);
+chatInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+/* collapse chat */
+document.getElementById('chatClose').addEventListener('click', () => {
+  chatPanel.classList.remove('open');
+  dmItems.forEach(d => d.classList.remove('active'));
+});
+
+/* =========================================================
+   INIT — compute initial counts
+   ========================================================= */
+['system', 'replies', 'likes', 'dm'].forEach(recalcCounts);
+</script>
+
+
+</body></html>
