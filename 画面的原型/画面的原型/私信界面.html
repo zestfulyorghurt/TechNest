@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="ocean"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>私信 · CodeHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+:root, html[data-theme="ocean"] { --c-primary:#3B82F6; --c-primary-rgb:59,130,246; --c-primary-soft:#DBEAFE; --c-primary-deep:#1D4ED8; --c-accent:#06B6D4; --c-accent-rgb:6,182,212; --bg-page:#F0F6FF; --bg-page-2:#E6EEFB; --bg-blur:rgba(255,255,255,0.62); --bg-blur-strong:rgba(255,255,255,0.78); --bg-card:rgba(255,255,255,0.72); --bg-card-solid:#FFFFFF; --bg-chip:rgba(59,130,246,0.10); --bg-input:rgba(255,255,255,0.85); --border-subtle:rgba(255,255,255,0.8); --border-strong:rgba(59,130,246,0.22); --text-1:#0F172A; --text-2:#334155; --text-3:#64748B; --text-4:#94A3B8; --text-on-primary:#FFFFFF; --shadow-glass:0 8px 32px rgba(15,30,80,0.08), 0 2px 6px rgba(15,30,80,0.04); --shadow-glass-lg:0 16px 48px rgba(15,30,80,0.10), 0 4px 12px rgba(15,30,80,0.05); --shadow-primary:0 6px 20px rgba(59,130,246,0.30); --grad-hero:radial-gradient(ellipse 80% 60% at 10% 0%, rgba(59,130,246,0.25) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 90% 20%, rgba(6,182,212,0.22) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(139,92,246,0.15) 0%, transparent 60%); --grad-primary:linear-gradient(135deg, var(--c-primary) 0%, var(--c-accent) 100%); --grad-primary-soft:linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(6,182,212,0.15) 100%); }
+html[data-theme="mint"] { --c-primary:#10B981; --c-primary-rgb:16,185,129; --c-primary-soft:#D1FAE5; --c-primary-deep:#047857; --c-accent:#0EA5E9; --c-accent-rgb:14,165,233; --bg-page:#EEFBF5; --bg-page-2:#DFF5E8; --bg-blur:rgba(255,255,255,0.62); --bg-blur-strong:rgba(255,255,255,0.78); --bg-card:rgba(255,255,255,0.72); --bg-card-solid:#FFFFFF; --bg-chip:rgba(16,185,129,0.10); --bg-input:rgba(255,255,255,0.85); --border-subtle:rgba(255,255,255,0.8); --border-strong:rgba(16,185,129,0.22); --text-1:#0B3D2E; --text-2:#1B5E46; --text-3:#4D806B; --text-4:#8BA89A; --shadow-glass:0 8px 32px rgba(10,60,40,0.08), 0 2px 6px rgba(10,60,40,0.04); --shadow-glass-lg:0 16px 48px rgba(10,60,40,0.10), 0 4px 12px rgba(10,60,40,0.05); --shadow-primary:0 6px 20px rgba(16,185,129,0.30); --grad-hero:radial-gradient(ellipse 80% 60% at 10% 0%, rgba(16,185,129,0.25) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 90% 20%, rgba(14,165,233,0.20) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(34,197,94,0.15) 0%, transparent 60%); --grad-primary:linear-gradient(135deg, #10B981 0%, #0EA5E9 100%); --grad-primary-soft:linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(14,165,233,0.15) 100%); }
+html[data-theme="coral"] { --c-primary:#F97316; --c-primary-rgb:249,115,22; --c-primary-soft:#FFEDD5; --c-primary-deep:#C2410C; --c-accent:#F43F5E; --c-accent-rgb:244,63,94; --bg-page:#FFF7F0; --bg-page-2:#FFEBDB; --bg-blur:rgba(255,255,255,0.62); --bg-blur-strong:rgba(255,255,255,0.78); --bg-card:rgba(255,255,255,0.72); --bg-card-solid:#FFFFFF; --bg-chip:rgba(249,115,22,0.10); --bg-input:rgba(255,255,255,0.85); --border-subtle:rgba(255,255,255,0.8); --border-strong:rgba(249,115,22,0.22); --text-1:#3F1E0A; --text-2:#6B3410; --text-3:#985A30; --text-4:#C48A64; --shadow-glass:0 8px 32px rgba(80,30,10,0.08), 0 2px 6px rgba(80,30,10,0.04); --shadow-glass-lg:0 16px 48px rgba(80,30,10,0.10), 0 4px 12px rgba(80,30,10,0.05); --shadow-primary:0 6px 20px rgba(249,115,22,0.30); --grad-hero:radial-gradient(ellipse 80% 60% at 10% 0%, rgba(249,115,22,0.22) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 90% 20%, rgba(244,63,94,0.20) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(251,146,60,0.15) 0%, transparent 60%); --grad-primary:linear-gradient(135deg, #F97316 0%, #F43F5E 100%); --grad-primary-soft:linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(244,63,94,0.15) 100%); }
+html[data-theme="lilac"] { --c-primary:#8B5CF6; --c-primary-rgb:139,92,246; --c-primary-soft:#EDE9FE; --c-primary-deep:#6D28D9; --c-accent:#EC4899; --c-accent-rgb:236,72,153; --bg-page:#F7F2FF; --bg-page-2:#ECE3FB; --bg-blur:rgba(255,255,255,0.62); --bg-blur-strong:rgba(255,255,255,0.78); --bg-card:rgba(255,255,255,0.72); --bg-card-solid:#FFFFFF; --bg-chip:rgba(139,92,246,0.10); --bg-input:rgba(255,255,255,0.85); --border-subtle:rgba(255,255,255,0.8); --border-strong:rgba(139,92,246,0.22); --text-1:#2A1458; --text-2:#472A82; --text-3:#7355A8; --text-4:#A38DCC; --shadow-glass:0 8px 32px rgba(60,20,120,0.08), 0 2px 6px rgba(60,20,120,0.04); --shadow-glass-lg:0 16px 48px rgba(60,20,120,0.10), 0 4px 12px rgba(60,20,120,0.05); --shadow-primary:0 6px 20px rgba(139,92,246,0.30); --grad-hero:radial-gradient(ellipse 80% 60% at 10% 0%, rgba(139,92,246,0.25) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 90% 20%, rgba(236,72,153,0.20) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(167,139,250,0.15) 0%, transparent 60%); --grad-primary:linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%); --grad-primary-soft:linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.15) 100%); }
+html[data-theme="amber"] { --c-primary:#D97706; --c-primary-rgb:217,119,6; --c-primary-soft:#FEF3C7; --c-primary-deep:#92400E; --c-accent:#DC2626; --c-accent-rgb:220,38,38; --bg-page:#FFFBF0; --bg-page-2:#FFF3DC; --bg-blur:rgba(255,255,255,0.62); --bg-blur-strong:rgba(255,255,255,0.78); --bg-card:rgba(255,255,255,0.72); --bg-card-solid:#FFFFFF; --bg-chip:rgba(217,119,6,0.10); --bg-input:rgba(255,255,255,0.85); --border-subtle:rgba(255,255,255,0.8); --border-strong:rgba(217,119,6,0.22); --text-1:#3D2405; --text-2:#6B4308; --text-3:#986A1A; --text-4:#C4974A; --shadow-glass:0 8px 32px rgba(80,50,10,0.08), 0 2px 6px rgba(80,50,10,0.04); --shadow-glass-lg:0 16px 48px rgba(80,50,10,0.10), 0 4px 12px rgba(80,50,10,0.05); --shadow-primary:0 6px 20px rgba(217,119,6,0.30); --grad-hero:radial-gradient(ellipse 80% 60% at 10% 0%, rgba(217,119,6,0.22) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 90% 20%, rgba(220,38,38,0.18) 0%, transparent 55%), radial-gradient(ellipse 70% 50% at 50% 100%, rgba(245,158,11,0.15) 0%, transparent 60%); --grad-primary:linear-gradient(135deg, #D97706 0%, #DC2626 100%); --grad-primary-soft:linear-gradient(135deg, rgba(217,119,6,0.15) 0%, rgba(220,38,38,0.15) 100%); }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text-1);line-height:1.6;min-height:100vh;background:var(--grad-hero),linear-gradient(180deg,var(--bg-page) 0%,var(--bg-page-2) 100%);background-attachment:fixed;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-20%;right:-10%;width:600px;height:600px;background:var(--grad-primary-soft);filter:blur(100px);border-radius:50%;opacity:0.55;z-index:0;pointer-events:none;animation:float-b 20s ease-in-out infinite}
+body::after{content:'';position:fixed;bottom:-25%;left:-15%;width:500px;height:500px;background:var(--grad-primary-soft);filter:blur(90px);border-radius:50%;opacity:0.45;z-index:0;pointer-events:none;animation:float-a 18s ease-in-out infinite}
+#app{position:relative;z-index:2}
+.glass{background:var(--bg-blur);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border:1px solid var(--border-subtle);box-shadow:var(--shadow-glass)}
+.glass-strong{background:var(--bg-blur-strong);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);border:1px solid var(--border-subtle);box-shadow:var(--shadow-glass-lg)}
+.card{background:var(--bg-card);backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid var(--border-subtle);border-radius:20px;box-shadow:var(--shadow-glass);transition:transform 0.35s cubic-bezier(.2,.8,.2,1),box-shadow 0.35s,border-color 0.35s}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(var(--c-primary-rgb),0.25);border-radius:10px;border:2px solid transparent;background-clip:padding-box}::-webkit-scrollbar-thumb:hover{background:rgba(var(--c-primary-rgb),0.45);background-clip:padding-box;border:2px solid transparent}
+h1,h2,h3,h4{font-family:'Space Grotesk','Inter',sans-serif;color:var(--text-1);letter-spacing:-0.02em;line-height:1.2}.font-display{font-family:'Space Grotesk',sans-serif}.font-mono{font-family:'JetBrains Mono',monospace}
+.theme-switcher{display:flex;align-items:center;gap:6px;padding:5px;background:var(--bg-card);backdrop-filter:blur(16px);border:1px solid var(--border-subtle);border-radius:14px;box-shadow:var(--shadow-glass)}
+.theme-dot{width:28px;height:28px;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:all 0.25s;position:relative;display:grid;place-items:center}
+.theme-dot::after{content:'';position:absolute;inset:4px;border-radius:6px;background:inherit;filter:brightness(1.05)}
+.theme-dot:hover{transform:scale(1.12)}
+.theme-dot.active{border-color:var(--c-primary);box-shadow:0 0 0 3px rgba(var(--c-primary-rgb),0.18)}
+.theme-dot.active::before{content:'✓';position:relative;z-index:1;font-size:11px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.3)}
+.theme-ocean{background:linear-gradient(135deg,#3B82F6,#06B6D4)}.theme-mint{background:linear-gradient(135deg,#10B981,#0EA5E9)}.theme-coral{background:linear-gradient(135deg,#F97316,#F43F5E)}.theme-lilac{background:linear-gradient(135deg,#8B5CF6,#EC4899)}.theme-amber{background:linear-gradient(135deg,#D97706,#DC2626)}
+.nav{position:sticky;top:16px;z-index:100;margin:16px auto 0;max-width:1400px;padding:0 24px}
+.nav-inner{height:68px;padding:0 18px 0 22px;display:flex;align-items:center;justify-content:space-between;border-radius:20px;gap:24px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text-1)}
+.logo-mark{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--grad-primary);box-shadow:var(--shadow-primary);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:20px;position:relative;overflow:hidden}
+.logo-mark::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.35) 0%,transparent 50%);pointer-events:none}
+.logo-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px}
+.logo-text em{font-style:normal;background:var(--grad-primary);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none}
+.nav-link{position:relative;padding:9px 16px;font-size:14px;font-weight:500;color:var(--text-2);text-decoration:none;border-radius:10px;transition:all 0.2s}
+.nav-link:hover{color:var(--c-primary);background:var(--bg-chip)}
+.nav-link.active{color:var(--c-primary);background:var(--bg-chip);font-weight:600}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.search-box{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:12px;width:280px;transition:all 0.25s}
+.search-box:focus-within{border-color:var(--c-primary);box-shadow:0 0 0 4px rgba(var(--c-primary-rgb),0.12);background:#fff}
+.search-box svg{width:16px;height:16px;color:var(--text-3);flex-shrink:0}
+.search-box input{flex:1;background:transparent;border:none;outline:none;color:var(--text-1);font-family:inherit;font-size:14px}
+.search-box input::placeholder{color:var(--text-4)}
+.search-kbd{font-family:'JetBrains Mono',monospace;font-size:11px;padding:3px 6px;background:var(--bg-chip);border-radius:5px;color:var(--c-primary);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;font-family:inherit;font-size:14px;font-weight:600;border-radius:12px;cursor:pointer;transition:all 0.25s;text-decoration:none;border:1px solid transparent;white-space:nowrap}
+.btn svg{width:16px;height:16px}
+.btn-ghost{background:transparent;color:var(--text-2)}
+.btn-ghost:hover{color:var(--c-primary);background:var(--bg-chip)}
+.btn-primary{background:var(--grad-primary);color:var(--text-on-primary);box-shadow:var(--shadow-primary)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(var(--c-primary-rgb),0.38)}
+.btn-outline{background:var(--bg-card);border-color:var(--border-subtle);color:var(--text-2)}
+.btn-outline:hover{color:var(--c-primary);border-color:var(--c-primary)}
+.btn-sm{padding:7px 12px;font-size:12.5px;border-radius:10px}
+.btn-icon{width:36px;height:36px;padding:0;border-radius:10px;display:grid;place-items:center;background:var(--bg-chip);border:1px solid transparent;color:var(--text-2);cursor:pointer;transition:all 0.2s}
+.btn-icon:hover{color:var(--c-primary);border-color:var(--border-strong);background:var(--bg-card-solid)}
+.btn-icon svg{width:17px;height:17px}
+.avatar-wrap{position:relative}
+.avatar{width:40px;height:40px;border-radius:50%;border:2px solid var(--bg-card-solid);background:var(--grad-primary);display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 12px rgba(var(--c-primary-rgb),0.25)}
+.avatar:hover{transform:scale(1.08);box-shadow:0 6px 18px rgba(var(--c-primary-rgb),0.35)}
+.avatar-menu{position:absolute;top:calc(100% + 10px);right:0;min-width:220px;padding:8px;background:var(--bg-blur-strong);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);border:1px solid var(--border-subtle);border-radius:16px;box-shadow:var(--shadow-glass-lg);opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.22s cubic-bezier(.2,.8,.2,1);z-index:200}
+.avatar-wrap.open .avatar-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.avatar-menu-head{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border-subtle);margin-bottom:6px}
+.avatar-menu-head .av-mini{width:36px;height:36px;border-radius:10px;background:var(--grad-primary);color:#fff;font-weight:700;display:grid;place-items:center}
+.avatar-menu-head .av-name{font-size:14px;font-weight:700;color:var(--text-1)}
+.avatar-menu-head .av-mail{font-size:12px;color:var(--text-3);font-family:'JetBrains Mono',monospace}
+.avatar-menu a{display:flex;align-items:center;gap:10px;padding:9px 12px;text-decoration:none;font-size:14px;color:var(--text-2);border-radius:10px;font-weight:500;transition:all 0.18s}
+.avatar-menu a:hover{background:var(--bg-chip);color:var(--c-primary)}
+.avatar-menu a svg{width:16px;height:16px}
+.avatar-menu .menu-sep{height:1px;background:var(--border-subtle);margin:6px 4px}
+.chat-page{max-width:1400px;margin:0 auto;padding:28px 24px 24px}
+.chat-grid{display:grid;grid-template-columns:260px 1fr 280px;gap:20px;align-items:start;min-height:780px}
+.conv-panel{position:sticky;top:100px;padding:18px 14px;border-radius:20px;max-height:calc(100vh - 130px);display:flex;flex-direction:column;gap:14px}
+.conv-head{display:flex;align-items:center;justify-content:space-between;padding:0 6px}
+.conv-head h2{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
+.conv-head h2 .bar{width:4px;height:20px;background:var(--grad-primary);border-radius:2px;box-shadow:0 0 10px rgba(var(--c-primary-rgb),0.35)}
+.new-chat-btn{width:34px;height:34px;border-radius:10px;border:none;background:var(--grad-primary);color:#fff;cursor:pointer;display:grid;place-items:center;transition:all 0.25s;box-shadow:var(--shadow-primary)}
+.new-chat-btn:hover{transform:translateY(-2px) rotate(90deg)}
+.new-chat-btn svg{width:16px;height:16px}
+.conv-search{display:flex;align-items:center;gap:8px;padding:9px 14px;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:12px;transition:all 0.2s}
+.conv-search:focus-within{border-color:var(--c-primary);box-shadow:0 0 0 4px rgba(var(--c-primary-rgb),0.12);background:#fff}
+.conv-search svg{width:15px;height:15px;color:var(--text-3);flex-shrink:0}
+.conv-search input{flex:1;background:transparent;border:none;outline:none;font-family:inherit;font-size:13px;color:var(--text-1)}
+.conv-search input::placeholder{color:var(--text-4)}
+.conv-tabs{display:flex;gap:3px;padding:3px;background:var(--bg-chip);border-radius:10px}
+.conv-tab{flex:1;padding:7px 0;font-size:12.5px;font-weight:600;color:var(--text-3);border-radius:8px;cursor:pointer;transition:all 0.2s;text-align:center;background:transparent;border:none;font-family:inherit}
+.conv-tab:hover{color:var(--text-1)}
+.conv-tab.active{background:var(--bg-card-solid);color:var(--c-primary);box-shadow:0 2px 6px rgba(15,30,80,0.06)}
+.conv-list{flex:1;overflow-y:auto;padding:4px 2px;display:flex;flex-direction:column;gap:2px;min-height:0}
+.conv-item{display:flex;gap:12px;padding:11px 10px;border-radius:12px;cursor:pointer;transition:all 0.2s;align-items:flex-start;position:relative;border:1px solid transparent}
+.conv-item::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--grad-primary);opacity:0;transform:scaleY(0);transition:all 0.2s}
+.conv-item:hover{background:rgba(var(--c-primary-rgb),0.06)}
+.conv-item.active{background:var(--bg-chip);border-color:var(--border-strong)}
+.conv-item.active::before{opacity:1;transform:scaleY(1)}
+.conv-item.unread .conv-user-name{color:var(--c-primary-deep);font-weight:700}
+.conv-item.unread .conv-time{color:var(--c-primary);font-weight:600}
+.conv-avatar-wrap{position:relative;flex-shrink:0}
+.conv-avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;font-family:'Space Grotesk',sans-serif}
+.conv-status{position:absolute;bottom:0;right:0;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg-card-solid);background:#94A3B8}
+.conv-status.online{background:#10B981;box-shadow:0 0 0 2px rgba(16,185,129,0.25)}
+.av-1{background:linear-gradient(135deg,#3B82F6,#06B6D4)}.av-2{background:linear-gradient(135deg,#F97316,#F43F5E)}.av-3{background:linear-gradient(135deg,#10B981,#0EA5E9)}.av-4{background:linear-gradient(135deg,#8B5CF6,#EC4899)}.av-5{background:linear-gradient(135deg,#D97706,#DC2626)}.av-6{background:linear-gradient(135deg,#06B6D4,#3B82F6)}.av-7{background:linear-gradient(135deg,#EC4899,#8B5CF6)}.av-8{background:linear-gradient(135deg,#14B8A6,#10B981)}.av-9{background:linear-gradient(135deg,#6366F1,#8B5CF6)}.av-10{background:linear-gradient(135deg,#F59E0B,#D97706)}.av-official{background:linear-gradient(135deg,#64748B,#475569)}.av-system{background:linear-gradient(135deg,#3B82F6,#8B5CF6)}
+.conv-body{flex:1;min-width:0}
+.conv-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:3px}
+.conv-user-name{font-size:13.5px;font-weight:600;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv-time{font-size:11px;color:var(--text-4);white-space:nowrap;flex-shrink:0}
+.conv-bottom{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.conv-preview{font-size:12px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.conv-badge{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--grad-primary);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center;flex-shrink:0;box-shadow:0 2px 6px rgba(var(--c-primary-rgb),0.35)}
+.chat-panel-col{display:flex;flex-direction:column;border-radius:20px;overflow:hidden;min-height:780px;max-height:calc(100vh - 130px);position:sticky;top:100px}
+.chat-header{height:60px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid var(--border-subtle);background:rgba(255,255,255,0.3);backdrop-filter:blur(10px);flex-shrink:0}
+.chat-header-left{display:flex;align-items:center;gap:12px;min-width:0}
+.chat-avatar-wrap{position:relative;flex-shrink:0}
+.chat-avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;font-family:'Space Grotesk',sans-serif}
+.chat-status-dot{position:absolute;bottom:0;right:0;width:10px;height:10px;border-radius:50%;border:2px solid var(--bg-card-solid);background:#94A3B8}
+.chat-status-dot.online{background:#10B981}
+.chat-user-info{min-width:0}
+.chat-user-name{font-size:15px;font-weight:700;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-user-role{font-size:11.5px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.chat-user-status{font-size:11.5px;color:var(--text-3);margin-top:1px}
+.chat-user-status.online{color:#10B981;font-weight:600}
+.chat-header-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.chat-menu-wrap{position:relative}
+.chat-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:180px;padding:6px;background:var(--bg-blur-strong);backdrop-filter:blur(24px) saturate(1.4);border:1px solid var(--border-subtle);border-radius:12px;box-shadow:var(--shadow-glass-lg);opacity:0;visibility:hidden;transform:translateY(-6px);transition:all 0.2s;z-index:50}
+.chat-menu-wrap.open .chat-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.chat-menu button{width:100%;display:flex;align-items:center;gap:10px;padding:9px 12px;border:none;background:transparent;color:var(--text-2);font-size:13px;font-weight:500;font-family:inherit;border-radius:8px;cursor:pointer;transition:all 0.18s;text-align:left}
+.chat-menu button:hover{background:var(--bg-chip);color:var(--c-primary)}
+.chat-menu button svg{width:15px;height:15px}
+.chat-menu a{display:flex;align-items:center;gap:10px;padding:9px 12px;border:none;background:transparent;color:var(--text-2);font-size:13px;font-weight:500;font-family:inherit;border-radius:8px;cursor:pointer;transition:all 0.18s;text-align:left;text-decoration:none}
+.chat-menu a:hover{background:var(--bg-chip);color:var(--c-primary)}
+.chat-menu a svg{width:15px;height:15px}
+.chat-body{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;background:linear-gradient(180deg,rgba(255,255,255,0.1) 0%,rgba(255,255,255,0.2) 100%);min-height:0}
+.chat-search-bar{display:none;align-items:center;gap:8px;padding:8px 16px;background:var(--bg-input);border-bottom:1px solid var(--border-subtle);flex-shrink:0}
+.chat-search-bar.open{display:flex}
+.chat-search-bar input{flex:1;background:transparent;border:none;outline:none;font-family:inherit;font-size:13.5px;color:var(--text-1)}
+.chat-search-bar input::placeholder{color:var(--text-4)}
+.chat-search-count{font-size:12px;color:var(--text-3);font-weight:600;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+.chat-search-nav{display:flex;gap:2px}
+.search-nav-btn{width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:var(--text-3);cursor:pointer;display:grid;place-items:center;transition:all 0.15s}
+.search-nav-btn:hover:not(:disabled){color:var(--c-primary);background:var(--bg-chip)}
+.search-nav-btn:disabled{opacity:0.3;cursor:not-allowed}
+.search-nav-btn svg{width:15px;height:15px}
+.search-close-btn{width:28px;height:28px;border-radius:8px;border:none;background:transparent;color:var(--text-3);cursor:pointer;display:grid;place-items:center;transition:all 0.15s}
+.search-close-btn:hover{color:#EF4444;background:rgba(239,68,68,0.1)}
+.search-close-btn svg{width:15px;height:15px}
+.msg-bubble mark.search-hl{background:rgba(255,235,59,0.55);color:inherit;border-radius:3px;padding:1px 2px;box-shadow:0 0 0 1px rgba(200,160,0,0.3)}
+.msg-bubble mark.search-hl.current{background:rgba(249,115,22,0.6);box-shadow:0 0 0 2px rgba(249,115,22,0.4);animation:pulse 1s ease}
+.msg-code mark.search-hl{background:rgba(255,235,59,0.3);color:#FBBF24;border-radius:2px}
+.msg-code mark.search-hl.current{background:rgba(249,115,22,0.5);color:#FED7AA}
+.msg-search-empty{padding:40px 20px;text-align:center;color:var(--text-4);font-size:13px}
+.msg-date-divider{display:flex;align-items:center;gap:12px;margin:8px 0 4px}
+.msg-date-divider::before,.msg-date-divider::after{content:'';flex:1;height:1px;background:var(--border-subtle)}
+.msg-date-text{font-size:12px;color:var(--text-4);font-weight:600;padding:4px 14px;background:var(--bg-chip);border-radius:999px}
+.msg-new-divider{display:flex;align-items:center;gap:10px;margin:12px 0 4px}
+.msg-new-divider::before,.msg-new-divider::after{content:'';flex:1;height:1px;border-top:2px dashed var(--c-primary);opacity:0.6}
+.msg-new-text{font-size:12px;color:var(--c-primary);font-weight:700;white-space:nowrap}
+.msg-row{display:flex;gap:10px;max-width:78%;animation:fade-in-up 0.3s ease}
+.msg-row.me{align-self:flex-end;flex-direction:row-reverse}
+.msg-avatar-sm{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:12px;font-family:'Space Grotesk',sans-serif;flex-shrink:0}
+.msg-content{display:flex;flex-direction:column;gap:4px;max-width:100%}
+.msg-row.them .msg-sender{font-size:11.5px;color:var(--text-3);font-weight:600;padding-left:2px}
+.msg-row.me .msg-sender{display:none}
+.msg-bubble{padding:10px 14px;font-size:14px;line-height:1.55;word-break:break-word;position:relative}
+.msg-row.them .msg-bubble{background:var(--bg-card-solid);color:var(--text-1);border-radius:18px 18px 18px 4px;box-shadow:var(--shadow-glass);border:1px solid var(--border-subtle)}
+.msg-row.me .msg-bubble{background:var(--grad-primary);color:#fff;border-radius:18px 18px 4px 18px;box-shadow:var(--shadow-primary)}
+.msg-time-inline{display:inline-block;margin-left:10px;font-size:10.5px;opacity:0.75;font-weight:500;vertical-align:baseline}
+.msg-row.them .msg-time-wrap{display:flex;align-items:center;gap:8px;padding-left:2px}
+.msg-time{font-size:11px;color:var(--text-4);white-space:nowrap}
+.msg-read-status{font-size:11px;color:var(--text-3);white-space:nowrap}
+.msg-read-status.read{color:var(--c-primary);font-weight:600}
+.msg-image{max-width:280px;border-radius:12px;overflow:hidden;cursor:pointer;border:2px solid rgba(255,255,255,0.5);box-shadow:var(--shadow-glass);transition:transform 0.2s}
+.msg-image:hover{transform:scale(1.02)}
+.msg-image img{width:100%;display:block;height:auto}
+.msg-code{background:rgba(15,23,42,0.88);color:#E2E8F0;padding:14px 16px;border-radius:12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.6;white-space:pre-wrap;word-break:break-all;border:1px solid rgba(148,163,184,0.2);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);max-width:400px}
+.msg-code .code-lang{display:block;font-size:10.5px;color:var(--c-accent);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid rgba(148,163,184,0.15)}
+.msg-system{align-self:center;max-width:85%;font-size:12px;color:var(--text-4);text-align:center;padding:8px 16px;background:var(--bg-chip);border-radius:999px;margin:4px 0}
+.chat-input-area{border-top:1px solid var(--border-subtle);background:rgba(255,255,255,0.4);backdrop-filter:blur(12px);padding:12px 20px 14px;flex-shrink:0}
+.toolbar{display:flex;align-items:center;gap:4px;margin-bottom:10px;position:relative}
+.toolbar-btn{width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:var(--text-2);cursor:pointer;display:grid;place-items:center;transition:all 0.2s}
+.toolbar-btn:hover{color:var(--c-primary);background:var(--bg-chip)}
+.toolbar-btn svg{width:17px;height:17px}
+.emoji-panel{position:absolute;bottom:calc(100% + 8px);left:0;padding:10px;background:var(--bg-blur-strong);backdrop-filter:blur(24px) saturate(1.4);border:1px solid var(--border-subtle);border-radius:14px;box-shadow:var(--shadow-glass-lg);display:none;grid-template-columns:repeat(6,1fr);gap:2px;width:260px;z-index:40}
+.emoji-panel.open{display:grid}
+.emoji-item{width:36px;height:36px;border-radius:8px;border:none;background:transparent;font-size:20px;cursor:pointer;transition:all 0.15s;display:grid;place-items:center}
+.emoji-item:hover{background:var(--bg-chip);transform:scale(1.2)}
+.textarea-wrap{position:relative}
+.chat-textarea{width:100%;min-height:56px;max-height:160px;padding:12px 60px 12px 14px;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:14px;font-family:inherit;font-size:14px;color:var(--text-1);resize:none;outline:none;transition:all 0.25s;line-height:1.55;overflow-y:auto}
+.chat-textarea:focus{border-color:var(--c-primary);box-shadow:0 0 0 4px rgba(var(--c-primary-rgb),0.12);background:#fff}
+.chat-textarea::placeholder{color:var(--text-4)}
+.send-btn{position:absolute;right:8px;bottom:8px;width:40px;height:40px;border-radius:12px;border:none;background:var(--grad-primary);color:#fff;cursor:pointer;display:grid;place-items:center;transition:all 0.25s;box-shadow:var(--shadow-primary)}
+.send-btn:hover:not(:disabled){transform:translateY(-2px)}
+.send-btn:disabled{opacity:0.5;cursor:not-allowed}
+.send-btn svg{width:17px;height:17px}
+.input-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding:0 2px}
+.input-hint{font-size:11px;color:var(--text-4)}
+.input-count{font-size:11px;color:var(--text-4);font-family:'JetBrains Mono',monospace}
+.input-count.over{color:#EF4444}
+.contact-panel{position:sticky;top:100px;padding:20px 16px;border-radius:20px;max-height:calc(100vh - 130px);overflow-y:auto;display:flex;flex-direction:column;gap:18px}
+.contact-profile{text-align:center;padding:6px 4px 2px}
+.contact-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:26px;font-family:'Space Grotesk',sans-serif;box-shadow:0 6px 20px rgba(var(--c-primary-rgb),0.3);border:3px solid var(--bg-card-solid);position:relative}
+.contact-avatar::after{content:'';position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(255,255,255,0.3);pointer-events:none}
+.contact-name{font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:4px;display:inline-flex;align-items:center;gap:6px}
+.lv-badge{display:inline-block;padding:2px 7px;font-size:10.5px;font-weight:700;background:var(--grad-primary);color:#fff;border-radius:6px;font-family:'JetBrains Mono',monospace;letter-spacing:0.02em}
+.contact-role{font-size:12.5px;color:var(--text-3);margin-bottom:10px}
+.view-profile-link{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--c-primary);font-weight:600;text-decoration:none;transition:all 0.2s}
+.view-profile-link:hover{text-decoration:underline}
+.view-profile-link svg{width:13px;height:13px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 10px;background:var(--bg-chip);border-radius:14px}
+.stat-item{text-align:center}
+.stat-num{font-size:17px;font-weight:800;color:var(--text-1);font-family:'Space Grotesk',sans-serif;line-height:1.2}
+.stat-label{font-size:10.5px;color:var(--text-3);font-weight:500;margin-top:2px;line-height:1.3}
+.action-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.action-btn{padding:9px 10px;font-size:12.5px;font-weight:600;border-radius:11px;border:1px solid var(--border-subtle);background:var(--bg-card-solid);color:var(--text-2);cursor:pointer;transition:all 0.2s;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:5px}
+.action-btn:hover{color:var(--c-primary);border-color:var(--c-primary);background:var(--bg-chip)}
+.action-btn.followed{background:var(--bg-chip);color:var(--c-primary);border-color:var(--border-strong)}
+.action-btn svg{width:14px;height:14px}
+.section-title{font-size:11.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-4);margin-bottom:10px}
+.mutual-section{margin-top:-2px}
+.mutual-text{font-size:12.5px;color:var(--text-2);margin-bottom:10px;font-weight:500}
+.mutual-text b{color:var(--c-primary);font-weight:700}
+.mutual-avatars{display:flex;align-items:center;gap:0;margin-bottom:10px}
+.mutual-avatar{width:32px;height:32px;border-radius:50%;border:2px solid var(--bg-card-solid);display:grid;place-items:center;color:#fff;font-weight:700;font-size:11px;font-family:'Space Grotesk',sans-serif;margin-left:-8px;transition:all 0.2s;cursor:pointer}
+.mutual-avatar:first-child{margin-left:0}
+.mutual-avatar:hover{transform:translateY(-3px)}
+.mutual-more{margin-left:8px;font-size:12px;color:var(--text-3);font-weight:500}
+.share-link-section{margin-top:-2px}
+.share-input-wrap{display:flex;align-items:center;gap:8px}
+.share-input{flex:1;padding:9px 12px;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-2);outline:none;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.copy-link-btn{padding:9px 12px;font-size:12px;font-weight:600;border-radius:10px;border:none;background:var(--grad-primary);color:#fff;cursor:pointer;transition:all 0.2s;font-family:inherit;display:inline-flex;align-items:center;gap:5px;box-shadow:var(--shadow-primary);flex-shrink:0}
+.copy-link-btn:hover{transform:translateY(-2px)}
+.copy-link-btn svg{width:13px;height:13px}
+.footer{margin-top:32px;padding:48px 24px 32px;border-top:1px solid var(--border-subtle)}
+.footer-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:40px;padding-bottom:36px;border-bottom:1px solid var(--border-subtle)}
+.footer-brand p{font-size:13.5px;color:var(--text-3);line-height:1.7;margin:14px 0 18px;max-width:280px}
+.footer-social{display:flex;gap:8px}
+.social-btn{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--bg-card);border:1px solid var(--border-subtle);color:var(--text-3);text-decoration:none;transition:all 0.25s}
+.social-btn:hover{color:var(--c-primary);border-color:var(--c-primary);transform:translateY(-2px);box-shadow:var(--shadow-glass)}
+.social-btn svg{width:16px;height:16px}
+.footer-col h5{font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:16px;letter-spacing:0.02em}
+.footer-col a{display:block;font-size:13px;color:var(--text-3);padding:5px 0;text-decoration:none;transition:all 0.18s}
+.footer-col a:hover{color:var(--c-primary);transform:translateX(3px)}
+.footer-bottom{max-width:1400px;margin:0 auto;padding-top:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer-copy{font-size:12.5px;color:var(--text-4);font-weight:500}
+.footer-ver{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.footer-ver .ver-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:var(--bg-chip);border-radius:999px;font-size:11px;color:var(--text-3);font-weight:600;font-family:'JetBrains Mono',monospace}
+.footer-ver .ver-chip .dot{width:6px;height:6px;border-radius:50%;background:#10B981;box-shadow:0 0 0 3px rgba(16,185,129,0.2);animation:beat 2s infinite}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.48);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex;animation:fade-in-up 0.28s ease}
+.modal{width:100%;max-width:600px;background:var(--bg-blur-strong);backdrop-filter:blur(28px) saturate(1.5);border:1px solid var(--border-subtle);border-radius:22px;box-shadow:var(--shadow-glass-lg);overflow:hidden;animation:fade-in-up 0.32s cubic-bezier(0.2,0.9,0.3,1.2)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border-subtle)}
+.modal-head h3{font-size:17px;font-weight:700;color:var(--text-1);display:flex;align-items:center;gap:9px}
+.modal-head h3 .bar{width:4px;height:20px;background:var(--grad-primary);border-radius:2px}
+.modal-close{width:34px;height:34px;border-radius:10px;border:none;background:var(--bg-chip);color:var(--text-2);cursor:pointer;display:grid;place-items:center;transition:all 0.2s}
+.modal-close:hover{background:#EF4444;color:#fff;transform:rotate(90deg)}
+.modal-close svg{width:15px;height:15px}
+.modal-body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px;max-height:62vh;overflow-y:auto}
+.modal-search{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--bg-input);border:1px solid var(--border-subtle);border-radius:13px;transition:all 0.2s}
+.modal-search:focus-within{border-color:var(--c-primary);box-shadow:0 0 0 4px rgba(var(--c-primary-rgb),0.12);background:#fff}
+.modal-search svg{width:17px;height:17px;color:var(--text-3);flex-shrink:0}
+.modal-search input{flex:1;background:transparent;border:none;outline:none;font-family:inherit;font-size:14px;color:var(--text-1)}
+.modal-search input::placeholder{color:var(--text-4)}
+.modal-tabs{display:flex;gap:4px;padding:3px;background:var(--bg-chip);border-radius:10px;width:max-content}
+.modal-tab{padding:7px 16px;font-size:12.5px;font-weight:600;color:var(--text-3);border-radius:8px;cursor:pointer;transition:all 0.2s;background:transparent;border:none;font-family:inherit}
+.modal-tab.active{background:var(--bg-card-solid);color:var(--c-primary);box-shadow:0 2px 6px rgba(15,30,80,0.06)}
+.followers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.follower-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;border:1px solid var(--border-subtle);background:var(--bg-card-solid);cursor:pointer;transition:all 0.2s;position:relative}
+.follower-item:hover{border-color:var(--c-primary);background:var(--bg-chip)}
+.follower-item.checked{border-color:var(--c-primary);background:var(--bg-primary-soft)}
+.follower-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:12px;font-family:'Space Grotesk',sans-serif;flex-shrink:0}
+.follower-name{font-size:12.5px;font-weight:600;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.follower-check{width:18px;height:18px;border-radius:5px;border:2px solid var(--border-strong);display:grid;place-items:center;transition:all 0.2s;flex-shrink:0;background:#fff}
+.follower-item.checked .follower-check{background:var(--grad-primary);border-color:transparent}
+.follower-check svg{width:11px;height:11px;color:#fff;opacity:0;transition:all 0.2s}
+.follower-item.checked .follower-check svg{opacity:1}
+.modal-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 24px;border-top:1px solid var(--border-subtle);background:rgba(255,255,255,0.25)}
+.modal-selection-info{font-size:12.5px;color:var(--text-3);font-weight:500}
+.modal-selection-info b{color:var(--c-primary);font-weight:700}
+.modal-btns{display:flex;gap:8px}
+.toast-wrap{position:fixed;top:96px;right:24px;z-index:300;display:flex;flex-direction:column;gap:10px;max-width:340px;pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg-blur-strong);backdrop-filter:blur(24px) saturate(1.5);border:1px solid var(--border-subtle);border-radius:12px;box-shadow:var(--shadow-glass-lg);pointer-events:auto;animation:fade-in-up 0.3s ease,slide-in-right 0.35s ease}
+.toast.t-success{border-color:rgba(16,185,129,0.3)}
+.toast.t-success .toast-icon{background:rgba(16,185,129,0.15);color:#10B981}
+.toast.t-error{border-color:rgba(239,68,68,0.3)}
+.toast.t-error .toast-icon{background:rgba(239,68,68,0.15);color:#EF4444}
+.toast.t-info{border-color:rgba(59,130,246,0.3)}
+.toast.t-info .toast-icon{background:rgba(59,130,246,0.15);color:var(--c-primary)}
+.toast-icon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;flex-shrink:0}
+.toast-icon svg{width:16px;height:16px}
+.toast-body{flex:1;min-width:0}
+.toast-title{font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:2px}
+.toast-text{font-size:12px;color:var(--text-3);line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.toast.leave{animation:fade-out-down 0.25s ease forwards}
+@keyframes slide-in-right{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes fade-out-down{to{transform:translateY(12px);opacity:0}}
+@keyframes float-a{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.05)}66%{transform:translate(-20px,20px) scale(0.95)}}
+@keyframes float-b{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-30px,40px) scale(0.92)}66%{transform:translate(30px,-20px) scale(1.08)}}
+@keyframes fade-in-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.7;transform:scale(1.08)}}
+@keyframes beat{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.9)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(.2,.8,.2,1),transform 0.7s cubic-bezier(.2,.8,.2,1)}
+.reveal.shown{opacity:1;transform:translateY(0)}
+.page-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--grad-hero)}
+.back-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:14px;border:none;background:var(--grad-primary);color:#fff;cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow-primary);z-index:80;opacity:0;visibility:hidden;transform:translateY(16px);transition:all 0.3s}
+.back-top.show{opacity:1;visibility:visible;transform:translateY(0)}
+.back-top:hover{transform:translateY(-4px)}
+.back-top svg{width:18px;height:18px}
+.mob-back{display:none;align-items:center;gap:8px;padding:4px 10px 4px 2px;font-size:13.5px;font-weight:600;color:var(--text-2);border:none;background:transparent;cursor:pointer;font-family:inherit}
+.mob-back svg{width:18px;height:18px}
+@media (max-width:1200px){
+.chat-grid{grid-template-columns:260px 1fr}
+.contact-panel{display:none}
+.footer-inner{grid-template-columns:1.2fr repeat(2,1fr);gap:32px}
+}
+@media (max-width:860px){
+.nav-links{display:none}
+.search-box{display:none}
+.chat-grid{grid-template-columns:230px 1fr;gap:12px}
+.chat-page{padding:16px 12px}
+.footer-inner{grid-template-columns:1fr 1fr;gap:24px}
+.conv-item{padding:9px 8px;gap:9px}
+.conv-avatar{width:38px;height:38px;font-size:13px}
+.conv-user-name{font-size:12.5px}
+.conv-preview{font-size:11px}
+}
+@media (max-width:640px){
+.chat-grid{grid-template-columns:1fr;position:relative}
+.chat-grid.show-conv .chat-panel-col{display:none}
+.chat-grid.show-conv .conv-panel{display:flex}
+.chat-grid.show-chat .conv-panel{display:none}
+.chat-grid.show-chat .chat-panel-col{display:flex}
+.chat-panel-col{display:none}
+.conv-panel{max-height:calc(100vh - 100px)}
+.mob-back{display:inline-flex}
+.chat-header{padding:0 14px;height:54px}
+.chat-body{padding:16px 14px}
+.chat-input-area{padding:10px 12px 12px}
+.footer-inner{grid-template-columns:1fr;gap:24px}
+.footer-bottom{flex-direction:column;text-align:center}
+.nav{max-width:calc(100% - 20px)}
+.logo-mark{width:34px;height:34px}
+.logo-text{font-size:17px}
+.theme-switcher{gap:3px;padding:4px}
+.theme-dot{width:24px;height:24px}
+.theme-dot::after{width:18px;height:18px}
+}
+</style>
+</head>
+<body>
+<div class="page-bg"></div>
+<header class="nav glass-strong reveal">
+<div class="nav-inner">
+<a href="index.html" class="logo" aria-label="CodeHub 首页">
+<div class="logo-mark">C</div>
+<span class="logo-text">Code<em>Hub</em></span>
+</a>
+<nav>
+<ul class="nav-links">
+<li><a href="index.html" class="nav-link">首页</a></li>
+<li><a href="article.html" class="nav-link">文章</a></li>
+<li><a href="#" class="nav-link active">讨论</a></li>
+<li><a href="#" class="nav-link">开源</a></li>
+<li><a href="#" class="nav-link">活动</a></li>
+<li><a href="#" class="nav-link">招聘</a></li>
+</ul>
+</nav>
+<div class="search-box">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input type="text" id="nav-search-input" placeholder="搜索文章、用户、项目…">
+<span class="search-kbd">⌘K</span>
+</div>
+<div class="theme-switcher" title="切换主题">
+<button class="theme-dot theme-ocean" data-theme="ocean" aria-label="海洋蓝"></button>
+<button class="theme-dot theme-mint" data-theme="mint" aria-label="薄荷绿"></button>
+<button class="theme-dot theme-coral" data-theme="coral" aria-label="珊瑚橙"></button>
+<button class="theme-dot theme-lilac" data-theme="lilac" aria-label="丁香紫"></button>
+<button class="theme-dot theme-amber" data-theme="amber" aria-label="琥珀黄"></button>
+</div>
+<div class="nav-actions">
+<button class="btn btn-ghost btn-sm" onclick="showToast('info','跳转提示','前往登录页面（模拟）')">登录</button>
+<button class="btn btn-primary btn-sm" onclick="showToast('info','跳转提示','前往注册页面（模拟）')">注册</button>
+<div class="avatar-wrap">
+<button class="avatar" id="avatar-btn" style="background:linear-gradient(135deg,#3B82F6,#06B6D4)">AL</button>
+<div class="avatar-menu" id="avatar-menu">
+<div class="avatar-menu-head">
+<div class="av-mini" style="background:linear-gradient(135deg,#3B82F6,#06B6D4)">AL</div>
+<div>
+<div class="av-name">Alex Liu</div>
+<div class="av-mail">alex@codehub.dev</div>
+</div>
+</div>
+<a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>用户主页</a>
+<a href="chat.html" style="color:var(--c-primary);background:var(--bg-chip)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>私信</a>
+<a href="messages.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>消息中心</a>
+<a href="settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>设置</a>
+<div class="menu-sep"></div>
+<a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>退出登录</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="chat-page">
+<div class="chat-grid show-conv" id="chat-grid">
+<aside class="conv-panel card reveal" id="conv-panel">
+<div class="conv-head">
+<h2><span class="bar"></span>私信</h2>
+<button class="new-chat-btn" id="new-chat-btn" title="发起新对话"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg></button>
+</div>
+<div class="conv-search">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input type="text" id="conv-search-input" placeholder="搜索聊天">
+</div>
+<div class="conv-tabs">
+<button class="conv-tab active" data-filter="all">全部</button>
+<button class="conv-tab" data-filter="unread">未读</button>
+<button class="conv-tab" data-filter="followed">关注的人</button>
+</div>
+<div class="conv-list" id="conv-list"></div>
+</aside>
+<section class="chat-panel-col card reveal" id="chat-col">
+<div class="chat-header">
+<button class="mob-back" id="mob-back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>返回</button>
+<div class="chat-header-left">
+<div class="chat-avatar-wrap">
+<div class="chat-avatar av-1" id="chat-top-avatar">R</div>
+<div class="chat-status-dot online" id="chat-top-status"></div>
+</div>
+<div class="chat-user-info">
+<div class="chat-user-name" id="chat-top-name">rust_sage</div>
+<div class="chat-user-role" id="chat-top-role">Rust 核心贡献者 · Mozilla</div>
+<div class="chat-user-status online" id="chat-top-status-text">● 在线</div>
+</div>
+</div>
+<div class="chat-header-right">
+<button class="btn-icon" id="chat-search-btn" title="搜索聊天记录"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+<button class="btn-icon" title="语音通话" onclick="showToast('info','语音通话','功能开发中，敬请期待')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></button>
+<div class="chat-menu-wrap" id="chat-menu-wrap">
+<button class="btn-icon" id="chat-menu-btn" title="更多选项" onclick="document.getElementById('chat-menu-wrap').classList.toggle('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button>
+<div class="chat-menu">
+<button onclick="clearChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>清空聊天</button>
+<button onclick="showToast('info','屏蔽','已屏蔽 rust_sage（模拟）')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" x2="19.07" y1="4.93" y2="19.07"></line></svg>屏蔽此人</button>
+<a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>查看资料</a>
+</div>
+</div>
+</div>
+</div>
+<div class="chat-search-bar" id="chat-search-bar">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--text-3);flex-shrink:0"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input type="text" id="chat-search-input" placeholder="搜索聊天记录…">
+<span class="chat-search-count" id="chat-search-count"></span>
+<div class="chat-search-nav">
+<button class="search-nav-btn" id="search-prev-btn" title="上一个" disabled=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+<button class="search-nav-btn" id="search-next-btn" title="下一个" disabled=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+</div>
+<button class="search-close-btn" id="search-close-btn" title="关闭搜索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+</div>
+<div class="chat-body" id="chat-body"></div>
+<div class="chat-input-area">
+<div class="toolbar">
+<button class="toolbar-btn" id="emoji-toggle" title="表情"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" x2="9.01" y1="9" y2="9"></line><line x1="15" x2="15.01" y1="9" y2="9"></line></svg></button>
+<div class="emoji-panel" id="emoji-panel"></div>
+<button class="toolbar-btn" title="上传图片" onclick="showToast('info','上传图片','文件选择器已打开（模拟）')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></button>
+<button class="toolbar-btn" title="上传附件" onclick="showToast('info','上传附件','文件选择器已打开（模拟）')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+<button class="toolbar-btn" title="插入代码块" onclick="insertCodeTemplate()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></button>
+<button class="toolbar-btn" title="更多" onclick="showToast('info','更多功能','功能开发中，敬请期待')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+</div>
+<div class="textarea-wrap">
+<textarea class="chat-textarea" id="chat-input" placeholder="写点什么…（Enter发送 / Shift+Enter换行）" maxlength="2000"></textarea>
+<button class="send-btn" id="send-btn" title="发送"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+</div>
+<div class="input-foot">
+<div class="input-hint">Enter 发送 / Shift+Enter 换行</div>
+<div class="input-count" id="input-count">0 / 2000</div>
+</div>
+</div>
+</section>
+<aside class="contact-panel card reveal">
+<div class="contact-profile">
+<div class="contact-avatar av-1" id="contact-avatar">R</div>
+<div class="contact-name"><span id="contact-name">rust_sage</span><span class="lv-badge">Lv.8</span></div>
+<div class="contact-role" id="contact-role">Rust 核心贡献者 · Mozilla</div>
+<a class="view-profile-link" href="profile.html">查看完整资料<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+</div>
+<div class="stats-grid">
+<div class="stat-item"><div class="stat-num">6</div><div class="stat-label">共同群组</div></div>
+<div class="stat-item"><div class="stat-num">328</div><div class="stat-label">关注天数</div></div>
+<div class="stat-item"><div class="stat-num">1,247</div><div class="stat-label">共发消息</div></div>
+</div>
+<div class="action-btns">
+<button class="action-btn followed" id="follow-btn" onclick="toggleFollow(this)">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>已关注</span>
+</button>
+<button class="action-btn" onclick="showToast('info','屏蔽用户','已屏蔽 rust_sage（模拟）')">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" x2="19.07" y1="4.93" y2="19.07"></line></svg>屏蔽
+</button>
+<button class="action-btn" onclick="showToast('info','推荐好友','已生成推荐卡片（模拟）')">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>推荐好友
+</button>
+<button class="action-btn" onclick="showToast('info','举报用户','已提交举报（模拟）')">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>举报
+</button>
+</div>
+<div class="mutual-section">
+<div class="section-title">共同关注</div>
+<div class="mutual-text">你们有 <b>8</b> 位共同关注</div>
+<div class="mutual-avatars">
+<div class="mutual-avatar av-2" title="ai_pioneer">A</div>
+<div class="mutual-avatar av-3" title="infra_guru">I</div>
+<div class="mutual-avatar av-4" title="cloud_native">C</div>
+<div class="mutual-avatar av-5" title="code_reviewer">C</div>
+<div class="mutual-avatar av-6" title="gopher_dev">G</div>
+<div class="mutual-avatar av-7" title="sys_caller">S</div>
+<div class="mutual-avatar av-8" title="devops_angel">D</div>
+<div class="mutual-avatar av-9" title="web_wizard">W</div>
+</div>
+<span class="mutual-more">等8位</span>
+</div>
+<div class="share-link-section">
+<div class="section-title">分享此对话</div>
+<div class="share-input-wrap">
+<input class="share-input" id="share-link-input" value="https://codehub.dev/chat/rust_sage?ref=share" readonly="">
+<button class="copy-link-btn" onclick="copyShareLink()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>复制链接</button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<footer class="footer reveal">
+<div class="footer-inner">
+<div class="footer-brand">
+<a href="index.html" class="logo" style="text-decoration:none">
+<div class="logo-mark">C</div>
+<span class="logo-text">Code<em>Hub</em></span>
+</a>
+<p>为开发者打造的技术交流社区。分享代码，碰撞想法，让好的技术被更多人看见。</p>
+<div class="footer-social">
+<a href="#" class="social-btn" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.3-3.2-.1-.3-.6-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.2 2.9.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"></path></svg></a>
+<a href="#" class="social-btn" title="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.5 8.6L23 22h-6.8l-5.3-6.9L4.7 22H1.6l8-9.2L1 2h7l4.8 6.3L18.9 2Zm-2.4 18h1.9L7.6 4H5.6l10.9 16Z"></path></svg></a>
+<a href="#" class="social-btn" title="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.5 3l-.2.4c1.5.4 2.8.9 4 1.7a15.4 15.4 0 0 0-12.6 0C7.8 4.3 9.2 3.8 10.7 3.4L10.5 3c-1.7.3-3.4.9-4.8 1.9C3.3 8.2 2.6 11.8 3 15.3a20 20 0 0 0 6 3l.5-.8c-1-.3-2-.8-2.8-1.4.2-.2.5-.4.7-.6a13.8 13.8 0 0 0 11.2 0l.7.6c-.9.6-1.9 1.1-2.9 1.4l.5.7a20 20 0 0 0 6-3c.5-4-.4-7.7-2.6-10.9ZM9.7 14.1c-1 0-1.8-1-1.8-2.1s.8-2.2 1.8-2.2 1.9 1 1.8 2.2 0 2.1-1.8 2.1Zm5.6 0c-1 0-1.8-1-1.8-2.1s.8-2.2 1.8-2.2 1.9 1 1.8 2.2 0 2.1-1.8 2.1Z"></path></svg></a>
+<a href="#" class="social-btn" title="RSS"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+</div>
+</div>
+<div class="footer-col"><h5>社区</h5><a href="#">讨论区</a><a href="#">技术话题</a><a href="#">排行榜</a><a href="#">活跃用户</a><a href="#">积分体系</a></div>
+<div class="footer-col"><h5>内容</h5><a href="article.html">技术文章</a><a href="#">开源项目</a><a href="#">学习路线</a><a href="#">技术周刊</a><a href="#">活动回顾</a></div>
+<div class="footer-col"><h5>开源</h5><a href="#">CodeHub CLI</a><a href="#">设计规范</a><a href="#">贡献指南</a><a href="#">开源协议</a><a href="#">Issues</a></div>
+<div class="footer-col"><h5>关于</h5><a href="#">关于我们</a><a href="#">加入团队</a><a href="#">隐私政策</a><a href="#">服务条款</a><a href="#">联系我们</a></div>
+</div>
+<div class="footer-bottom">
+<div class="footer-copy">© 2025 CodeHub Community. All rights reserved.</div>
+<div class="footer-ver"><span class="ver-chip"><span class="dot"></span>v2.6.0 · Stable</span><span class="ver-chip">Build 2025.08.13</span></div>
+</div>
+</footer>
+<div class="modal-overlay" id="new-chat-modal">
+<div class="modal">
+<div class="modal-head">
+<h3><span class="bar"></span>发起新对话</h3>
+<button class="modal-close" onclick="closeNewChatModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+</div>
+<div class="modal-body">
+<div class="modal-search">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input type="text" id="modal-search-input" placeholder="搜索联系人…">
+</div>
+<div class="modal-tabs">
+<button class="modal-tab active" data-mtab="followed">关注的人</button>
+<button class="modal-tab" data-mtab="recent">最近聊天</button>
+</div>
+<div class="followers-grid" id="followers-grid"></div>
+</div>
+<div class="modal-foot">
+<div class="modal-selection-info">已选择 <b id="selected-count">0</b> 位联系人</div>
+<div class="modal-btns">
+<button class="btn-ghost" onclick="closeNewChatModal()">取消</button>
+<button class="btn-primary" onclick="createNewChat()">确定创建</button>
+</div>
+</div>
+</div>
+</div>
+<div class="toast-wrap" id="toast-wrap"></div>
+<button class="back-top" id="back-top" title="回到顶部"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+<script>
+(() => {
+const THEME_KEY = 'codehub-theme';
+const THEMES = ['ocean','mint','coral','lilac','amber'];
+const get$ = (id) => document.getElementById(id);
+const svgCheck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+function applyTheme(t){ if(!THEMES.includes(t)) t='ocean'; document.documentElement.setAttribute('data-theme', t); document.querySelectorAll('.theme-dot').forEach(d=>d.classList.toggle('active', d.dataset.theme===t)); try{localStorage.setItem(THEME_KEY, t)}catch(e){} }
+function initTheme(){ let t='ocean'; try{ const s=localStorage.getItem(THEME_KEY); if(s && THEMES.includes(s)) t=s; }catch(e){} applyTheme(t); }
+function showToast(type, title, text){ const wrap=get$('toast-wrap'); if(!wrap) return; const types = {success:'✓',error:'✕',info:'ℹ'}; const el=document.createElement('div'); el.className=`toast t-${type}`; el.innerHTML=`<div class="toast-icon">${type==='success'?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':type==='error'?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/></svg>'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-text">${text||''}</div></div>`; wrap.appendChild(el); setTimeout(()=>{ el.classList.add('leave'); setTimeout(()=>el.remove(),300); }, 2600); }
+window.showToast = showToast;
+const CONV_DATA = [
+{id:1,name:'rust_sage',role:'Rust 核心贡献者 · Mozilla',online:true,unread:2,preview:'太棒了，周末有空一起讨论下？',time:'10:24',av:'av-1',followed:true,official:false,stats:{groups:6,days:328,msgs:1247}},
+{id:2,name:'ai_pioneer',role:'AI 研究员 · OpenAI Lab',online:true,unread:1,preview:'关于 eBPF 的那篇文章你有看…',time:'昨天',av:'av-2',followed:true,official:false,stats:{groups:4,days:256,msgs:892}},
+{id:3,name:'infra_guru',role:'基础架构师 · 字节跳动',online:false,unread:0,preview:'好的，收到，已经转发给运维组',time:'昨天',av:'av-3',followed:true,official:false,stats:{groups:8,days:512,msgs:2048}},
+{id:4,name:'cloud_native',role:'云原生布道师 · CNCF',online:true,unread:0,preview:'K8S Operator 教程我已收藏',time:'周一',av:'av-4',followed:true,official:false,stats:{groups:10,days:640,msgs:3156}},
+{id:5,name:'系统通知',role:'CodeHub 官方通知',online:false,unread:1,preview:'恭喜您获得「月度活跃贡献…',time:'08-10',av:'av-system',followed:false,official:true,stats:{groups:0,days:999,msgs:128}},
+{id:6,name:'公告服务',role:'CodeHub 官方公告',online:false,unread:0,preview:'CodeHub v2.6.0 已发布，新…',time:'08-08',av:'av-official',followed:false,official:true,stats:{groups:0,days:999,msgs:86}},
+{id:7,name:'code_reviewer',role:'高级代码审核员 · GitHub',online:false,unread:0,preview:'你的PR已通过审核，谢谢贡献…',time:'08-05',av:'av-5',followed:true,official:false,stats:{groups:3,days:180,msgs:642}},
+{id:8,name:'gopher_dev',role:'Go 语言爱好者',online:false,unread:5,preview:'等3人赞了你的Go泛型文章…',time:'08-02',av:'av-6',followed:true,official:false,stats:{groups:5,days:120,msgs:456}},
+{id:9,name:'sys_caller',role:'系统底层开发者',online:false,unread:0,preview:'下次技术分享准备什么主题呢？',time:'07-28',av:'av-7',followed:true,official:false,stats:{groups:2,days:90,msgs:234}},
+{id:10,name:'devops_angel',role:'DevOps 工程师 · 腾讯云',online:true,unread:0,preview:'CICD那个问题已解决，多谢！',time:'07-25',av:'av-8',followed:true,official:false,stats:{groups:7,days:420,msgs:1680}},
+];
+function initial(name){ if(!name) return '?'; const p = name.split(/[_\s]/); let r=''; for(let i=0;i<Math.min(2,p.length);i++) if(p[i]) r += p[i][0].toUpperCase(); return r || name[0].toUpperCase(); }
+function renderConversationList(filter='all', search=''){
+  const list = get$('conv-list'); if(!list) return;
+  const kw = search.trim().toLowerCase();
+  let items = CONV_DATA.filter(c=>{
+    if(filter==='unread' && !c.unread) return false;
+    if(filter==='followed' && !c.followed) return false;
+    if(kw && !c.name.toLowerCase().includes(kw) && !c.preview.toLowerCase().includes(kw)) return false;
+    return true;
+  });
+  list.innerHTML = items.map(c=>{
+    const first = initial(c.name);
+    const unreadHTML = c.unread ? `<div class="conv-badge">${c.unread>99?'99+':c.unread}</div>` : '';
+    return `<div class="conv-item ${c.id===currentConvId?'active':''} ${c.unread?'unread':''}" data-cid="${c.id}" onclick="selectConversation(${c.id})">
+      <div class="conv-avatar-wrap"><div class="conv-avatar ${c.av}">${c.official? (c.name.includes('系统')?'🔔':'📢') : first}</div><div class="conv-status ${c.online?'online':''}"></div></div>
+      <div class="conv-body">
+        <div class="conv-top"><div class="conv-user-name">${c.name}</div><div class="conv-time">${c.time}</div></div>
+        <div class="conv-bottom"><div class="conv-preview">${c.preview}</div>${unreadHTML}</div>
+      </div>
+    </div>`;
+  }).join('') || `<div style="text-align:center;padding:30px 10px;color:var(--text-4);font-size:13px">没有匹配的会话</div>`;
+}
+const CONV_MESSAGES = {};
+function buildInitialMessages(cid){
+  const conv = CONV_DATA.find(c=>c.id===cid);
+  if(!conv) return [];
+  const name = conv.name;
+  const av = conv.av;
+  const first = initial(name);
+  const them = (text, time, extra='') => ({from:'them', name, av, first, text, time, ...(extra||{}), extra});
+  const me = (text, time, extra='', read=true) => ({from:'me', text, time, read, ...(extra||{}), extra});
+  if(cid===1){
+    return [
+      {type:'date', text:'昨天 8月12日'},
+      them('你好呀！看了你最近写的那篇《Rust异步运行时深度剖析》，写得真不错 🔥','18:30'),
+      me('感谢！其实我也是参考了 tokio 的源码加上自己的一些理解，整理出来的','18:33'),
+      them('文中关于 work-stealing 调度器那段分析特别到位，解决了我之前一直的困惑','18:35'),
+      {type:'system', text:`你已与 ${name} 建立好友关系 · 2024-09-15`},
+      them('对了，你有在写后续的 Pin/Unpin 相关文章吗？','18:37'),
+      me('有的，下一篇正在写，预计本周末能发出来，到时分享给你','18:39', '', false),
+      them('期待期待！','18:40'),
+      {type:'date', text:'今天 8月13日'},
+      them('早上好呀 ☀️','09:02'),
+      them('上次你提到的文章发了吗？','09:45'),
+      me('刚发！链接给你：https://codehub.dev/article/rust-pin-unpin','09:58', '', false),
+      them('太棒了！赶紧马住看 📖','09:59'),
+      them('刚好我最近在做一个相关的小项目，碰到一个问题想请教你一下：','10:05'),
+      them({type:'code', lang:'rust', content:`// 我想在 Future 中持有 &mut T，但被 lifetime 卡住了
+async fn process<'a>(data: &'a mut Data) -> Result<()> {
+    step1(data).await?;    // ↓ 编译器报错
+    step2(data).await?;    // use of moved value
+    Ok(())
+}`},'10:07'),
+      me('这是因为 &mut T 在第一次 await 后被 move 了。有几种解决方式：','10:12'),
+      me({type:'code', lang:'rust', content:`// 方案一：每一步重新借用
+async fn process<'a>(data: &'a mut Data) -> Result<()> {
+    step1(&mut *data).await?;
+    step2(&mut *data).await?;
+    Ok(())
+}`},'10:13', '', true),
+      me('方案二是用 Pin<Box<T>> 做堆分配，或者把流程拆成同步函数包起来','10:14', '', true),
+      them('秒懂！我按方案一改完编译通过了 ✅','10:18'),
+      them('最近社区有个 Rust meetup，你有空来线下一起聊聊吗？','10:20'),
+      them({type:'image', url:'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&auto=format&fit=crop&q=70', w:560, h:320, alt:'Meetup 海报'},'10:21'),
+      {type:'newline'},
+      them('太棒了，周末有空一起讨论下？','10:24'),
+    ];
+  }
+  if(cid===2){
+    return [
+      {type:'date', text:'昨天 8月12日'},
+      them('嗨！上次 eBPF LSM 那个补丁有新进展了','21:10'),
+      them('LKML 上有人 review 了，提了几个点','21:10'),
+      me('这么快？是 Andrew 吗？','21:15','',false),
+      them('对，就是他，主要是关于 map memory pinning','21:16'),
+      {type:'date', text:'今天 8月13日'},
+      them('关于 eBPF 的那篇文章你有看…','08:12'),
+    ];
+  }
+  if(cid===5){
+    return [
+      {type:'date', text:'08-10'},
+      them('🎉 恭喜！','08:10'),
+      them('您在 2025 年 8 月的社区贡献中表现突出，荣获「月度活跃贡献者」称号！查看详情 →','08:10'),
+    ];
+  }
+  if(cid===6){
+    return [
+      {type:'date', text:'08-08'},
+      them('📢 CodeHub v2.6.0 发布公告','09:00'),
+      them('• 全新私信界面（就是你现在看到的这个）\n• 支持 Markdown 代码块高亮\n• 主题系统升级 5 套配色\n• 若干性能优化与 Bug 修复\n\n更多信息：官网更新日志','09:00'),
+    ];
+  }
+  return [
+    {type:'date', text:'近期消息'},
+    them('这里是与 '+name+' 的对话开始 👋', '—'),
+    me('你好！', '—', '', false),
+    them('有什么可以帮你的吗？','—'),
+  ];
+}
+let currentConvId = 1;
+function getMessages(cid){
+  if(!CONV_MESSAGES[cid]) CONV_MESSAGES[cid] = buildInitialMessages(cid);
+  return CONV_MESSAGES[cid];
+}
+function formatNow(){ const d=new Date(); const h=String(d.getHours()).padStart(2,'0'); const m=String(d.getMinutes()).padStart(2,'0'); return `${h}:${m}`; }
+function renderMessages(cid){
+  const list = getMessages(cid);
+  const body = get$('chat-body'); if(!body) return;
+  body.innerHTML = list.map(m => renderOneMsg(m)).join('');
+  body.scrollTop = body.scrollHeight;
+  const items = body.querySelectorAll('.msg-row.me');
+  if(items.length){
+    const last = items[items.length-1];
+    const status = last.querySelector('.msg-read-status');
+    if(status){ const data = list[list.findIndex(x=>x.from==='me' && (list.indexOf(x)===list.length-1 || x===list[list.length-1]))]; /* noop */ }
+  }
+  updateLastReadFlag();
+}
+function renderOneMsg(m){
+  if(m.type==='date'){
+    return `<div class="msg-date-divider"><span class="msg-date-text">${m.text}</span></div>`;
+  }
+  if(m.type==='newline'){
+    return `<div class="msg-new-divider"><span class="msg-new-text">— 以下为新消息 —</span></div>`;
+  }
+  if(m.type==='system'){
+    return `<div class="msg-system">${m.text}</div>`;
+  }
+  const isMe = m.from==='me';
+  const avatarHTML = isMe ? '' : `<div class="msg-avatar-sm ${m.av||'av-1'}">${m.first||'U'}</div>`;
+  const senderHTML = isMe ? '' : `<div class="msg-sender">${m.name||'对方'}</div>`;
+  let bubbleHTML = '';
+  if(typeof m.text === 'object' && m.text.type==='code'){
+    bubbleHTML = `<div class="msg-code"><span class="code-lang">${m.text.lang||'CODE'}</span>${escapeHtml(m.text.content)}</div>`;
+  } else if(typeof m.text === 'object' && m.text.type==='image'){
+    bubbleHTML = `<div class="msg-image" onclick="showToast('info','查看图片','图片预览（模拟）')"><img src="${m.text.url}" alt="${m.text.alt||''}" /></div>`;
+  } else {
+    if(isMe){
+      bubbleHTML = `<div class="msg-bubble">${escapeHtml(String(m.text))}<span class="msg-time-inline">${m.time||''}</span></div>`;
+    } else {
+      bubbleHTML = `<div class="msg-bubble">${escapeHtml(String(m.text))}</div>`;
+    }
+  }
+  if(isMe){
+    const readHTML = m.read ? '<span class="msg-read-status read">✓✓ 已读</span>' : '<span class="msg-read-status">✓ 已发送</span>';
+    return `<div class="msg-row me"><div class="msg-content">${bubbleHTML}<div class="msg-time-wrap">${readHTML}</div></div></div>`;
+  } else {
+    return `<div class="msg-row them">${avatarHTML}<div class="msg-content">${senderHTML}${bubbleHTML}<div class="msg-time-wrap"><span class="msg-time">${m.time||''}</span></div></div></div>`;
+  }
+}
+function escapeHtml(s){ return String(s).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function updateLastReadFlag(){
+  const rows = document.querySelectorAll('#chat-body .msg-row.me');
+  if(!rows.length) return;
+  let last = null;
+  for(let i=rows.length-1;i>=0;i--){ last = rows[i]; break; }
+  if(!last) return;
+  const conv = CONV_DATA.find(c=>c.id===currentConvId);
+  const allMsgs = getMessages(currentConvId);
+  const lastMe = [...allMsgs].reverse().find(m=>m.from==='me');
+  if(lastMe){
+    let statusEl = last.querySelector('.msg-read-status');
+    if(!statusEl){
+      const tw = last.querySelector('.msg-time-wrap');
+      if(tw){ statusEl = document.createElement('span'); statusEl.className='msg-read-status'; tw.appendChild(statusEl); }
+    }
+    if(statusEl){
+      if(conv && conv.online && (allMsgs[allMsgs.length-1].from==='me')){
+        statusEl.className = 'msg-read-status'; statusEl.textContent = '✓ 已发送';
+      } else if (allMsgs[allMsgs.length-1].from==='them' || (conv && !conv.online && lastMe.read)){
+        statusEl.className = 'msg-read-status read'; statusEl.textContent = '✓✓ 已读';
+      } else {
+        statusEl.className = lastMe.read ? 'msg-read-status read' : 'msg-read-status';
+        statusEl.textContent = lastMe.read ? '✓✓ 已读' : '✓ 已发送';
+      }
+    }
+  }
+}
+function selectConversation(cid){
+  const conv = CONV_DATA.find(c=>c.id===cid);
+  if(!conv) return;
+  currentConvId = cid;
+  if(conv.unread){
+    conv.unread = 0;
+    updateUnreadBadge();
+  }
+  const sBar = get$('chat-search-bar');
+  if(sBar && sBar.classList.contains('open')){
+    sBar.classList.remove('open');
+    const sInput = get$('chat-search-input'); if(sInput) sInput.value='';
+  }
+  const grid = get$('chat-grid');
+  if(grid){
+    grid.classList.remove('show-conv'); grid.classList.add('show-chat');
+  }
+  const nameEl = get$('chat-top-name'); if(nameEl) nameEl.textContent = conv.name;
+  const roleEl = get$('chat-top-role'); if(roleEl) roleEl.textContent = conv.role;
+  const staEl = get$('chat-top-status-text'); if(staEl){ staEl.className = 'chat-user-status'+(conv.online?' online':''); staEl.textContent = conv.online?'● 在线':'○ 离线'; }
+  const statDot = get$('chat-top-status'); if(statDot){ statDot.className = 'chat-status-dot'+(conv.online?' online':''); }
+  const topAv = get$('chat-top-avatar');
+  if(topAv){ topAv.className = 'chat-avatar '+conv.av; topAv.textContent = conv.official? (conv.name.includes('系统')?'🔔':'📢') : initial(conv.name); }
+  const ctAv = get$('contact-avatar');
+  if(ctAv){ ctAv.className = 'contact-avatar '+conv.av; ctAv.textContent = conv.official? (conv.name.includes('系统')?'🔔':'📢') : initial(conv.name); }
+  const ctNm = get$('contact-name'); if(ctNm) ctNm.textContent = conv.name;
+  const ctRl = get$('contact-role'); if(ctRl) ctRl.textContent = conv.role;
+  const shareLink = get$('share-link-input'); if(shareLink) shareLink.value = `https://codehub.dev/chat/${conv.name}?ref=share`;
+  const stats = conv.stats || {groups:0,days:0,msgs:0};
+  const statNums = document.querySelectorAll('.stat-num');
+  if(statNums.length>=3){ statNums[0].textContent = stats.groups.toLocaleString(); statNums[1].textContent = stats.days.toLocaleString(); statNums[2].textContent = stats.msgs.toLocaleString(); }
+  const fBtn = get$('follow-btn');
+  if(fBtn){
+    const span = fBtn.querySelector('span');
+    if(conv.followed){ fBtn.classList.add('followed'); if(span) span.textContent='已关注'; }
+    else { fBtn.classList.remove('followed'); if(span) span.textContent='关注'; }
+  }
+  renderConversationList(convFilter, (get$('conv-search-input')||{}).value||'');
+  renderMessages(cid);
+}
+window.selectConversation = selectConversation;
+let convFilter = 'all';
+function updateUnreadBadge(){
+  const total = CONV_DATA.reduce((s,c)=>s+(c.unread||0),0);
+  document.title = total>0 ? `(${total}) 私信 · CodeHub` : '私信 · CodeHub';
+}
+function toggleFollow(btn){
+  const conv = CONV_DATA.find(c=>c.id===currentConvId); if(!conv) return;
+  const span = btn.querySelector('span');
+  conv.followed = !conv.followed;
+  if(conv.followed){ btn.classList.add('followed'); if(span) span.textContent='已关注'; showToast('success','关注成功','你关注了 '+conv.name); }
+  else { btn.classList.remove('followed'); if(span) span.textContent='关注'; showToast('info','取消关注','已取消关注 '+conv.name); }
+}
+window.toggleFollow = toggleFollow;
+function clearChat(){
+  if(!confirm('确定要清空与当前会话的聊天记录吗？（此操作不可恢复）')) return;
+  const conv = CONV_DATA.find(c=>c.id===currentConvId); if(!conv) return;
+  CONV_MESSAGES[currentConvId] = [
+    {type:'system', text:'聊天记录已清空 · '+formatNow()}
+  ];
+  renderMessages(currentConvId);
+  showToast('success','已清空','聊天记录已清空');
+}
+window.clearChat = clearChat;
+function copyShareLink(){
+  const input = get$('share-link-input'); if(!input) return;
+  const text = input.value;
+  try{ navigator.clipboard.writeText(text); showToast('success','复制成功','对话邀请链接已复制到剪贴板'); }
+  catch(e){ input.select(); try{ document.execCommand('copy'); showToast('success','复制成功','对话邀请链接已复制'); }catch(_){ showToast('error','复制失败','请手动复制链接'); } }
+}
+window.copyShareLink = copyShareLink;
+function insertCodeTemplate(){
+  const ta = get$('chat-input'); if(!ta) return;
+  const tpl = '```js\n// 在此编写代码\nfunction hello() {\n  console.log("Hello, CodeHub");\n}\n```';
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  ta.value = ta.value.substring(0,s) + tpl + ta.value.substring(e);
+  ta.focus(); ta.selectionStart = ta.selectionEnd = s + tpl.length;
+  updateCount(); autoResize();
+  showToast('info','代码模板','已插入代码块模板，编辑后发送即可渲染高亮');
+}
+window.insertCodeTemplate = insertCodeTemplate;
+function openNewChatModal(){
+  const m = get$('new-chat-modal'); if(!m) return;
+  m.classList.add('open'); renderFollowersGrid(); updateSelectedCount();
+  setTimeout(()=>{ const si = get$('modal-search-input'); if(si) si.focus(); }, 100);
+}
+window.openNewChatModal = openNewChatModal;
+function closeNewChatModal(){
+  const m = get$('new-chat-modal'); if(m) m.classList.remove('open');
+  selectedFollowers.clear(); const si = get$('modal-search-input'); if(si) si.value='';
+}
+window.closeNewChatModal = closeNewChatModal;
+const selectedFollowers = new Set();
+const FOLLOWER_DATA = [
+  {name:'rust_sage',av:'av-1'},{name:'ai_pioneer',av:'av-2'},{name:'infra_guru',av:'av-3'},
+  {name:'cloud_native',av:'av-4'},{name:'code_reviewer',av:'av-5'},{name:'gopher_dev',av:'av-6'},
+  {name:'sys_caller',av:'av-7'},{name:'devops_angel',av:'av-8'},{name:'web_wizard',av:'av-9'},
+  {name:'data_queen',av:'av-10'},{name:'ml_master',av:'av-2'},{name:'blockchain_x',av:'av-4'},
+];
+function renderFollowersGrid(){
+  const grid = get$('followers-grid'); if(!grid) return;
+  const kw = ((get$('modal-search-input')||{}).value||'').trim().toLowerCase();
+  const list = FOLLOWER_DATA.filter(f=>!kw||f.name.toLowerCase().includes(kw));
+  grid.innerHTML = list.map((f,i)=>{
+    const id = f.name;
+    const chk = selectedFollowers.has(id);
+    return `<div class="follower-item ${chk?'checked':''}" data-name="${id}" onclick="toggleFollower('${id}')">
+      <div class="follower-avatar ${f.av}">${initial(f.name)}</div>
+      <div class="follower-name">${f.name}</div>
+      <div class="follower-check">${svgCheck}</div>
+    </div>`;
+  }).join('') || `<div style="grid-column:1/-1;text-align:center;padding:26px;color:var(--text-4);font-size:13px">没有匹配的联系人</div>`;
+}
+function toggleFollower(name){
+  if(selectedFollowers.has(name)) selectedFollowers.delete(name);
+  else selectedFollowers.add(name);
+  renderFollowersGrid(); updateSelectedCount();
+}
+window.toggleFollower = toggleFollower;
+function updateSelectedCount(){
+  const el = get$('selected-count'); if(el) el.textContent = selectedFollowers.size;
+}
+function createNewChat(){
+  if(selectedFollowers.size===0){ showToast('error','未选择','请先选择至少一位联系人'); return; }
+  const arr = Array.from(selectedFollowers);
+  closeNewChatModal();
+  if(arr.length===1){
+    const name = arr[0];
+    const ex = CONV_DATA.find(c=>c.name===name);
+    if(ex){ selectConversation(ex.id); showToast('info','打开对话','已打开与 '+name+' 的对话'); return; }
+  }
+  showToast('success','创建成功', selectedFollowers.size>1 ? `已创建 ${arr.length} 人群聊（模拟）` : `已创建与 ${arr[0]} 的新对话（模拟）`);
+}
+window.createNewChat = createNewChat;
+const EMOJI_LIST = ['😀','😁','😂','🤣','😊','😍','😘','😎','🤩','🥳','😇','🤗','🤔','😏','😌','🙃','😋','🤪','😜','😝','🤑','🤫','🤭','😶','🙄','😳','🥺','😢','😭','😤','😠','🤬','👍','👎','👏','🙌','🤝','💪','❤️','💔','💕','💯','🔥','⭐','✨','🎉','🎊','🚀','💡','📌','✅','❌','⚠️','❓','💬','📢'];
+function renderEmojiPanel(){
+  const p = get$('emoji-panel'); if(!p) return;
+  const shown = EMOJI_LIST.slice(0,36);
+  p.innerHTML = shown.map(e=>`<button class="emoji-item" type="button" data-e="${e}">${e}</button>`).join('');
+  p.querySelectorAll('.emoji-item').forEach(b=>{
+    b.addEventListener('click', (ev)=>{ ev.stopPropagation(); insertEmoji(b.dataset.e); });
+  });
+}
+function insertEmoji(e){
+  const ta = get$('chat-input'); if(!ta) return;
+  const s = ta.selectionStart, en = ta.selectionEnd;
+  ta.value = ta.value.substring(0,s) + e + ta.value.substring(en);
+  ta.focus(); ta.selectionStart = ta.selectionEnd = s + e.length;
+  updateCount(); autoResize();
+}
+function updateCount(){
+  const ta = get$('chat-input'); const c = get$('input-count'); if(!ta||!c) return;
+  const n = ta.value.length; c.textContent = `${n} / 2000`; c.classList.toggle('over', n>=2000);
+}
+function autoResize(){
+  const ta = get$('chat-input'); if(!ta) return;
+  ta.style.height = '56px';
+  const nh = Math.min(ta.scrollHeight, 160);
+  ta.style.height = nh + 'px';
+}
+const AUTO_REPLIES = ['收到！👍','好的好的～','哈哈你说得对','嗯嗯我了解了','这个有意思！','我稍后回复你哈','明白了，感谢！','哇 学到了','期待后续~','+1'];
+function appendMessage(m){
+  const msgs = getMessages(currentConvId);
+  msgs.push(m);
+  const body = get$('chat-body'); if(!body) return;
+  const wrap = document.createElement('div'); wrap.innerHTML = renderOneMsg(m); const el = wrap.firstElementChild;
+  if(el) body.appendChild(el);
+  body.scrollTop = body.scrollHeight;
+  updateLastReadFlag();
+}
+function sendMessage(){
+  const ta = get$('chat-input'); if(!ta) return;
+  const raw = ta.value.trim();
+  if(!raw) return;
+  let text = raw;
+  const codeMatch = raw.match(/^```([a-zA-Z0-9_+-]*)\s*\n([\s\S]*?)```\s*$/);
+  if(codeMatch){
+    text = {type:'code', lang: codeMatch[1]||'CODE', content: codeMatch[2].replace(/\n$/,'')};
+  }
+  const time = formatNow();
+  appendMessage({from:'me', text, time, read:false});
+  const conv = CONV_DATA.find(c=>c.id===currentConvId);
+  if(conv){ conv.preview = typeof text==='string'? text : '[代码片段]'; conv.time = time; renderConversationList(convFilter, (get$('conv-search-input')||{}).value||''); }
+  ta.value = ''; updateCount(); autoResize();
+  setTimeout(()=>{
+    if(conv && !conv.online && !conv.official) return;
+    if(conv && conv.official) return;
+    const r = AUTO_REPLIES[Math.floor(Math.random()*AUTO_REPLIES.length)];
+    const t = formatNow();
+    appendMessage({from:'them', name:conv.name, av:conv.av, first:initial(conv.name), text:r, time:t});
+    if(conv){ conv.preview = r; conv.time = t; renderConversationList(convFilter, (get$('conv-search-input')||{}).value||''); }
+    const all = getMessages(currentConvId);
+    const meMsgs = all.filter(m=>m.from==='me');
+    if(meMsgs.length){ const last = meMsgs[meMsgs.length-1]; last.read = true; updateLastReadFlag(); }
+    showToast('info', '新消息 · '+conv.name, r);
+  }, 1800 + Math.random()*800);
+}
+function initChatInput(){
+  const ta = get$('chat-input'); const sb = get$('send-btn'); if(!ta) return;
+  ta.addEventListener('input', ()=>{ updateCount(); autoResize(); });
+  ta.addEventListener('keydown', (ev)=>{
+    if(ev.key==='Enter' && !ev.shiftKey && !ev.isComposing){
+      ev.preventDefault(); sendMessage();
+    }
+  });
+  if(sb) sb.addEventListener('click', sendMessage);
+  const et = get$('emoji-toggle'); const ep = get$('emoji-panel');
+  if(et && ep){
+    et.addEventListener('click', (ev)=>{ ev.stopPropagation(); ep.classList.toggle('open'); });
+    document.addEventListener('click', (ev)=>{ if(!ep.contains(ev.target) && ev.target!==et) ep.classList.remove('open'); });
+  }
+}
+function initDropdowns(){
+  const ab = get$('avatar-btn'); const am = get$('avatar-menu');
+  if(ab && am){
+    ab.addEventListener('click', (ev)=>{ ev.stopPropagation(); am.classList.toggle('open'); const cm = get$('chat-menu-wrap'); if(cm) cm.classList.remove('open'); });
+  }
+  document.addEventListener('click', (ev)=>{
+    if(am && !am.contains(ev.target) && ev.target!==ab) am.classList.remove('open');
+    const cmw = get$('chat-menu-wrap'); const cmb = get$('chat-menu-btn');
+    if(cmw && !cmw.contains(ev.target) && (!cmb || !cmb.contains(ev.target))) cmw.classList.remove('open');
+    const modal = get$('new-chat-modal');
+    if(modal && modal.classList.contains('open') && ev.target===modal) closeNewChatModal();
+  });
+}
+function initConvsUI(){
+  const tabs = document.querySelectorAll('.conv-tab');
+  tabs.forEach(t=>{
+    t.addEventListener('click', ()=>{
+      tabs.forEach(x=>x.classList.remove('active')); t.classList.add('active');
+      convFilter = t.dataset.filter || 'all';
+      renderConversationList(convFilter, (get$('conv-search-input')||{}).value||'');
+    });
+  });
+  const si = get$('conv-search-input');
+  if(si){ si.addEventListener('input', ()=>{ renderConversationList(convFilter, si.value); }); }
+  const msi = get$('modal-search-input');
+  if(msi){ msi.addEventListener('input', renderFollowersGrid); }
+  const mTabs = document.querySelectorAll('.modal-tab');
+  mTabs.forEach(t=>{ t.addEventListener('click',()=>{ mTabs.forEach(x=>x.classList.remove('active')); t.classList.add('active'); renderFollowersGrid(); }); });
+}
+function initThemeSwitcher(){
+  document.querySelectorAll('.theme-dot').forEach(d=>{
+    d.addEventListener('click', ()=>{ applyTheme(d.dataset.theme); });
+  });
+}
+function initKeyboard(){
+  document.addEventListener('keydown', (ev)=>{
+    if((ev.metaKey||ev.ctrlKey) && ev.key.toLowerCase()==='k'){
+      ev.preventDefault();
+      const inp = get$('nav-search-input') || get$('conv-search-input');
+      if(inp){ inp.focus(); inp.select(); }
+    }
+    if(ev.key==='Escape'){
+      closeNewChatModal();
+      const am = get$('avatar-menu'); if(am) am.classList.remove('open');
+      const cmw = get$('chat-menu-wrap'); if(cmw) cmw.classList.remove('open');
+    }
+  });
+}
+function initScroll(){
+  const bt = get$('back-top');
+  const onScroll = ()=>{
+    const y = window.scrollY || document.documentElement.scrollTop;
+    if(bt) bt.classList.toggle('show', y>360);
+  };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  if(bt) bt.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('shown'); io.unobserve(e.target); } });
+  }, {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}
+function initMobile(){
+  const mb = get$('mob-back-btn'); const grid = get$('chat-grid');
+  if(mb && grid){ mb.addEventListener('click', ()=>{ grid.classList.remove('show-chat'); grid.classList.add('show-conv'); }); }
+}
+function initChatSearch(){
+  const btn = get$('chat-search-btn');
+  const bar = get$('chat-search-bar');
+  const input = get$('chat-search-input');
+  const closeBtn = get$('search-close-btn');
+  const prevBtn = get$('search-prev-btn');
+  const nextBtn = get$('search-next-btn');
+  const countEl = get$('chat-search-count');
+  if(!btn || !bar || !input) return;
+  let matches = [];
+  let currentIdx = -1;
+  function toggle(open){
+    bar.classList.toggle('open', open);
+    if(open){ setTimeout(()=>input.focus(), 100); }
+    else { input.value=''; clearHighlights(); updateCount(); }
+  }
+  btn.addEventListener('click', ()=>{ toggle(!bar.classList.contains('open')); });
+  if(closeBtn) closeBtn.addEventListener('click', ()=>toggle(false));
+  function getMsgText(m){
+    if(m.type==='date' || m.type==='newline' || m.type==='system') return '';
+    if(typeof m.text === 'object'){
+      if(m.text.type==='code') return m.text.content || '';
+      if(m.text.type==='image') return m.text.alt || '';
+      return '';
+    }
+    return String(m.text || '');
+  }
+  function clearHighlights(){
+    const body = get$('chat-body');
+    if(!body) return;
+    body.querySelectorAll('mark.search-hl').forEach(m=>{
+      const parent = m.parentNode;
+      parent.replaceChild(document.createTextNode(m.textContent), m);
+      parent.normalize();
+    });
+  }
+  function highlightText(node, kw){
+    if(node.nodeType === 3){
+      const text = node.textContent;
+      const lower = text.toLowerCase();
+      const idx = lower.indexOf(kw);
+      if(idx >= 0){
+        const before = document.createTextNode(text.substring(0, idx));
+        const mark = document.createElement('mark');
+        mark.className = 'search-hl';
+        mark.textContent = text.substring(idx, idx + kw.length);
+        const after = document.createTextNode(text.substring(idx + kw.length));
+        const frag = document.createDocumentFragment();
+        frag.appendChild(before); frag.appendChild(mark); frag.appendChild(after);
+        node.parentNode.replaceChild(frag, node);
+        return mark;
+      }
+    } else if(node.nodeType === 1 && node.childNodes){
+      const children = Array.from(node.childNodes);
+      for(const child of children){
+        const r = highlightText(child, kw);
+        if(r) return r;
+      }
+    }
+    return null;
+  }
+  function doSearch(){
+    const kw = input.value.trim().toLowerCase();
+    clearHighlights();
+    matches = [];
+    currentIdx = -1;
+    if(!kw){ updateCount(); return; }
+    const body = get$('chat-body');
+    if(!body) return;
+    const rows = body.querySelectorAll('.msg-row');
+    rows.forEach(row=>{
+      const mark = highlightText(row, kw);
+      if(mark){ matches.push(mark); }
+    });
+    if(matches.length > 0){
+      currentIdx = 0;
+      scrollToMatch(0);
+    }
+    updateCount();
+  }
+  function scrollToMatch(idx){
+    matches.forEach((m,i)=> m.classList.toggle('current', i===idx));
+    if(idx >= 0 && idx < matches.length){
+      const m = matches[idx];
+      const body = get$('chat-body');
+      const rect = m.getBoundingClientRect();
+      const bodyRect = body.getBoundingClientRect();
+      body.scrollTop += (rect.top - bodyRect.top) - body.offsetHeight / 2 + rect.height / 2;
+    }
+  }
+  function updateCount(){
+    const n = matches.length;
+    if(n === 0){
+      countEl.textContent = input.value.trim() ? '0/0' : '';
+      prevBtn.disabled = true; nextBtn.disabled = true;
+    } else {
+      countEl.textContent = (currentIdx + 1) + '/' + n;
+      prevBtn.disabled = n <= 1;
+      nextBtn.disabled = n <= 1;
+    }
+  }
+  let searchTimer = null;
+  input.addEventListener('input', ()=>{
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(doSearch, 200);
+  });
+  input.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      if(matches.length > 0){
+        currentIdx = (currentIdx + 1) % matches.length;
+        scrollToMatch(currentIdx);
+        updateCount();
+      }
+    }
+    if(e.key === 'Escape'){ toggle(false); }
+    if(e.key === 'ArrowUp'){ e.preventDefault(); goPrev(); }
+    if(e.key === 'ArrowDown'){ e.preventDefault(); goNext(); }
+  });
+  function goPrev(){
+    if(matches.length === 0) return;
+    currentIdx = (currentIdx - 1 + matches.length) % matches.length;
+    scrollToMatch(currentIdx);
+    updateCount();
+  }
+  function goNext(){
+    if(matches.length === 0) return;
+    currentIdx = (currentIdx + 1) % matches.length;
+    scrollToMatch(currentIdx);
+    updateCount();
+  }
+  if(prevBtn) prevBtn.addEventListener('click', goPrev);
+  if(nextBtn) nextBtn.addEventListener('click', goNext);
+}
+function initOthers(){
+  const ncb = get$('new-chat-btn'); if(ncb) ncb.addEventListener('click', ()=>openNewChatModal());
+}
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initThemeSwitcher();
+  renderEmojiPanel();
+  renderConversationList(convFilter, '');
+  renderMessages(currentConvId);
+  updateUnreadBadge();
+  initChatInput();
+  initDropdowns();
+  initConvsUI();
+  initKeyboard();
+  initScroll();
+  initMobile();
+  initChatSearch();
+  initOthers();
+});
+})();
+</script>
+
+
+</body></html>
